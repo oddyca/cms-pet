@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import logo from '/logo.svg';
 
 export default function Header() {
@@ -11,14 +11,16 @@ export default function Header() {
         <nav className="flex-1 flex justify-center items-center">
           <ul className="list-none flex gap-6">
             <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>Portfolio</li>
-            <li>
-              <Link to="/blog">Blog</Link>
+              <NavLink to="/">Home</NavLink>
             </li>
             <li>
-              <Link to="/contact">Contact Us</Link>
+              <NavLink to="/#portfolio">Portfolio</NavLink>
+            </li>
+            <li>
+              <NavLink to="/blog">Blog</NavLink>
+            </li>
+            <li>
+              <NavLink to="/contact">Contact Us</NavLink>
             </li>
           </ul>
         </nav>

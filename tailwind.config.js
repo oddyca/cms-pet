@@ -7,6 +7,9 @@ export default {
         'base-black': {
           100: '#494949',
         },
+        'highlight-blue': {
+          100: '#D0D3E6',
+        },
       },
     },
   },
