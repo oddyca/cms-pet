@@ -180,7 +180,7 @@ function App() {
                   <FeaturedCompanies
                     img={sugarcrm}
                     alt="sugarcrm logo"
-                    paragraph="A cutting-edge company revolutionizing the AI industry."
+                    paragraph="An award-winning CRM that helps business create customers for life."
                   />
                 </div>
               </div>
