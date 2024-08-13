@@ -7,8 +7,14 @@ export default {
         'base-black': {
           100: '#494949',
         },
-        'highlight-blue': {
+        'accent-purple': {
           100: '#D0D3E6',
+        },
+        'accent-blue': {
+          100: '#93BADE',
+        },
+        'link-blue': {
+          100: '#828DCF',
         },
       },
     },

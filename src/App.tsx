@@ -24,7 +24,7 @@ const aboutSloganClass = 'text-7xl font-bold text-black';
 function App() {
   return (
     <>
-      <div className="w-full min-h-screen max-w-[1640px] my-0 mx-auto flex flex-col">
+      <div className="w-full min-h-screen max-w-[1440px] my-0 mx-auto flex flex-col">
         <div className="h-[64px]" />
         <div className="flex items-center justify-between mt-6">
           <div className="flex flex-col gap-6">
@@ -97,15 +97,15 @@ function App() {
         </div>
       </div>
       <Link to="/blog">
-        <div className="w-full bg-highlight-blue-100 py-1 flex justify-center items-center">
+        <div className="w-full bg-accent-purple-100 py-1 flex justify-center items-center">
           <p className="font-semibold text-xs text-black">
             CHECK OUT THE BLOG FOR OUR INSIGHTS AND IDEAS &#10141;
           </p>
         </div>
       </Link>
-      <div className="w-full min-h-screen max-w-[1640px] my-0 mx-auto flex flex-col">
+      <div className="w-full min-h-screen max-w-[1440px] my-6 mx-auto flex flex-col">
         <div>
-          <div className="mt-6">
+          <div className="">
             <div className="w-full grid grid-cols-3 py-6">
               <div className="flex justify-between">
                 <p>WHAT WE OFFER</p>

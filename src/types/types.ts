@@ -4,3 +4,8 @@ export type TCell = {
   title?: string;
   paragraph: string;
 };
+
+export type TBlogNavBar = {
+  name: string;
+  slug: string;
+};
