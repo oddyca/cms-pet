@@ -1,4 +1,15 @@
-import { createBrowserRouter, Outlet } from 'react-router-dom';
+import { createBrowserRouter, Outlet, useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+}
 
 import App from '../App';
 import Header from '../components/Header/Header';
@@ -11,6 +22,7 @@ export const Layout = () => (
   <>
     <Header />
     <Outlet />
+    <ScrollToTop />
     <Footer />
   </>
 );

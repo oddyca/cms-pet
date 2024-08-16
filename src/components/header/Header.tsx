@@ -1,6 +1,9 @@
 import { NavLink } from 'react-router-dom';
 import logo from '/logo.svg';
 
+const navLinkClass = ({ isActive }: { isActive: boolean }) =>
+  isActive ? 'underline underline-offset-8' : undefined;
+
 export default function Header() {
   return (
     <div className="w-full h-[64px] flex justify-center place-center bg-white/50 border-2 border-b-base-black-100 fixed backdrop-blur">
@@ -11,16 +14,24 @@ export default function Header() {
         <nav className="flex-1 flex justify-center items-center">
           <ul className="list-none flex gap-6">
             <li>
-              <NavLink to="/">Home</NavLink>
+              <NavLink to="/" className={navLinkClass}>
+                Home
+              </NavLink>
             </li>
             <li>
-              <NavLink to="/#portfolio">Portfolio</NavLink>
+              <NavLink to="/#portfolio" className={navLinkClass}>
+                Portfolio
+              </NavLink>
             </li>
             <li>
-              <NavLink to="/blog">Blog</NavLink>
+              <NavLink to="/blog" className={navLinkClass}>
+                Blog
+              </NavLink>
             </li>
             <li>
-              <NavLink to="/contact">Contact Us</NavLink>
+              <NavLink to="/contact" className={navLinkClass}>
+                Contact Us
+              </NavLink>
             </li>
           </ul>
         </nav>
