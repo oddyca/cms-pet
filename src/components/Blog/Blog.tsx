@@ -1,11 +1,35 @@
+import React from 'react';
+import { Link, NavLink } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+
 import VerticalDivider from '../Dividers/VerticalDivider';
-import HorizontallDivider from '../Dividers/HorizontalDivider';
+import BigPost from './BigPost';
+import { allPosts } from '../../controller/controller';
+import { TPost } from '../../types/types';
 
 import logo from '/logo.svg';
-import NavBar from './NavBar/NavBar';
-import { Link, NavLink } from 'react-router-dom';
+import NavBar from './NavBar';
 
 export default function Blog() {
+  const { isPending, error, data } = useQuery({
+    queryKey: ['blogPosts'],
+    queryFn: allPosts,
+  });
+
+  const renderBigPosts = (d: TPost[]): React.ReactElement[] => {
+    return d.map((post: TPost) => (
+      <BigPost
+        key={post.id}
+        title={post.attributes.title}
+        content={post.attributes.content}
+        author={post.attributes.author}
+        tag={post.attributes.tag}
+        date={post.attributes.publishedAt}
+        thumbnail={post.attributes.placeholderThumbnail}
+      />
+    ));
+  };
+
   return (
     <>
       <div className="h-[64px]" />
@@ -21,72 +45,7 @@ export default function Blog() {
         <NavBar />
         <div className="grid grid-cols-3 gap-6">
           <div className="col-span-2 flex flex-col gap-4">
-            <div className="flex flex-col gap-6">
-              <div className="flex gap-4">
-                <div className="flex-1 bg-black" />
-                <div className="flex-1 flex flex-col justify-between">
-                  <div className="flex flex-col gap-4">
-                    <h2 className="text-xl text-black font-bold">
-                      Lorem Ipsum Um Lorem Ipsum Ipsum Lorem Ume Re Tre Lorem
-                      Ipsum Ipsum Lorem
-                    </h2>
-                    <p>
-                      Lorem Ipsum lorem ipsum lorem ipsum lorem ipsum lorem
-                      ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum
-                      lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem
-                      ipsum lorem ipsum{' '}
-                    </p>
-                    <Link to="/" className="hover:text-link-blue-100">
-                      Read more &#10141;
-                    </Link>
-                  </div>
-                  <div className="flex place-self-end items-center gap-2 text-sm">
-                    <p>Feb 20, 2024</p>
-                    <p>•</p>
-                    <NavLink
-                      to="/blog/mentions"
-                      className="px-4 py-1 border rounded-full border-black hover:text-link-blue-100 hover:border-link-blue-100"
-                    >
-                      Mentions
-                    </NavLink>
-                  </div>
-                </div>
-              </div>
-              <HorizontallDivider />
-            </div>
-            <div className="flex flex-col gap-6">
-              <div className="flex gap-4">
-                <div className="flex-1 bg-black" />
-                <div className="flex-1 flex flex-col justify-between">
-                  <div className="flex flex-col gap-4">
-                    <h2 className="text-xl text-black font-bold">
-                      Lorem Ipsum Um Lorem Ipsum Ipsum Lorem Ume Re Tre Lorem
-                      Ipsum Ipsum Lorem
-                    </h2>
-                    <p>
-                      Lorem Ipsum lorem ipsum lorem ipsum lorem ipsum lorem
-                      ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum
-                      lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem
-                      ipsum lorem ipsum{' '}
-                    </p>
-                    <Link to="/" className="hover:text-link-blue-100">
-                      Read more &#10141;
-                    </Link>
-                  </div>
-                  <div className="flex place-self-end items-center gap-2 text-sm">
-                    <p>Feb 20, 2024</p>
-                    <p>•</p>
-                    <NavLink
-                      to="/blog/mentions"
-                      className="px-4 py-1 border rounded-full border-black hover:text-link-blue-100 hover:border-link-blue-100"
-                    >
-                      Mentions
-                    </NavLink>
-                  </div>
-                </div>
-              </div>
-              <HorizontallDivider />
-            </div>
+            {!isPending && renderBigPosts(data!.data)}
           </div>
           <div className="col-span-1 flex gap-4">
             <VerticalDivider />

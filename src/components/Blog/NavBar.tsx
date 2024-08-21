@@ -1,8 +1,8 @@
 import { NavLink } from 'react-router-dom';
-import VerticalDivider from '../../Dividers/VerticalDivider';
-import HorizontallDivider from '../../Dividers/HorizontalDivider';
+import VerticalDivider from '../Dividers/VerticalDivider';
+import HorizontallDivider from '../Dividers/HorizontalDivider';
 
-import { TBlogNavBar } from '../../../types/types';
+import { TBlogNavBar } from '../../types/types';
 
 const tags = [
   { name: 'FRONT PAGE', slug: 'front-page' },
@@ -16,20 +16,18 @@ const navLinkClass = ({ isActive }: { isActive: boolean }) =>
 
 const renderNavBar = (arr: TBlogNavBar[]) => {
   return arr.map((tag: TBlogNavBar, id) => (
-    <>
-      <li
-        className="flex items-center w-full text-center hover:bg-accent-purple-100"
-        key={tag.slug}
+    <li
+      className="flex items-center w-full text-center hover:bg-accent-purple-100"
+      key={tag.slug}
+    >
+      {id > 0 && id <= arr.length - 1 && <VerticalDivider />}
+      <NavLink
+        to={`/blog${tag.slug === 'front-page' ? '' : '/' + tag.slug}`}
+        className={navLinkClass}
       >
-        {id > 0 && id <= arr.length - 1 && <VerticalDivider />}
-        <NavLink
-          to={`/blog${tag.slug === 'front-page' ? '' : '/' + tag.slug}`}
-          className={navLinkClass}
-        >
-          {tag.name}
-        </NavLink>
-      </li>
-    </>
+        {tag.name}
+      </NavLink>
+    </li>
   ));
 };
 

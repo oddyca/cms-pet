@@ -1,5 +1,6 @@
 import { createBrowserRouter, Outlet, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -18,12 +19,16 @@ import Contact from '../components/Contact/Contact';
 import Footer from '../components/Footer/Footer';
 import Dashboard from '../components/Dashboard/Dashboard';
 
+const queryClient = new QueryClient();
+
 export const Layout = () => (
   <>
-    <Header />
-    <Outlet />
-    <ScrollToTop />
-    <Footer />
+    <QueryClientProvider client={queryClient}>
+      <Header />
+      <Outlet />
+      <ScrollToTop />
+      <Footer />
+    </QueryClientProvider>
   </>
 );
 
