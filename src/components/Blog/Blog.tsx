@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import VerticalDivider from '../Dividers/VerticalDivider';
 import BigPost from './BigPost';
+import BigPostLoader from './BigPostLoader';
 import { allPosts } from '../../controller/controller';
 import { TPost } from '../../types/types';
 
@@ -45,7 +46,14 @@ export default function Blog() {
         <NavBar />
         <div className="grid grid-cols-3 gap-6">
           <div className="col-span-2 flex flex-col gap-4">
-            {!isPending && renderBigPosts(data!.data)}
+            {isPending && (
+              <>
+                <BigPostLoader />
+                <BigPostLoader />
+              </>
+            )}
+            {!isPending && !error && renderBigPosts(data!.data.slice(0, 1))}
+            {error && <div>Error loading posts</div>}
           </div>
           <div className="col-span-1 flex gap-4">
             <VerticalDivider />
