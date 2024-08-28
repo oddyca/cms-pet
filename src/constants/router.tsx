@@ -18,6 +18,8 @@ import Blog from '../components/Blog/Blog';
 import Contact from '../components/Contact/Contact';
 import Footer from '../components/Footer/Footer';
 import Dashboard from '../components/Dashboard/Dashboard';
+import BlogPost from '../components/Blog/BlogPost';
+import Category from '../components/Blog/Category';
 
 const queryClient = new QueryClient();
 
@@ -43,6 +45,16 @@ export const router = createBrowserRouter([
       {
         path: '/blog',
         element: <Blog />,
+        children: [
+          {
+            path: ':category',
+            element: <Category />,
+          },
+        ],
+      },
+      {
+        path: '/blog/:category/:slug',
+        element: <BlogPost />,
       },
       {
         path: '/contact',

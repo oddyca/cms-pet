@@ -24,6 +24,7 @@ const renderNavBar = (arr: TBlogNavBar[]) => {
       <NavLink
         to={`/blog${tag.slug === 'front-page' ? '' : '/' + tag.slug}`}
         className={navLinkClass}
+        end={tag.slug === 'front-page'}
       >
         {tag.name}
       </NavLink>
