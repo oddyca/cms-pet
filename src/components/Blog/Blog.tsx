@@ -18,6 +18,8 @@ export default function Blog() {
     queryFn: allPosts,
   });
 
+  // TODO: put this func into controller and abstract it
+  // by adding "post" param to dynamically render any fetched posts
   const renderBigPosts = (d: TPost[]): React.ReactElement[] => {
     return d.map((post: TPost) => (
       <BigPost
@@ -61,6 +63,7 @@ export default function Blog() {
             <SideBar />
           </div>
         </div>
+        <Outlet />
       </div>
     </>
   );

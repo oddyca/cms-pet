@@ -46,3 +46,10 @@ export type TBigPost = {
   date: string;
   thumbnail?: string;
 };
+
+export type TFilterCategoryParams = {
+  request: Request;
+  params: {
+    [param: string]: string | undefined;
+  };
+};
