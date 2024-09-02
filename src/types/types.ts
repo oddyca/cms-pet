@@ -1,3 +1,5 @@
+import React from 'react';
+
 export type TCell = {
   img: string;
   alt: string;
@@ -43,8 +45,8 @@ export type TBigPost = {
   content: string;
   author: string;
   tag: string;
-  date: string;
-  thumbnail?: string;
+  publishedAt: string;
+  placeholderThumbnail?: string;
 };
 
 export type TFilterCategoryParams = {

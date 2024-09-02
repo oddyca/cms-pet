@@ -1,4 +1,5 @@
-import { TAllPosts, TFilterCategoryParams } from '../types/types';
+import React from 'react';
+import { TAllPosts, TFilterCategoryParams, TPost } from '../types/types';
 import { LoaderFunction } from 'react-router-dom';
 
 export const allPosts = (): Promise<TAllPosts> => {
@@ -19,4 +20,14 @@ export const filterByCategory: LoaderFunction = async ({
   ).then((res) => res.json());
 
   return fetchedData as TAllPosts;
+};
+
+export const renderComponents = (
+  data: TPost[],
+  Component: React.ComponentType<TPost['attributes']>,
+): React.ReactElement[] => {
+  return data.map((post) => {
+    const { attributes } = post;
+    return <Component key={post.id} {...attributes} />;
+  });
 };
