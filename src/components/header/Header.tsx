@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import logo from '/logo.svg';
 
 const navLinkClass = ({ isActive }: { isActive: boolean }) =>
@@ -6,10 +6,12 @@ const navLinkClass = ({ isActive }: { isActive: boolean }) =>
 
 export default function Header() {
   return (
-    <div className="w-full h-[64px] flex justify-center place-center bg-white/50 border-2 border-b-base-black-100 fixed backdrop-blur">
+    <div className="w-full h-[64px] flex justify-center place-center bg-white/50 border-b-2 border-b-base-black-100 fixed backdrop-blur z-10">
       <div className="w-full h-full max-w-[1440px] flex items-center justify-between">
         <div className="flex-1">
-          <img src={logo} alt="logo icon" />
+          <Link to="/">
+            <img src={logo} alt="logo icon" />
+          </Link>
         </div>
         <nav className="flex-1 flex justify-center items-center">
           <ul className="list-none flex gap-6">

@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 
 import VerticalDivider from '../Dividers/VerticalDivider';
@@ -17,6 +17,9 @@ export default function Blog() {
     queryKey: ['blogPosts'],
     queryFn: allPosts,
   });
+
+  const { pathname } = useLocation();
+  console.log(pathname);
 
   return (
     <>
@@ -38,9 +41,11 @@ export default function Blog() {
                 <BigPostLoader />
               </>
             )}
-            {!isPending &&
-              !error &&
-              renderComponents(data!.data.slice(0, 2), BigPost)}
+            {!isPending && !error && pathname === '/blog' ? (
+              renderComponents(data!.data.slice(0, 2), BigPost)
+            ) : (
+              <></>
+            )}
             {error && <div>Something went wrong. Try again</div>}
           </div>
           <div className="col-span-1 flex gap-4">

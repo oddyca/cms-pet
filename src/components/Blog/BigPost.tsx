@@ -7,6 +7,7 @@ export default function BigPost({
   title,
   content,
   tag,
+  slug,
   publishedAt,
   placeholderThumbnail,
 }: TBigPost) {
@@ -34,7 +35,7 @@ export default function BigPost({
           <div className="flex flex-col gap-4">
             <h2 className="text-xl text-black font-bold">{title}</h2>
             <p>{content.slice(0, 64)}...</p>
-            <Link to="/" className="hover:text-link-blue-100">
+            <Link to={`${slug}`} className="hover:text-link-blue-100">
               Read more &#10141;
             </Link>
           </div>
@@ -42,7 +43,7 @@ export default function BigPost({
             <p>{formattedDate}</p>
             <p>•</p>
             <NavLink
-              to="/blog/mentions"
+              to={`/blog/${tag}`}
               className="px-4 py-1 border rounded-full border-black hover:text-link-blue-100 hover:border-link-blue-100"
             >
               {tag}

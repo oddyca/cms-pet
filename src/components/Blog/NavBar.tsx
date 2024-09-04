@@ -4,29 +4,29 @@ import HorizontallDivider from '../Dividers/HorizontalDivider';
 
 import { TBlogNavBar } from '../../types/types';
 
-const tags = [
+const categories = [
   { name: 'FRONT PAGE', slug: 'front-page' },
   { name: 'MENTIONS', slug: 'mentions' },
   { name: 'ARTICLES', slug: 'articles' },
-  { name: 'OUR IDEAS', slug: 'our-ideas' },
+  { name: 'OUR IDEAS', slug: 'ideas' },
 ];
 
 const navLinkClass = ({ isActive }: { isActive: boolean }) =>
   isActive ? 'block w-full bg-accent-purple-100' : 'w-full';
 
 const renderNavBar = (arr: TBlogNavBar[]) => {
-  return arr.map((tag: TBlogNavBar, id) => (
+  return arr.map((category: TBlogNavBar, id) => (
     <li
       className="flex items-center w-full text-center hover:bg-accent-purple-100"
-      key={tag.slug}
+      key={category.slug}
     >
       {id > 0 && id <= arr.length - 1 && <VerticalDivider />}
       <NavLink
-        to={`/blog${tag.slug === 'front-page' ? '' : '/' + tag.slug}`}
+        to={`/blog${category.slug === 'front-page' ? '' : '/' + category.slug}`}
         className={navLinkClass}
-        end={tag.slug === 'front-page'}
+        end={category.slug === 'front-page'}
       >
-        {tag.name}
+        {category.name}
       </NavLink>
     </li>
   ));
@@ -37,7 +37,7 @@ export default function NavBar() {
     <div>
       <HorizontallDivider />
       <ul className="grid grid-cols-4 justify-items-stretch list-none py-4">
-        {renderNavBar(tags)}
+        {renderNavBar(categories)}
       </ul>
       <HorizontallDivider />
     </div>
