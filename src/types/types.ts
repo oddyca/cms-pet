@@ -38,15 +38,19 @@ export type TPost = {
   };
 };
 
-export type TBigPost = {
+export type TBlogPost = {
   title: string;
   content: string;
   author: string;
   tag: string;
   slug: string;
   publishedAt: string;
+  thumbnail?: string;
   placeholderThumbnail?: string;
 };
+
+export type TBigPost = TBlogPost;
+export type TPostCard = TBlogPost;
 
 export type TFilterCategoryParams = {
   request: Request;

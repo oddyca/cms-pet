@@ -1,7 +1,11 @@
-import { Link, NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+
 import HorizontallDivider from '../Dividers/HorizontalDivider';
+import Tag from '../Tag/Tag';
 
 import { TBigPost } from '../../types/types';
+
+import { convertDate } from '../../controller/controller';
 
 export default function BigPost({
   title,
@@ -11,18 +15,11 @@ export default function BigPost({
   publishedAt,
   placeholderThumbnail,
 }: TBigPost) {
-  const postDate = new Date(publishedAt);
-
-  const options: Intl.DateTimeFormatOptions = {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-  };
-  const formattedDate = postDate.toLocaleDateString('en-US', options);
+  const formattedDate = convertDate(publishedAt);
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-4 gap-4">
         <div className="col-span-2 h-80 w-full overflow-hidden rounded">
           <img
             src={placeholderThumbnail}
@@ -31,7 +28,7 @@ export default function BigPost({
             loading="lazy"
           />
         </div>
-        <div className="col-span-1 flex flex-col justify-between">
+        <div className="col-span-2 flex flex-col justify-between">
           <div className="flex flex-col gap-4">
             <h2 className="text-xl text-black font-bold">{title}</h2>
             <p>{content.slice(0, 64)}...</p>
@@ -42,12 +39,7 @@ export default function BigPost({
           <div className="flex place-self-end items-center gap-2 text-sm">
             <p>{formattedDate}</p>
             <p>•</p>
-            <NavLink
-              to={`/blog/${tag}`}
-              className="px-4 py-1 border rounded-full border-black hover:text-link-blue-100 hover:border-link-blue-100"
-            >
-              {tag}
-            </NavLink>
+            <Tag tag={tag} />
           </div>
         </div>
       </div>

@@ -14,6 +14,7 @@ export const filterByCategory: LoaderFunction = async ({
   request,
   params,
 }: TFilterCategoryParams) => {
+  console.log(params.category);
   const fetchedData = await fetch(
     `http://localhost:1337/api/blog-posts?filters[tag][$eqi]=${params.category}`,
     { signal: request.signal },
@@ -30,4 +31,17 @@ export const renderComponents = (
     const { attributes } = post;
     return <Component key={post.id} {...attributes} />;
   });
+};
+
+export const convertDate = (d: string): string => {
+  const postDate = new Date(d);
+
+  const options: Intl.DateTimeFormatOptions = {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  };
+  const formattedDate = postDate.toLocaleDateString('en-US', options);
+
+  return formattedDate;
 };

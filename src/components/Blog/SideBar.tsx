@@ -11,9 +11,6 @@ import facebook from '/fb-bw.svg';
 export default function SideBar() {
   const { pathname } = useLocation();
 
-  // useEffect(() => {
-  //   console.log(pathname);
-  // }, []);
   return (
     <div className="flex flex-col gap-4">
       {pathname != '/blog' && (
