@@ -1,8 +1,21 @@
 import React from 'react';
-import { useLoaderData } from 'react-router-dom';
+import { useLoaderData, useParams } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+
+import { categoryPosts } from '../../controller/controller';
 
 export default function Category() {
-  const data = useLoaderData();
+  const initialData = useLoaderData();
+  const { category } = useParams();
+
+  const { isPending, error, data } = useQuery({
+    queryKey: ['category', category],
+    queryFn: () => categoryPosts(category!),
+    initialData,
+  });
+
+  console.log('initital data', initialData);
+  console.log('data', data);
 
   return <div>{data!.data[0].attributes.title}</div>;
 }

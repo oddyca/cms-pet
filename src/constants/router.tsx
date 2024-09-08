@@ -2,7 +2,7 @@ import { createBrowserRouter, Outlet, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-import { filterByCategory } from '../controller/controller';
+import { categoryLoader } from '../controller/controller';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -51,7 +51,7 @@ export const router = createBrowserRouter([
           {
             path: ':category',
             element: <Category />,
-            loader: filterByCategory,
+            loader: categoryLoader(queryClient),
           },
         ],
       },

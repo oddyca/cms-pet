@@ -1,20 +1,46 @@
 import React from 'react';
-import { TAllPosts, TFilterCategoryParams, TPost } from '../types/types';
+import { LoaderFunctionArgs } from 'react-router-dom';
+import { QueryClient } from '@tanstack/react-query';
+import { TAllPosts, TPost, TCategoryPosts } from '../types/types';
 import { LoaderFunction } from 'react-router-dom';
 
+// TODO
+// write laoders for <Blog /> and each Post
+export const categoryLoader =
+  (queryClient: QueryClient) => async (args: LoaderFunctionArgs) => {
+    const queryKey = ['category', args.params.category];
+
+    return (
+      queryClient.getQueryData(queryKey) ??
+      (await queryClient.fetchQuery({
+        queryKey,
+        queryFn: () => filterByCategory(args),
+      }))
+    );
+  };
+
 export const allPosts = (): Promise<TAllPosts> => {
-  const fetchedData = fetch('http://localhost:1337/api/blog-posts').then(
-    (res) => res.json(),
-  );
+  const fetchedData = fetch(
+    'http://localhost:1337/api/blog-posts?populate=thumbnail',
+  ).then((res) => res.json());
 
   return fetchedData as Promise<TAllPosts>;
+};
+
+export const categoryPosts = async (
+  category: string,
+): Promise<TCategoryPosts> => {
+  const fetchedData = await fetch(
+    `http://localhost:1337/api/blog-posts?filters[tag][$eqi]=${category}`,
+  ).then((res) => res.json());
+
+  return fetchedData as Promise<TCategoryPosts>;
 };
 
 export const filterByCategory: LoaderFunction = async ({
   request,
   params,
-}: TFilterCategoryParams) => {
-  console.log(params.category);
+}: LoaderFunctionArgs) => {
   const fetchedData = await fetch(
     `http://localhost:1337/api/blog-posts?filters[tag][$eqi]=${params.category}`,
     { signal: request.signal },

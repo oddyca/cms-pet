@@ -22,6 +22,8 @@ export type TAllPosts = {
   };
 };
 
+export type TCategoryPosts = TAllPosts;
+
 export type TPost = {
   id: number;
   attributes: {
@@ -33,7 +35,16 @@ export type TPost = {
     updatedAt: string;
     publishedAt: string;
     tag: string;
-    thumbnail?: string;
+    thumbnail?: {
+      data: [
+        {
+          id: number;
+          attributes: {
+            url: 'string';
+          };
+        },
+      ];
+    };
     placeholderThumbnail?: string;
   };
 };
@@ -45,16 +56,18 @@ export type TBlogPost = {
   tag: string;
   slug: string;
   publishedAt: string;
-  thumbnail?: string;
+  thumbnail?: {
+    data: [
+      {
+        id: number;
+        attributes: {
+          url: 'string';
+        };
+      },
+    ];
+  };
   placeholderThumbnail?: string;
 };
 
 export type TBigPost = TBlogPost;
 export type TPostCard = TBlogPost;
-
-export type TFilterCategoryParams = {
-  request: Request;
-  params: {
-    [param: string]: string | undefined;
-  };
-};

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { Link } from 'react-router-dom';
 
 import Tag from '../Tag/Tag';
@@ -20,7 +18,12 @@ export default function PostCard({
 
   return (
     <div className="border border-2 rounded col-span-1 flex flex-col gap-2 overflow-hidden">
-      <img src={thumbnail || placeholderThumbnail} />
+      <img
+        src={
+          placeholderThumbnail ??
+          `http://localhost:1337${thumbnail!.data[0].attributes.url}`
+        }
+      />
       <div className="p-2 flex flex-col gap-4">
         <Link
           to={`/blog/${slug}`}
