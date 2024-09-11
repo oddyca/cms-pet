@@ -59,7 +59,7 @@ export default function Blog() {
             <SideBar />
           </div>
           {pathname === '/blog' && (
-            <div className="grid grid-cols-4 col-span-4">
+            <div className="grid grid-cols-4 col-span-4 gap-4">
               {!isPending &&
                 !error &&
                 renderComponents(data!.data.slice(2), PostCard)}

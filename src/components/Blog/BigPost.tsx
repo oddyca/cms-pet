@@ -20,7 +20,7 @@ export default function BigPost({
   return (
     <div className="flex flex-col gap-6">
       <div className="grid grid-cols-4 gap-4">
-        <div className="col-span-2 h-80 w-full overflow-hidden rounded">
+        <div className="col-span-2 h-80 w-full overflow-hidden rounded-md">
           <img
             src={placeholderThumbnail}
             alt="Big post thumbnail"
@@ -30,8 +30,8 @@ export default function BigPost({
         </div>
         <div className="col-span-2 flex flex-col justify-between">
           <div className="flex flex-col gap-4">
-            <h2 className="text-xl text-black font-bold">{title}</h2>
-            <p>{content.slice(0, 64)}...</p>
+            <h2 className="text-2xl text-black font-bold">{title}</h2>
+            <p>{content.split('.').slice(0, 2).join('. ')}.</p>
             <Link to={`${slug}`} className="hover:text-link-blue-100">
               Read more &#10141;
             </Link>

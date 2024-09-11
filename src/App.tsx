@@ -103,9 +103,9 @@ function App() {
           </p>
         </div>
       </Link>
-      <div className="w-full min-h-screen max-w-[1440px] my-6 mx-auto flex flex-col">
+      <div className="w-full min-h-screen max-w-[1440px] mx-auto flex flex-col">
         <div>
-          <div className="">
+          <div>
             <div className="w-full grid grid-cols-3 py-6">
               <div className="flex justify-between">
                 <p>WHAT WE OFFER</p>
@@ -147,7 +147,7 @@ function App() {
             </div>
             <HorizontallDivider />
           </div>
-          <div className="mt-6" id="portfolio">
+          <div id="portfolio">
             <div className="w-full grid grid-cols-3 py-6">
               <div className="flex justify-between">
                 <p>OUR PORTFOLIO</p>

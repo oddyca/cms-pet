@@ -14,8 +14,5 @@ export default function Category() {
     initialData,
   });
 
-  console.log('initital data', initialData);
-  console.log('data', data);
-
   return <div>{data!.data[0].attributes.title}</div>;
 }
