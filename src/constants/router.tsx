@@ -2,7 +2,7 @@ import { createBrowserRouter, Outlet, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-import { categoryLoader } from '../controller/controller';
+import { categoryLoader, blogLoader } from '../controller/controller';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -47,6 +47,7 @@ export const router = createBrowserRouter([
       {
         path: '/blog',
         element: <Blog />,
+        loader: () => blogLoader(queryClient),
         children: [
           {
             path: ':category',

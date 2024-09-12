@@ -29,7 +29,7 @@ export default function PostCard({
       <div className="p-2 flex flex-col flex-1 justify-between gap-4">
         <div className="flex flex-col gap-2">
           <Link
-            to={`/blog/${slug}`}
+            to={`/blog/${tag.toLowerCase()}/${slug}`}
             className="font-bold hover:text-link-blue-100 text-xl"
           >
             {title}

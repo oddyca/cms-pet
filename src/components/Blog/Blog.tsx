@@ -1,8 +1,10 @@
-import { Outlet, useLocation } from 'react-router-dom';
+import { Outlet, useLoaderData, useLocation } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import logo from '/logo.svg';
 
-import { allPosts } from '../../controller/controller';
+import { allPosts, renderComponents } from '../../controller/controller';
+
+import { TAllPosts } from '../../types/types';
 
 import VerticalDivider from '../Dividers/VerticalDivider';
 import BigPost from './BigPost';
@@ -11,15 +13,15 @@ import BigPostLoader from './BigPostLoader';
 import NavBar from './NavBar';
 import SideBar from './SideBar';
 
-import { renderComponents } from '../../controller/controller';
-
 export default function Blog() {
-  const { isPending, error, data } = useQuery({
+  const { pathname } = useLocation();
+  const initialData = useLoaderData() as TAllPosts;
+
+  const { isPending, error, data } = useQuery<TAllPosts>({
     queryKey: ['blogPosts'],
     queryFn: allPosts,
+    initialData,
   });
-
-  const { pathname } = useLocation();
 
   return (
     <>
@@ -45,7 +47,7 @@ export default function Blog() {
                 )}
                 {!isPending &&
                   !error &&
-                  renderComponents(data!.data.slice(0, 2), BigPost)}
+                  renderComponents(data.data.slice(0, 2), BigPost)}
                 {error && <div>Something went wrong. Try again</div>}
               </div>
             </>

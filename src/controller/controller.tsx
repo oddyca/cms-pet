@@ -6,6 +6,18 @@ import { LoaderFunction } from 'react-router-dom';
 
 // TODO
 // write laoders for <Blog /> and each Post
+export const blogLoader = async (queryClient: QueryClient) => {
+  const queryKey = ['blogPosts'];
+
+  return (
+    queryClient.getQueryData(queryKey) ??
+    (await queryClient.fetchQuery({
+      queryKey,
+      queryFn: allPosts,
+    }))
+  );
+};
+
 export const categoryLoader =
   (queryClient: QueryClient) => async (args: LoaderFunctionArgs) => {
     const queryKey = ['category', args.params.category];
@@ -15,6 +27,20 @@ export const categoryLoader =
       (await queryClient.fetchQuery({
         queryKey,
         queryFn: () => filterByCategory(args),
+      }))
+    );
+  };
+
+export const blogPostLoader =
+  (queryClient: QueryClient) => async (args: LoaderFunctionArgs) => {
+    const queryKey = ['post', args.params.slug];
+    const slug = args.params.slug as string;
+
+    return (
+      queryClient.getQueryData(queryKey) ??
+      (await queryClient.fetchQuery({
+        queryKey,
+        queryFn: () => blogPost(slug),
       }))
     );
   };
@@ -47,6 +73,14 @@ export const filterByCategory: LoaderFunction = async ({
   ).then((res) => res.json());
 
   return fetchedData as TAllPosts;
+};
+
+export const blogPost = async (slug: string): Promise<TAllPosts> => {
+  const fetchedData = await fetch(
+    `http://localhost:1337/api/blog-posts?filters[slug][$eqi]=${slug}`,
+  ).then((res) => res.json());
+
+  return fetchedData as Promise<TAllPosts>;
 };
 
 export const renderComponents = (
