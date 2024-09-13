@@ -1,4 +1,3 @@
-import React from 'react';
 import { useLoaderData, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 
@@ -19,7 +18,7 @@ export default function Category() {
   });
 
   return (
-    <div className="grid grid-cols-3 gap-4">
+    <div className="grid grid-cols-3 gap-4 w-full">
       {isPending ?? <p>Loading...</p>}
       {!isPending && !error && renderComponents(data.data, PostCard)}
     </div>

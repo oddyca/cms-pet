@@ -57,7 +57,7 @@ export const categoryPosts = async (
   category: string,
 ): Promise<TCategoryPosts> => {
   const fetchedData = await fetch(
-    `http://localhost:1337/api/blog-posts?filters[tag][$eqi]=${category}`,
+    `http://localhost:1337/api/blog-posts?filters[tag][$eqi]=${category}&populate=thumbnail`,
   ).then((res) => res.json());
 
   return fetchedData as Promise<TCategoryPosts>;
@@ -68,7 +68,7 @@ export const filterByCategory: LoaderFunction = async ({
   params,
 }: LoaderFunctionArgs) => {
   const fetchedData = await fetch(
-    `http://localhost:1337/api/blog-posts?filters[tag][$eqi]=${params.category}`,
+    `http://localhost:1337/api/blog-posts?filters[tag][$eqi]=${params.category}&populate=thumbnail`,
     { signal: request.signal },
   ).then((res) => res.json());
 
@@ -77,7 +77,7 @@ export const filterByCategory: LoaderFunction = async ({
 
 export const blogPost = async (slug: string): Promise<TAllPosts> => {
   const fetchedData = await fetch(
-    `http://localhost:1337/api/blog-posts?filters[slug][$eqi]=${slug}`,
+    `http://localhost:1337/api/blog-posts?filters[slug][$eqi]=${slug}&populate=thumbnail`,
   ).then((res) => res.json());
 
   return fetchedData as Promise<TAllPosts>;

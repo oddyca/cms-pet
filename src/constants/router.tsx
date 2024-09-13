@@ -1,4 +1,9 @@
-import { createBrowserRouter, Outlet, useLocation } from 'react-router-dom';
+import {
+  createBrowserRouter,
+  Outlet,
+  useLocation,
+  useNavigate,
+} from 'react-router-dom';
 import { useEffect } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
@@ -6,8 +11,12 @@ import { categoryLoader, blogLoader } from '../controller/controller';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
+    if (pathname !== '/' && pathname.endsWith('/')) {
+      navigate(pathname.slice(0, -1), { replace: true });
+    }
     window.scrollTo(0, 0);
   }, [pathname]);
 
@@ -56,6 +65,7 @@ export const router = createBrowserRouter([
           },
         ],
       },
+
       {
         path: '/blog/:category/:slug',
         element: <BlogPost />,

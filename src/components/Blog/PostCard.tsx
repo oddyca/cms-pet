@@ -22,7 +22,7 @@ export default function PostCard({
       <img
         className="h-1/2 object-cover flex-1"
         src={
-          placeholderThumbnail ??
+          placeholderThumbnail ||
           `http://localhost:1337${thumbnail!.data[0].attributes.url}`
         }
       />
