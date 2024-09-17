@@ -20,7 +20,7 @@ export default function PostCard({
   return (
     <div className="h-96 relative border-2 rounded-xl col-span-1 overflow-hidden group">
       <img
-        className="h-full w-full object-cover transition-transform group-hover:scale-110"
+        className="h-full w-full object-cover duration-300 ease-in-out group-hover:scale-110"
         src={
           placeholderThumbnail ||
           `http://localhost:1337${thumbnail!.data[0].attributes.url}`

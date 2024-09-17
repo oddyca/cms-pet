@@ -58,7 +58,7 @@ export default function Blog() {
           )}
           <div className="col-span-1 flex gap-4">
             <VerticalDivider />
-            <SideBar />
+            <SideBar initialData={initialData} />
           </div>
           {pathname === '/blog' && (
             <div className="grid grid-cols-4 col-span-4 gap-4">

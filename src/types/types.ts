@@ -71,3 +71,7 @@ export type TBlogPost = {
 
 export type TBigPost = TBlogPost;
 export type TPostCard = TBlogPost;
+
+export type TSideBarProps = {
+  initialData: TAllPosts;
+};

@@ -7,9 +7,21 @@ import HorizontallDivider from '../Dividers/HorizontalDivider';
 import twitter from '/twit-bw.svg';
 import instagram from '/inst-bw.svg';
 import facebook from '/fb-bw.svg';
+import { TSideBarProps, TPost } from '../../types/types';
 
-export default function SideBar() {
+export default function SideBar({ initialData }: TSideBarProps) {
   const { pathname } = useLocation();
+
+  console.log('initialData', initialData);
+
+  const filteredPosts = initialData?.data
+    .filter(
+      (post: TPost) =>
+        `/blog/${post.attributes.tag.toLocaleLowerCase()}` !== pathname,
+    )
+    .slice(0, 2);
+
+  console.log('filteredPosts', filteredPosts);
 
   return (
     <div className="flex flex-col gap-4">
@@ -17,42 +29,29 @@ export default function SideBar() {
         <div className="flex flex-col gap-4">
           <p className="text-gray-400">SEE ALSO</p>
           <div className="flex flex-col gap-4">
-            <div className="flex flex-col gap-2">
-              <h3 className="font-bold">
-                5 Essential Skills Every Visionary Must Have
-              </h3>
-              <Link to="/" className="hover:text-link-blue-100">
-                Read more &#10141;
-              </Link>
-              <div className="flex place-self-end items-center gap-2 text-sm">
-                <p>Feb 20, 2024</p>
-                <p>•</p>
-                <NavLink
-                  to="/blog/articles"
-                  className="px-4 py-1 border rounded-full border-black hover:text-link-blue-100 hover:border-link-blue-100"
+            {filteredPosts.slice(0, 2).map((post) => (
+              <div key={post.id} className="flex flex-col gap-2">
+                <h3 className="font-bold">{post.attributes.title}</h3>
+                <Link
+                  to={`/blog/${post.attributes.tag}/${post.attributes.slug}`}
+                  className="hover:text-link-blue-100"
                 >
-                  Articles
-                </NavLink>
+                  Read more &#10141;
+                </Link>
+                <div className="flex place-self-end items-center gap-2 text-sm">
+                  <p>
+                    {new Date(post.attributes.publishedAt).toLocaleDateString()}
+                  </p>
+                  <p>•</p>
+                  <NavLink
+                    to={`/blog/${post.attributes.tag}`}
+                    className="px-4 py-1 border rounded-full border-black hover:text-link-blue-100 hover:border-link-blue-100"
+                  >
+                    {post.attributes.tag}
+                  </NavLink>
+                </div>
               </div>
-            </div>
-            <div className="flex flex-col gap-2">
-              <h3 className="font-bold">
-                5 Essential Skills Every Visionary Must Have
-              </h3>
-              <Link to="/" className="hover:text-link-blue-100">
-                Read more &#10141;
-              </Link>
-              <div className="flex place-self-end items-center gap-2 text-sm">
-                <p>Feb 20, 2024</p>
-                <p>•</p>
-                <NavLink
-                  to="/blog/our-ideas"
-                  className="px-4 py-1 border rounded-full border-black hover:text-link-blue-100 hover:border-link-blue-100"
-                >
-                  Ideas
-                </NavLink>
-              </div>
-            </div>
+            ))}
           </div>
           <HorizontallDivider />
         </div>
