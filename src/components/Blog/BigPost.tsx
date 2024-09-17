@@ -39,7 +39,7 @@ export default function BigPost({
           <div className="flex place-self-end items-center gap-2 text-sm">
             <p>{formattedDate}</p>
             <p>•</p>
-            <Tag tag={tag} />
+            <Tag tag={tag} elem={'big'} />
           </div>
         </div>
       </div>

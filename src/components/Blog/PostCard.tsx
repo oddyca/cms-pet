@@ -18,9 +18,9 @@ export default function PostCard({
   const formattedDate = convertDate(publishedAt);
 
   return (
-    <div className="h-96 relative border-2 rounded-md col-span-1 overflow-hidden">
+    <div className="h-96 relative border-2 rounded-xl col-span-1 overflow-hidden group">
       <img
-        className="h-full w-full object-cover"
+        className="h-full w-full object-cover transition-transform group-hover:scale-110"
         src={
           placeholderThumbnail ||
           `http://localhost:1337${thumbnail!.data[0].attributes.url}`
@@ -37,13 +37,13 @@ export default function PostCard({
           </Link>
           <p className="text-white z-10">{content.split('.')[0]}.</p>
         </div>
-        <div className="flex justify-end items-center text-sm gap-2 z-10 text-white">
+        <div className="flex justify-end items-center text-sm gap-2 z-10 text-white opacity-50 group-hover:opacity-100">
           <p>{formattedDate}</p>
           <p>•</p>
-          <Tag tag={tag} />
+          <Tag tag={tag} elem={'card'} />
         </div>
       </div>
-      <div className="absolute h-1/2 hover:h-full w-full bottom-0 bg-gradient-to-t from-black to-none z-1" />
+      <div className="absolute h-1/2 group-hover:h-full w-full duration-300 ease-in-out bottom-0 bg-gradient-to-t from-black to-transparent z-1" />
     </div>
   );
 }
