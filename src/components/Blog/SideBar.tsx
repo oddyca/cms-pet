@@ -12,16 +12,12 @@ import { TSideBarProps, TPost } from '../../types/types';
 export default function SideBar({ initialData }: TSideBarProps) {
   const { pathname } = useLocation();
 
-  console.log('initialData', initialData);
-
   const filteredPosts = initialData?.data
     .filter(
       (post: TPost) =>
         `/blog/${post.attributes.tag.toLocaleLowerCase()}` !== pathname,
     )
     .slice(0, 2);
-
-  console.log('filteredPosts', filteredPosts);
 
   return (
     <div className="flex flex-col gap-4">

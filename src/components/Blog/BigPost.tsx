@@ -32,7 +32,10 @@ export default function BigPost({
           <div className="flex flex-col gap-4">
             <h2 className="text-2xl text-black font-bold">{title}</h2>
             <p>{content.split('.').slice(0, 2).join('. ')}.</p>
-            <Link to={`${slug}`} className="hover:text-link-blue-100">
+            <Link
+              to={`/blog/${tag}/${slug}`}
+              className="hover:text-link-blue-100"
+            >
               Read more &#10141;
             </Link>
           </div>

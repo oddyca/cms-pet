@@ -4,8 +4,6 @@ import { QueryClient } from '@tanstack/react-query';
 import { TAllPosts, TPost, TCategoryPosts } from '../types/types';
 import { LoaderFunction } from 'react-router-dom';
 
-// TODO
-// write laoders for <Blog /> and each Post
 export const blogLoader = async (queryClient: QueryClient) => {
   const queryKey = ['blogPosts'];
 

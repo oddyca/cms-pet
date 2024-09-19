@@ -7,7 +7,11 @@ import {
 import { useEffect } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-import { categoryLoader, blogLoader } from '../controller/controller';
+import {
+  categoryLoader,
+  blogLoader,
+  blogPostLoader,
+} from '../controller/controller';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -65,10 +69,10 @@ export const router = createBrowserRouter([
           },
         ],
       },
-
       {
         path: '/blog/:category/:slug',
         element: <BlogPost />,
+        loader: blogPostLoader(queryClient),
       },
       {
         path: '/contact',
