@@ -35,6 +35,7 @@ import Footer from '../components/Footer/Footer';
 import Dashboard from '../components/Dashboard/Dashboard';
 import BlogPost from '../components/Blog/BlogPost';
 import Category from '../components/Blog/Category';
+import ErrorBoundary from '../components/ErrorBoundary/ErrorBoundary';
 
 const queryClient = new QueryClient();
 
@@ -61,6 +62,7 @@ export const router = createBrowserRouter([
         path: '/blog',
         element: <Blog />,
         loader: () => blogLoader(queryClient),
+        errorElement: <ErrorBoundary />,
         children: [
           {
             path: ':category',
