@@ -9,10 +9,11 @@ import { convertDate } from '../../controller/controller';
 
 export default function BigPost({
   title,
-  content,
+  article,
   tag,
   slug,
   publishedAt,
+  thumbnail,
   placeholderThumbnail,
 }: TBigPost) {
   const formattedDate = convertDate(publishedAt);
@@ -22,7 +23,10 @@ export default function BigPost({
       <div className="grid grid-cols-4 gap-4">
         <div className="col-span-2 h-80 w-full overflow-hidden rounded-md">
           <img
-            src={placeholderThumbnail}
+            src={
+              placeholderThumbnail ||
+              `http://localhost:1337${thumbnail!.data[0].attributes.url}`
+            }
             alt="Big post thumbnail"
             className="scale-125 object-cover"
             loading="lazy"
@@ -31,7 +35,7 @@ export default function BigPost({
         <div className="col-span-2 flex flex-col justify-between">
           <div className="flex flex-col gap-4">
             <h2 className="text-2xl text-black font-bold">{title}</h2>
-            <p>{content.split('.').slice(0, 2).join('. ')}.</p>
+            <p>{article.split('.').slice(0, 2).join('. ')}.</p>
             <Link
               to={`/blog/${tag}/${slug}`}
               className="hover:text-link-blue-100"

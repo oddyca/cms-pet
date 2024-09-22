@@ -41,12 +41,12 @@ const queryClient = new QueryClient();
 
 export const Layout = () => (
   <>
+    <Header />
     <QueryClientProvider client={queryClient}>
-      <Header />
       <Outlet />
-      <ScrollToTop />
-      <Footer />
     </QueryClientProvider>
+    <ScrollToTop />
+    <Footer />
   </>
 );
 

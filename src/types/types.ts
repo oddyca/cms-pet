@@ -11,13 +11,14 @@ export type TBlogNavBar = {
 };
 
 export type TAllPosts = {
+  blogPosts: Promise<TAllPosts>;
   data: TPost[];
   meta: {
     pagination: {
       page: number;
       pageSize: number;
       pageCount: number;
-      tota: number;
+      total: number;
     };
   };
 };
@@ -28,13 +29,14 @@ export type TPost = {
   id: number;
   attributes: {
     title: string;
-    content: string;
+    intro: string;
     author: string;
     slug: string;
     createdAt: string;
     updatedAt: string;
     publishedAt: string;
     tag: string;
+    article: string;
     thumbnail?: {
       data: [
         {
@@ -51,10 +53,11 @@ export type TPost = {
 
 export type TBlogPost = {
   title: string;
-  content: string;
+  intro: string;
   author: string;
   tag: string;
   slug: string;
+  article: string;
   publishedAt: string;
   thumbnail?: {
     data: [

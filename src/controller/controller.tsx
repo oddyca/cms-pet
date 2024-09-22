@@ -1,5 +1,5 @@
 import React from 'react';
-import { LoaderFunctionArgs } from 'react-router-dom';
+import { LoaderFunctionArgs, defer } from 'react-router-dom';
 import { QueryClient } from '@tanstack/react-query';
 import { TAllPosts, TPost, TCategoryPosts } from '../types/types';
 import { LoaderFunction } from 'react-router-dom';
@@ -7,13 +7,12 @@ import { LoaderFunction } from 'react-router-dom';
 export const blogLoader = async (queryClient: QueryClient) => {
   const queryKey = ['blogPosts'];
 
-  return (
-    queryClient.getQueryData(queryKey) ??
-    (await queryClient.fetchQuery({
+  return defer({
+    blogPosts: queryClient.ensureQueryData({
       queryKey,
       queryFn: allPosts,
-    }))
-  );
+    }),
+  });
 };
 
 export const categoryLoader =
@@ -43,12 +42,12 @@ export const blogPostLoader =
     );
   };
 
-export const allPosts = (): Promise<TAllPosts> => {
-  const fetchedData = fetch(
+export const allPosts = async (): Promise<TAllPosts> => {
+  await new Promise((resolve) => setTimeout(resolve, 2000)); // Simulate network delay
+  const fetchedData = await fetch(
     'http://localhost:1337/api/blog-posts?populate=thumbnail',
-  ).then((res) => res.json());
-
-  return fetchedData as Promise<TAllPosts>;
+  );
+  return fetchedData.json();
 };
 
 export const categoryPosts = async (

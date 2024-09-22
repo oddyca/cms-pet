@@ -9,7 +9,7 @@ import { convertDate } from '../../controller/controller';
 export default function PostCard({
   title,
   tag,
-  content,
+  article,
   slug,
   publishedAt,
   thumbnail,
@@ -35,7 +35,7 @@ export default function PostCard({
           >
             {title}
           </Link>
-          <p className="text-white z-10">{content.split('.')[0]}.</p>
+          <p className="text-white z-10">{article.split('.')[0]}.</p>
         </div>
         <div className="flex justify-end items-center text-sm gap-2 z-10 text-white opacity-50 group-hover:opacity-100">
           <p>{formattedDate}</p>

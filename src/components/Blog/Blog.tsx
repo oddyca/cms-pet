@@ -1,4 +1,5 @@
-import { Outlet, useLoaderData, useLocation } from 'react-router-dom';
+import { Suspense } from 'react';
+import { Outlet, useLoaderData, useLocation, Await } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import logo from '/logo.svg';
 
@@ -9,7 +10,8 @@ import { TAllPosts } from '../../types/types';
 import VerticalDivider from '../Dividers/VerticalDivider';
 import BigPost from './BigPost';
 import PostCard from './PostCard';
-import BigPostLoader from './BigPostLoader';
+import BigPostLoader from './Loaders/BigPostLoader';
+import SideBarLoader from './Loaders/SideBarLoader';
 import NavBar from './NavBar';
 import SideBar from './SideBar';
 
@@ -37,20 +39,13 @@ export default function Blog() {
         <NavBar />
         <div className="grid grid-cols-4 gap-6">
           {pathname === '/blog' ? (
-            <>
-              <div className="col-span-3 flex flex-col gap-4">
-                {isPending && (
-                  <>
-                    <BigPostLoader />
-                    <BigPostLoader />
-                  </>
-                )}
-                {!isPending &&
-                  !error &&
-                  renderComponents(data.data.slice(0, 2), BigPost)}
-                {error && <div>Something went wrong. Try again</div>}
-              </div>
-            </>
+            <div className="col-span-3 flex flex-col gap-4">
+              <Suspense fallback={<BigPostLoader />}>
+                <Await resolve={initialData.blogPosts}>
+                  {(data) => renderComponents(data.data.slice(0, 2), BigPost)}
+                </Await>
+              </Suspense>
+            </div>
           ) : (
             <div className="col-span-3 flex flex-col gap-4">
               <Outlet />
@@ -58,7 +53,11 @@ export default function Blog() {
           )}
           <div className="col-span-1 flex gap-4">
             <VerticalDivider />
-            <SideBar initialData={initialData} />
+            <Suspense fallback={<SideBarLoader />}>
+              <Await resolve={initialData.blogPosts}>
+                {(resolvedData) => <SideBar initialData={resolvedData} />}
+              </Await>
+            </Suspense>
           </div>
           {pathname === '/blog' && (
             <div className="grid grid-cols-4 col-span-4 gap-4">
