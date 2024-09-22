@@ -1,11 +1,12 @@
 import { useLoaderData, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
+import ReactMarkdown from 'react-markdown';
 
 import { TAllPosts } from '../../types/types';
 
 import { blogPost, convertDate } from '../../controller/controller';
 
-import PostLoader from './PostLoader';
+import PostLoader from './Loaders/PostLoader';
 import Tag from '../Tag/Tag';
 
 export default function BlogPost() {
@@ -30,7 +31,7 @@ export default function BlogPost() {
             <PostLoader />
           ) : (
             !error && (
-              <div className="flex flex-col items-center gap-4">
+              <div className="flex flex-col items-center gap-6">
                 <div className="flex flex-col gap-2 items-center">
                   <h1 className="text-3xl font-serif font-black">
                     {data.data[0].attributes.title}
@@ -43,6 +44,9 @@ export default function BlogPost() {
                     <Tag tag={data.data[0].attributes.tag} elem={'post'} />
                   </div>
                 </div>
+                <p className="lg:w-3/5 text-lg">
+                  {data.data[0].attributes.intro || ''}
+                </p>
                 <div className="h-96 w-1/2 rounded-md overflow-hidden">
                   <img
                     className="w-full object-cover"
@@ -52,9 +56,11 @@ export default function BlogPost() {
                     }
                   />
                 </div>
-                <p className="lg:w-3/4 text-lg">
-                  {data.data[0].attributes.content}
-                </p>
+                <div className="lg:w-3/5 text-lg prose">
+                  <ReactMarkdown className="">
+                    {data.data[0].attributes.article}
+                  </ReactMarkdown>
+                </div>
               </div>
             )
           )}
