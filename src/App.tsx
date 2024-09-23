@@ -67,7 +67,7 @@ function App() {
                   <img
                     src={triangle}
                     alt="triangle icon"
-                    className="h-[4rem]"
+                    className="h-[5rem] w-[5rem]"
                   />
                 </div>
               </div>
@@ -97,7 +97,7 @@ function App() {
         </div>
       </div>
       <Link to="/blog">
-        <div className="w-full bg-accent-purple-100 py-1 flex justify-center items-center">
+        <div className="w-full bg-accent-purple-100 hover:bg-gradient-to-r from-accent-purple-100 via-accent-purple-50 to-accent-purple-100 animated-background py-1 flex justify-center items-center">
           <p className="font-semibold text-xs text-black">
             CHECK OUT THE BLOG FOR OUR INSIGHTS AND IDEAS &#10141;
           </p>
