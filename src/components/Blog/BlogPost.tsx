@@ -8,10 +8,11 @@ import { blogPost, convertDate } from '../../controller/controller';
 
 import PostLoader from './Loaders/PostLoader';
 import Tag from '../Tag/Tag';
+import Breadcrumbs from './Breadcrumbs';
 
 export default function BlogPost() {
   const initialData = useLoaderData() as TAllPosts;
-  const { slug } = useParams();
+  const { category, slug } = useParams();
 
   const { isPending, error, data } = useQuery<TAllPosts>({
     queryKey: ['post', slug],
@@ -25,8 +26,8 @@ export default function BlogPost() {
     <>
       <div className="h-[64px]" />
       <div className="w-full flex flex-col">
-        <div className="w-full max-w-[1440px] place-self-center py-6">
-          {/* <BreadCrumbs /> */}
+        <div className="w-full max-w-[1440px] place-self-center py-6 flex flex-col gap-6">
+          <Breadcrumbs crumbs={[category!, data.data[0].attributes.title]} />
           {isPending ? (
             <PostLoader />
           ) : (

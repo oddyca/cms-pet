@@ -78,3 +78,5 @@ export type TPostCard = TBlogPost;
 export type TSideBarProps = {
   initialData: TAllPosts;
 };
+
+export type TBreadCrumbs = { crumbs: string[] };
