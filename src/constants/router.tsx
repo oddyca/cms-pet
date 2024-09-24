@@ -14,7 +14,7 @@ import {
 } from '../controller/controller';
 
 function ScrollToTop() {
-  const { pathname } = useLocation();
+  const { pathname, hash } = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -22,7 +22,7 @@ function ScrollToTop() {
       navigate(pathname.slice(0, -1), { replace: true });
     }
     window.scrollTo(0, 0);
-  }, [pathname]);
+  }, [pathname, hash]);
 
   return null;
 }

@@ -1,4 +1,5 @@
 import { Link, NavLink } from 'react-router-dom';
+import { HashLink } from 'react-router-hash-link';
 import logo from '/logo.svg';
 
 const navLinkClass = ({ isActive }: { isActive: boolean }) =>
@@ -21,9 +22,9 @@ export default function Header() {
               </NavLink>
             </li>
             <li>
-              <NavLink to="/#portfolio" className={navLinkClass}>
+              <HashLink smooth to="/#portfolio">
                 Portfolio
-              </NavLink>
+              </HashLink>
             </li>
             <li>
               <NavLink to="/blog" className={navLinkClass}>
