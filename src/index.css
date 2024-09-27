@@ -20,11 +20,15 @@ h1 {
   font-family: 'Uncial Antiqua', system-ui;
 }
 
+a:hover {
+  color: #828dcf;
+}
+
 .animated-background {
   background-size: 200% 100%;
-  -webkit-animation: animation 4s ease-in-out infinite;
-  -moz-animation: animation 4s ease-in-out infinite;
-  animation: animation 4s ease-in-out infinite;
+  -webkit-animation: animation 3s ease-in-out infinite;
+  -moz-animation: animation 3s ease-in-out infinite;
+  animation: animation 3s ease-in-out infinite;
 }
 
 @keyframes animation {

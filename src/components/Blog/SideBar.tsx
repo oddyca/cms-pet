@@ -66,21 +66,21 @@ export default function SideBar({ initialData }: TSideBarProps) {
             <img
               src={twitter}
               alt="twitter logo icon"
-              className="w-7 h-auto hover:scale-110"
+              className="w-7 h-auto hover:scale-110 duration-300 ease-in-out"
             />
           </Link>
           <Link to="https://instagram.com/">
             <img
               src={instagram}
               alt="instagram logo icon"
-              className="w-7 h-auto hover:scale-110"
+              className="w-7 h-auto hover:scale-110 duration-300 ease-in-out"
             />
           </Link>
           <Link to="https://facebook.com/">
             <img
               src={facebook}
               alt="facebook logo icon"
-              className="w-7 h-auto hover:scale-110"
+              className="w-7 h-auto hover:scale-110 duration-300 ease-in-out"
             />
           </Link>
         </div>

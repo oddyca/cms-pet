@@ -36,6 +36,8 @@ import Dashboard from '../components/Dashboard/Dashboard';
 import BlogPost from '../components/Blog/BlogPost';
 import Category from '../components/Blog/Category';
 import ErrorBoundary from '../components/ErrorBoundary/ErrorBoundary';
+import Signin from '../components/Dashboard/Signin';
+import ProtectedRoute from '../components/ProtectedRoute/ProtectedRoute';
 
 const queryClient = new QueryClient();
 
@@ -82,7 +84,17 @@ export const router = createBrowserRouter([
       },
       {
         path: '/dashboard',
-        element: <Dashboard />,
+        element: <ProtectedRoute />,
+        children: [
+          {
+            path: '',
+            element: <Dashboard />,
+          },
+        ],
+      },
+      {
+        path: '/dashboard/signin',
+        element: <Signin />,
       },
     ],
   },

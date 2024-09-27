@@ -8,7 +8,7 @@ export default function Footer() {
   return (
     <div className="w-full">
       <HorizontallDivider />
-      <div className="mx-auto my-0 max-w-[1440px] min-h-[400px] flex justify-between items-start py-6">
+      <div className="mx-auto my-0 max-w-[1440px] min-h-[300px] flex justify-between items-start py-6">
         <div className="flex items-center gap-4">
           <img src={logo} alt="logo icon" />
           <p>Venture Capital</p>
@@ -29,10 +29,20 @@ export default function Footer() {
         </ul>
         <Link to="/dashboard">Control Panel</Link>
         <div className="flex gap-4">
-          <a href="https://github.com/oddyca" target="_blank" rel="noreferrer">
+          <a
+            href="https://github.com/oddyca"
+            target="_blank"
+            rel="noreferrer"
+            className="hover:scale-110 duration-300 ease-in-out"
+          >
             <img src={github} alt="github logo" className="h-[48px]" />
           </a>
-          <a href="https://t.me/emilsin" target="_blank" rel="noreferrer">
+          <a
+            href="https://t.me/emilsin"
+            target="_blank"
+            rel="noreferrer"
+            className="hover:scale-110 duration-300 ease-in-out"
+          >
             <img src={telegram} alt="telegram logo" className="h-[48px]" />
           </a>
         </div>

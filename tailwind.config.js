@@ -12,7 +12,8 @@ export default {
         'accent-purple': {
           50: '#DADDF1',
           100: '#D0D3E6',
-          200: '#BDC2E0',
+          200: '#CBCFE8',
+          500: '#9FA7D9',
         },
         'accent-blue': {
           100: '#93BADE',
