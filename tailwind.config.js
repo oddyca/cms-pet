@@ -13,7 +13,8 @@ export default {
           50: '#DADDF1',
           100: '#D0D3E6',
           200: '#CBCFE8',
-          500: '#9FA7D9',
+          300: '#9FA7D9',
+          500: '#8691D1',
         },
         'accent-blue': {
           100: '#93BADE',

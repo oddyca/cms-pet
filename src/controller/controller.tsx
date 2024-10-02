@@ -102,3 +102,17 @@ export const convertDate = (d: string): string => {
 
   return formattedDate;
 };
+
+export const signIn = async (email: string, password: string) => {
+  const response = await fetch(
+    `http://localhost:1337/admin/login?email=${email}&password=${password}`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    },
+  );
+
+  return response;
+};

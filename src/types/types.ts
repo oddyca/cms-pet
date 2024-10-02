@@ -80,3 +80,8 @@ export type TSideBarProps = {
 };
 
 export type TBreadCrumbs = { crumbs: string[] };
+
+export type TFormInputs = {
+  email: string;
+  password: string;
+};
