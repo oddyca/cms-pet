@@ -1,6 +1,6 @@
 import { Link, NavLink } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
-import logo from '/logo.svg';
+import Logo from '../../assets/Logo';
 
 const navLinkClass = ({ isActive }: { isActive: boolean }) =>
   isActive ? 'underline underline-offset-8' : undefined;
@@ -10,8 +10,8 @@ export default function Header() {
     <div className="w-full h-[64px] flex justify-center place-center bg-white/50 border-b-2 border-b-base-black-100 fixed backdrop-blur z-10">
       <div className="w-full h-full max-w-[1440px] flex items-center justify-between">
         <div className="flex-1">
-          <Link to="/">
-            <img src={logo} alt="logo icon" />
+          <Link to="/" className="hover:text-black">
+            <Logo fillColor="black" />
           </Link>
         </div>
         <nav className="flex-1 flex justify-center items-center">

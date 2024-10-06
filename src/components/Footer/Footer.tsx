@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 import HorizontallDivider from '../Dividers/HorizontalDivider';
-import logo from '/logo.svg';
-import github from '/github.svg';
-import telegram from '/telegram.svg';
+import Logo from '../../assets/Logo';
+import GitLogo from '../../assets/GitLogo';
+import TelegramLogo from '../../assets/TelegramLogo';
 
 export default function Footer() {
   return (
@@ -10,7 +10,7 @@ export default function Footer() {
       <HorizontallDivider />
       <div className="mx-auto my-0 max-w-[1440px] min-h-[300px] flex justify-between items-start py-6">
         <div className="flex items-center gap-4">
-          <img src={logo} alt="logo icon" />
+          <Logo fillColor="black" />
           <p>Venture Capital</p>
         </div>
         <ul className="list-none flex flex-col gap-6">
@@ -35,7 +35,7 @@ export default function Footer() {
             rel="noreferrer"
             className="hover:scale-110 duration-300 ease-in-out"
           >
-            <img src={github} alt="github logo" className="h-[48px]" />
+            <GitLogo fillColor="black" />
           </a>
           <a
             href="https://t.me/emilsin"
@@ -43,7 +43,7 @@ export default function Footer() {
             rel="noreferrer"
             className="hover:scale-110 duration-300 ease-in-out"
           >
-            <img src={telegram} alt="telegram logo" className="h-[48px]" />
+            <TelegramLogo fillColor="black" />
           </a>
         </div>
         <p>2024 | oddyca</p>

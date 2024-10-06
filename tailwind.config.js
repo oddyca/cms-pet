@@ -17,6 +17,7 @@ export default {
           500: '#8691D1',
         },
         'accent-blue': {
+          50: '#A3C9EC',
           100: '#93BADE',
         },
         'link-blue': {

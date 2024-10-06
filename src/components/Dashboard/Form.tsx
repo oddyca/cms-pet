@@ -29,6 +29,7 @@ export default function Form() {
       if (response.ok) {
         const { data } = await response.json();
         localStorage.setItem('JWT', data.token);
+        sessionStorage.setItem('isLogged', 'true');
         navigate('/dashboard');
       } else {
         setSignInError('Invalid email or password');

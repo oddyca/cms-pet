@@ -3,9 +3,9 @@ import { useLocation } from 'react-router-dom';
 
 import HorizontallDivider from '../Dividers/HorizontalDivider';
 
-import twitter from '/twit-bw.svg';
-import instagram from '/inst-bw.svg';
-import facebook from '/fb-bw.svg';
+import TwitterLogo from '../../assets/TwitterLogo';
+import InstaLogo from '../../assets/InstaLogo';
+import FBLogo from '../../assets/FBLogo';
 import { TSideBarProps, TPost } from '../../types/types';
 
 export default function SideBar({ initialData }: TSideBarProps) {
@@ -63,25 +63,13 @@ export default function SideBar({ initialData }: TSideBarProps) {
         <p>Follow us on</p>
         <div className="flex gap-4">
           <Link to="https://x.com/">
-            <img
-              src={twitter}
-              alt="twitter logo icon"
-              className="w-7 h-auto hover:scale-110 duration-300 ease-in-out"
-            />
+            <TwitterLogo fillColor="black" />
           </Link>
           <Link to="https://instagram.com/">
-            <img
-              src={instagram}
-              alt="instagram logo icon"
-              className="w-7 h-auto hover:scale-110 duration-300 ease-in-out"
-            />
+            <InstaLogo fillColor="black" />
           </Link>
           <Link to="https://facebook.com/">
-            <img
-              src={facebook}
-              alt="facebook logo icon"
-              className="w-7 h-auto hover:scale-110 duration-300 ease-in-out"
-            />
+            <FBLogo fillColor="black" />
           </Link>
         </div>
       </div>
