@@ -11,7 +11,7 @@ export default function Header() {
       <div className="w-full h-full max-w-[1440px] flex items-center justify-between">
         <div className="flex-1">
           <Link to="/" className="hover:text-black">
-            <Logo fillColor="black" />
+            <Logo fillColor="text-black" />
           </Link>
         </div>
         <nav className="flex-1 flex justify-center items-center">

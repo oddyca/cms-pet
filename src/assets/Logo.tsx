@@ -5,7 +5,7 @@ export default function Logo({ fillColor }: { fillColor: string }) {
       height="33"
       viewBox="0 0 39 33"
       fill="none"
-      className={`text-${fillColor} inline`}
+      className={`${fillColor} inline`}
     >
       <path
         d="M19.0526 13L26.8468 26.5H11.2583L19.0526 13Z"
