@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { signIn } from '../../controller/controller';
+import { signIn } from '@/controller/controller';
 
 import lock from '/lock.svg';
 import mail from '/mail.svg';
 import { Link, useNavigate } from 'react-router-dom';
-import { TFormInputs } from '../../types/types';
+import { TFormInputs } from '@/types/types';
 import Loader from './Loader';
 
 export default function Form() {

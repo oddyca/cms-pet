@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import Logo from '../../assets/Logo';
+import Logo from '@/assets/Logo';
 import house from '/house.svg';
 import table from '/table.svg';
 import HorizontallDivider from '../Dividers/HorizontalDivider';

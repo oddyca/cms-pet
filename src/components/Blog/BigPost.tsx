@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 import HorizontallDivider from '../Dividers/HorizontalDivider';
 import Tag from '../Tag/Tag';
 
-import { TBigPost } from '../../types/types';
+import { TBigPost } from '@/types/types';
 
-import { convertDate } from '../../controller/controller';
+import { convertDate } from '@/controller/controller';
 
 export default function BigPost({
   title,

@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
 import Form from './Form';
-import Logo from '../../assets/Logo';
-import InfoIcon from '../../assets/InfoIcon';
+import Logo from '@/assets/Logo';
+import InfoIcon from '@/assets/InfoIcon';
 
 const hiddenHint = 'hidden absolute left-0 p-2';
 const shownHint =

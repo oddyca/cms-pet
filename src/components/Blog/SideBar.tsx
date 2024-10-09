@@ -3,10 +3,10 @@ import { useLocation } from 'react-router-dom';
 
 import HorizontallDivider from '../Dividers/HorizontalDivider';
 
-import TwitterLogo from '../../assets/TwitterLogo';
-import InstaLogo from '../../assets/InstaLogo';
-import FBLogo from '../../assets/FBLogo';
-import { TSideBarProps, TPost } from '../../types/types';
+import TwitterLogo from '@/assets/TwitterLogo';
+import InstaLogo from '@/assets/InstaLogo';
+import FBLogo from '@/assets/FBLogo';
+import { TSideBarProps, TPost } from '@/types/types';
 
 export default function SideBar({ initialData }: TSideBarProps) {
   const { pathname } = useLocation();

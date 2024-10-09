@@ -1,4 +1,4 @@
-import { TCell } from '../../types/types';
+import { TCell } from '@/types/types';
 
 const weOfferCellClass = 'flex-1 px-4 grid grid-cols-3';
 const cellTextClass = 'col-span-2 flex flex-col gap-2';

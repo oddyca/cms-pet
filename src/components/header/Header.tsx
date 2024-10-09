@@ -1,6 +1,6 @@
 import { Link, NavLink } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
-import Logo from '../../assets/Logo';
+import Logo from '@/assets/Logo';
 
 const navLinkClass = ({ isActive }: { isActive: boolean }) =>
   isActive ? 'underline underline-offset-8' : undefined;

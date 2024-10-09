@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { TBreadCrumbs } from '../../types/types';
+import { TBreadCrumbs } from '@/types/types';
 
 export default function Breadcrumbs({ crumbs }: TBreadCrumbs) {
   return (

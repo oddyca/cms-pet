@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom';
 import VerticalDivider from '../Dividers/VerticalDivider';
 import HorizontallDivider from '../Dividers/HorizontalDivider';
 
-import { TBlogNavBar } from '../../types/types';
+import { TBlogNavBar } from '@/types/types';
 
 const categories = [
   { name: 'FRONT PAGE', slug: 'front-page' },

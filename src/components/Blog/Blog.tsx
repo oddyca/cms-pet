@@ -1,11 +1,11 @@
 import { Suspense } from 'react';
 import { Outlet, useLoaderData, useLocation, Await } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import Logo from '../../assets/Logo';
+import Logo from '@/assets/Logo';
 
-import { allPosts, renderComponents } from '../../controller/controller';
+import { allPosts, renderComponents } from '@/controller/controller';
 
-import { TAllPosts } from '../../types/types';
+import { TAllPosts } from '@/types/types';
 
 import VerticalDivider from '../Dividers/VerticalDivider';
 import BigPost from './BigPost';

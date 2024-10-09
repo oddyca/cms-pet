@@ -1,6 +1,6 @@
 import VerticalDivider from '../Dividers/VerticalDivider';
 
-import { TCell } from '../../types/types';
+import { TCell } from '@/types/types';
 
 export default function FeaturedCompanies(props: TCell) {
   return (

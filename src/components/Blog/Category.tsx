@@ -1,9 +1,9 @@
 import { useLoaderData, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 
-import { TCategoryPosts } from '../../types/types';
+import { TCategoryPosts } from '@/types/types';
 
-import { categoryPosts, renderComponents } from '../../controller/controller';
+import { categoryPosts, renderComponents } from '@/controller/controller';
 
 import PostCard from './PostCard';
 

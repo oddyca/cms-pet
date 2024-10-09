@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 import HorizontallDivider from '../Dividers/HorizontalDivider';
-import Logo from '../../assets/Logo';
-import GitLogo from '../../assets/GitLogo';
-import TelegramLogo from '../../assets/TelegramLogo';
+import Logo from '@/assets/Logo';
+import GitLogo from '@/assets/GitLogo';
+import TelegramLogo from '@/assets/TelegramLogo';
 
 export default function Footer() {
   return (

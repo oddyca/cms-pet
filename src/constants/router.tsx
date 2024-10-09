@@ -11,7 +11,7 @@ import {
   categoryLoader,
   blogLoader,
   blogPostLoader,
-} from '../controller/controller';
+} from '@/controller/controller';
 
 function ScrollToTop() {
   const { pathname, hash } = useLocation();
@@ -27,18 +27,18 @@ function ScrollToTop() {
   return null;
 }
 
-import App from '../App';
-import Header from '../components/Header/Header';
-import Blog from '../components/Blog/Blog';
-import Contact from '../components/Contact/Contact';
-import Footer from '../components/Footer/Footer';
-import Dashboard from '../components/Dashboard/Dashboard';
-import BlogPost from '../components/Blog/BlogPost';
-import Category from '../components/Blog/Category';
-import ErrorBoundary from '../components/ErrorBoundary/ErrorBoundary';
-import Signin from '../components/Dashboard/Signin';
-import ProtectedRoute from '../components/ProtectedRoute/ProtectedRoute';
-import DashboardTab from '../components/Dashboard/DashboardTab';
+import App from '@/App';
+import Header from '@/components/Header/Header';
+import Blog from '@/components/Blog/Blog';
+import Contact from '@/components/Contact/Contact';
+import Footer from '@/components/Footer/Footer';
+import Dashboard from '@/components/Dashboard/Dashboard';
+import BlogPost from '@/components/Blog/BlogPost';
+import Category from '@/components/Blog/Category';
+import ErrorBoundary from '@/components/ErrorBoundary/ErrorBoundary';
+import Signin from '@/components/Dashboard/Signin';
+import ProtectedRoute from '@/components/ProtectedRoute/ProtectedRoute';
+import DashboardTab from '@/components/Dashboard/DashboardTab';
 
 const queryClient = new QueryClient();
 

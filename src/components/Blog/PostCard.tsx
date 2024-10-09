@@ -2,9 +2,9 @@ import { Link } from 'react-router-dom';
 
 import Tag from '../Tag/Tag';
 
-import { TPostCard } from '../../types/types';
+import { TPostCard } from '@/types/types';
 
-import { convertDate } from '../../controller/controller';
+import { convertDate } from '@/controller/controller';
 
 export default function PostCard({
   title,

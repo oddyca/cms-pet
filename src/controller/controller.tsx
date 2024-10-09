@@ -1,7 +1,7 @@
 import React from 'react';
 import { LoaderFunctionArgs, defer } from 'react-router-dom';
 import { QueryClient } from '@tanstack/react-query';
-import { TAllPosts, TPost, TCategoryPosts } from '../types/types';
+import { TAllPosts, TPost, TCategoryPosts } from '@/types/types';
 import { LoaderFunction } from 'react-router-dom';
 
 export const blogLoader = async (queryClient: QueryClient) => {
