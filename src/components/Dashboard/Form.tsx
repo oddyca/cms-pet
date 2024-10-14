@@ -30,7 +30,7 @@ export default function Form() {
         const { data } = await response.json();
         sessionStorage.setItem('JWT', data.token);
         sessionStorage.setItem('isLogged', 'true');
-        navigate('/dashboard');
+        navigate('/dashboard/home');
       } else {
         setSignInError('Invalid email or password');
         setTimeout(() => setSignInError(''), 5000);

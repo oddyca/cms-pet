@@ -27,7 +27,7 @@ export default function Footer() {
             <Link to="/contact">Contact us</Link>
           </li>
         </ul>
-        <Link to="/dashboard">Control Panel</Link>
+        <Link to="/dashboard/home">Control Panel</Link>
         <div className="flex gap-4">
           <a
             href="https://github.com/oddyca"

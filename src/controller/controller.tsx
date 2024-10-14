@@ -43,7 +43,6 @@ export const blogPostLoader =
   };
 
 export const allPosts = async (): Promise<TAllPosts> => {
-  await new Promise((resolve) => setTimeout(resolve, 2000)); // Simulate network delay
   const fetchedData = await fetch(
     'http://localhost:1337/api/blog-posts?populate=thumbnail',
   );

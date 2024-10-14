@@ -36,6 +36,9 @@ export default {
           },
         },
       },
+      boxShadow: {
+        centrif: '0px 0px 20px 8px rgba(34, 60, 80, 0.2)',
+      },
     },
   },
   plugins: [typography],
