@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
 import PostCard from './PostCard';
@@ -8,24 +7,30 @@ import Dropwdown from '@/components/Dropdown/Dropwdown';
 import { allPosts, renderComponents } from '@/controller/controller';
 
 import { TAllPosts } from '@/types/types';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/controller/store/store';
 
 export default function Posts() {
-  const { isPending, error, data } = useQuery<TAllPosts>({
+  const category = useSelector(
+    (state: RootState) => state.dashboardCategoryFilter.value,
+  );
+
+  const allPostsQuery = useQuery<TAllPosts>({
     queryKey: ['blogPosts'],
     queryFn: allPosts,
+    enabled: category === 'All Categories',
   });
 
-  const [postsToShow, setPostsToShow] = useState([]);
-
   const categoriesFilterQuery = useQuery({
-    queryKey: ['category'],
+    queryKey: ['category', category],
     queryFn: async () => {
       const fetchedData = await fetch(
-        `http://localhost:1337/api/blog-posts?filters[tag][$eqi]=${categoryFilter ?? ''}&populate=thumbnail`,
+        `http://localhost:1337/api/blog-posts?filters[tag][$eqi]=${category}&populate=thumbnail`,
       );
 
-      return fetchedData;
+      return fetchedData.json();
     },
+    enabled: category !== 'All Categories',
   });
 
   return (
@@ -44,14 +49,16 @@ export default function Posts() {
         </button>
       </div>
       <div className="flex flex-col gap-2">
-        {!isPending ? (
-          postsToShow.length != 0 ? (
-            renderComponents(postsToShow, PostCard)
+        {category !== 'All Categories' ? (
+          categoriesFilterQuery.isLoading ? (
+            <p>Loading...</p>
           ) : (
-            renderComponents(data!.data, PostCard)
+            renderComponents(categoriesFilterQuery.data!.data, PostCard)
           )
-        ) : (
+        ) : allPostsQuery.isLoading ? (
           <p>Loading...</p>
+        ) : (
+          renderComponents(allPostsQuery.data!.data, PostCard)
         )}
       </div>
     </div>
