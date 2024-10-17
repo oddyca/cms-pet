@@ -34,10 +34,7 @@ export default function Posts() {
   });
 
   return (
-    <div className="flex flex-col px-4 p-4 gap-4">
-      <div className="w-full h-12 flex flex-col justify-end">
-        <HorizontallDivider />
-      </div>
+    <div className="flex flex-col">
       <div className="w-full p-2 flex justify-between">
         <div>
           <Dropwdown
@@ -48,18 +45,20 @@ export default function Posts() {
           CREATE NEW POST
         </button>
       </div>
-      <div className="flex flex-col gap-2">
-        {category !== 'All Categories' ? (
-          categoriesFilterQuery.isLoading ? (
+      <div className="h-full flex min-h-0">
+        <div className="basis-1/2 custom-scrollbar overflow-y-auto p-2">
+          {category !== 'All Categories' ? (
+            categoriesFilterQuery.isLoading ? (
+              <p>Loading...</p>
+            ) : (
+              renderComponents(categoriesFilterQuery.data!.data, PostCard)
+            )
+          ) : allPostsQuery.isLoading ? (
             <p>Loading...</p>
           ) : (
-            renderComponents(categoriesFilterQuery.data!.data, PostCard)
-          )
-        ) : allPostsQuery.isLoading ? (
-          <p>Loading...</p>
-        ) : (
-          renderComponents(allPostsQuery.data!.data, PostCard)
-        )}
+            renderComponents(allPostsQuery.data!.data, PostCard)
+          )}
+        </div>
       </div>
     </div>
   );

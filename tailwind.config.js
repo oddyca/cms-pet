@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 import typography from '@tailwindcss/typography';
+import plugin from 'tailwindcss/plugin';
 
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
@@ -41,5 +42,36 @@ export default {
       },
     },
   },
-  plugins: [typography],
+  plugins: [
+    typography,
+    plugin(function ({ addUtilities }) {
+      const customScrollbars = {
+        /* WebKit-based browsers (Chrome, Safari) */
+        '.custom-scrollbar::-webkit-scrollbar': {
+          width: '8px' /* Scrollbar width */,
+          borderRadius: '10px',
+        },
+        '.custom-scrollbar::-webkit-scrollbar-thumb': {
+          background: '#C0C0C0' /* Light gray color */,
+          borderRadius: '10px',
+        },
+        '.custom-scrollbar::-webkit-scrollbar-track': {
+          background: 'transparent' /* No background */,
+          borderRadius: '10px',
+        },
+        /* Firefox */
+        '.custom-scrollbar': {
+          scrollbarWidth: 'thin' /* Thin scrollbar */,
+          scrollbarColor:
+            '#C0C0C0 transparent' /* Light gray thumb, no track background */,
+        },
+        /* Edge/IE */
+        '.custom-scrollbar::-ms-scrollbar': {
+          width: '8px' /* Scrollbar width for IE/Edge */,
+        },
+      };
+
+      addUtilities(customScrollbars);
+    }),
+  ],
 };

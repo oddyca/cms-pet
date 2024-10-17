@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Logo from '@/assets/Logo';
 import house from '/house.svg';
@@ -15,7 +15,7 @@ export default function Dashboard() {
   const [token, setToken] = useState('');
   const navigate = useNavigate();
 
-  const handleClick = (e) => {
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     sessionStorage.removeItem('isLogged');
     navigate('/dashboard/signin');
@@ -29,11 +29,11 @@ export default function Dashboard() {
   }, []);
   return (
     <>
-      <div className="w-full h-screen max-w-[1440px] my-0 mx-auto flex flex-col justify-center items-center">
+      <div className="w-full max-h-screen">
         <div className="h-[64px]" />
-        <div className="w-11/12 h-full p-8">
-          <div className="grid grid-col-5 h-full rounded overflow-hidden shadow-centrif">
-            <div className="col-span-1 w-0 min-w-full bg-accent-blue-100 flex flex-col justify-between">
+        <div className="w-full h-[calc(100vh-64px)] p-8 mx-0 my-auto">
+          <div className="flex rounded shadow-centrif h-full">
+            <div className="basis-1/5 align-self-stretch bg-accent-blue-100 flex flex-col justify-between">
               <div className="flex flex-col items-stretch gap-6 items-center p-4">
                 <Logo fillColor="text-accent-blue-50 self-center" />
                 <HorizontallDivider color="accent-blue-50" />
@@ -58,7 +58,7 @@ export default function Dashboard() {
                 </button>
               </div>
             </div>
-            <div className="col-span-4 col-start-2 grid-col-4 p-2 w-0 min-w-full">
+            <div className="basis-4/5 col-start-2 flex p-2 h-full">
               <Outlet />
             </div>
           </div>
