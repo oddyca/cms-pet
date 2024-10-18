@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
+import { Outlet, useParams } from 'react-router-dom';
 
-import PostCard from './PostCard';
-import HorizontallDivider from '@/components/Dividers/HorizontalDivider';
+import PostCard from './PostCard/PostCard';
 import Dropwdown from '@/components/Dropdown/Dropwdown';
 
 import { allPosts, renderComponents } from '@/controller/controller';
@@ -11,6 +11,8 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/controller/store/store';
 
 export default function Posts() {
+  const { slug } = useParams();
+
   const category = useSelector(
     (state: RootState) => state.dashboardCategoryFilter.value,
   );
@@ -33,6 +35,8 @@ export default function Posts() {
     enabled: category !== 'All Categories',
   });
 
+  if (slug) return <Outlet />;
+
   return (
     <div className="flex flex-col">
       <div className="w-full p-2 flex justify-between">
@@ -46,7 +50,7 @@ export default function Posts() {
         </button>
       </div>
       <div className="h-full flex min-h-0">
-        <div className="basis-1/2 custom-scrollbar overflow-y-auto p-2">
+        <div className="basis-1/2 custom-scrollbar-hidden hover:custom-scrollbar overflow-y-auto p-2">
           {category !== 'All Categories' ? (
             categoriesFilterQuery.isLoading ? (
               <p>Loading...</p>

@@ -39,6 +39,7 @@ import ErrorBoundary from '@/components/ErrorBoundary/ErrorBoundary';
 import Signin from '@/components/Dashboard/Signin';
 import ProtectedRoute from '@/components/ProtectedRoute/ProtectedRoute';
 import DashboardTab from '@/components/Dashboard/DashboardTab';
+import DashboardPost from '@/components/Dashboard/Tabs/Posts/DashboardPost/DashboardPost';
 
 const queryClient = new QueryClient();
 
@@ -94,6 +95,11 @@ export const router = createBrowserRouter([
               {
                 path: '/dashboard/:tab',
                 element: <DashboardTab />,
+              },
+              {
+                path: '/dashboard/posts/:slug',
+                element: <DashboardPost />,
+                loader: blogPostLoader(queryClient),
               },
             ],
           },

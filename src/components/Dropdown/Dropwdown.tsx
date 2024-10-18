@@ -37,7 +37,7 @@ export default function Dropwdown({ menuOptions }: { menuOptions: string[] }) {
       <ul
         className={
           isOpen
-            ? 'absolute top-6 left-0 bg-white rounded border border-1 border-black flex flex-col gap-2 duration-150 w-fit min-w-40 max-h-48 overflow-hidden'
+            ? 'absolute top-8 left-0 bg-white rounded border border-1 border-gray-300 flex flex-col gap-2 duration-150 w-fit min-w-64 max-h-48 overflow-hidden shadow-centrif'
             : 'max-h-0 absolute top-6 left-0 bg-white'
         }
       >

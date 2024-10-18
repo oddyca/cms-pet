@@ -38,7 +38,7 @@ export default {
         },
       },
       boxShadow: {
-        centrif: '0px 0px 20px 8px rgba(34, 60, 80, 0.2)',
+        centrif: '0px 0px 8px 2px rgba(34, 60, 80, 0.2)',
       },
     },
   },
@@ -48,26 +48,37 @@ export default {
       const customScrollbars = {
         /* WebKit-based browsers (Chrome, Safari) */
         '.custom-scrollbar::-webkit-scrollbar': {
-          width: '8px' /* Scrollbar width */,
+          width: '8px',
           borderRadius: '10px',
         },
         '.custom-scrollbar::-webkit-scrollbar-thumb': {
-          background: '#C0C0C0' /* Light gray color */,
+          background: '#C0C0C0',
           borderRadius: '10px',
+          transitionDuration: '150ms',
+        },
+        '.custom-scrollbar-hidden::-webkit-scrollbar-thumb': {
+          background: 'transparent',
+          borderRadius: '10px',
+          transitionDuration: '150ms',
         },
         '.custom-scrollbar::-webkit-scrollbar-track': {
-          background: 'transparent' /* No background */,
+          background: 'transparent',
           borderRadius: '10px',
         },
         /* Firefox */
         '.custom-scrollbar': {
-          scrollbarWidth: 'thin' /* Thin scrollbar */,
-          scrollbarColor:
-            '#C0C0C0 transparent' /* Light gray thumb, no track background */,
+          scrollbarWidth: 'thin',
+          scrollbarColor: '#C0C0C0 transparent',
+          transitionDuration: '150ms',
+        },
+        '.custom-scrollbar-hidden': {
+          scrollbarWidth: 'thin',
+          scrollbarColor: 'transparent transparent',
+          transitionDuration: '150ms',
         },
         /* Edge/IE */
         '.custom-scrollbar::-ms-scrollbar': {
-          width: '8px' /* Scrollbar width for IE/Edge */,
+          width: '8px',
         },
       };
 
