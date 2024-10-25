@@ -1,4 +1,4 @@
-export default function Logo({ fillColor }: { fillColor: string }) {
+export default function Logo({ fillColor }: { fillColor?: string }) {
   return (
     <svg
       width="39"

@@ -1,4 +1,5 @@
 import { isRouteErrorResponse, Link, useRouteError } from 'react-router-dom';
+import Logo from '@/assets/Logo';
 
 // react router error boundary
 export default function BlogErrorBoundary() {
@@ -21,7 +22,7 @@ export default function BlogErrorBoundary() {
   return (
     <div className="h-screen w-full flex flex-col justify-center items-center gap-8">
       <div className="flex flex-col gap-4 justify-center items-center">
-        <img src="/logo.svg" alt="Blog logo" className="h-16" />
+        <Logo />
         <h1 className="text-4xl font-bold">Oops! Error:</h1>
         <h3 className="text-xl">&quot;{errorMessage}&quot;</h3>
       </div>
