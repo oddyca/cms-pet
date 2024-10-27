@@ -8,7 +8,7 @@ import PostLoader from '@/components/Blog/Loaders/PostLoader';
 import Button from '../Button/Button';
 import EditIcon from '@/assets/EditIcon';
 import CopyIcon from '@/assets/CopyIcon';
-import Editor from '@/components/Dashboard/Tiptap/Editor';
+import Editor from '@/components/Dashboard/TextEditor/Editor';
 
 export default function DashboardPost() {
   const initialData = useLoaderData() as TAllPosts;
@@ -20,23 +20,23 @@ export default function DashboardPost() {
     initialData,
   });
 
-  console.log('DATA ', data.data[0].attributes);
+  const post = data.data[0].attributes;
 
   return (
     <>
-      <div className="w-full min-h-full p-4 overflow-y-auto flex gap-4">
+      <div className="w-full h-full min-h-0 p-4 flex gap-4">
         {isPending ? (
           <PostLoader />
         ) : (
           !error && (
             <>
-              <div className="basis-1/4 h-fit rounded border-dashed border-2 border-gray-300 hover:border-gray-400 hover:cursor-pointer p-4 group relative">
+              <div className="basis-1/5 h-fit rounded border-dashed border-2 border-gray-300 hover:border-gray-400 hover:cursor-pointer p-4 group relative">
                 <img
                   className="w-full object-cover"
                   loading="lazy"
                   src={
-                    data.data[0].attributes.placeholderThumbnail ??
-                    `http://localhost:1337${data.data[0].attributes.thumbnail!.data[0].attributes.url}`
+                    post.placeholderThumbnail ??
+                    `http://localhost:1337${post.thumbnail!.data[0].attributes.url}`
                   }
                 />
                 <div className="hidden absolute inset-0 group-hover:flex group-hover:bg-white/[0.7] justify-center items-center z-10">
@@ -46,7 +46,7 @@ export default function DashboardPost() {
                   </div>
                 </div>
               </div>
-              <div className="basis-2/4 flex flex-col gap-2">
+              <div className="flex flex-col h-full items-evenly w-full min-h-0 gap-2">
                 <div className="flex justify-between">
                   <Button bg="black" btn="Preview" />
                   <div className="flex gap-6">
@@ -54,27 +54,23 @@ export default function DashboardPost() {
                     <Button bg="accent-purple-300" btn="Save Changes" />
                   </div>
                 </div>
-                <div className="h-full w-full border border-1 border-gray-300">
-                  <div className="flex flex-col gap-4">
-                    <div className="flex justify-evenly gap-2">
-                      <p>Title</p>
-                      <textarea className="w-full border border-1 border-gray-400 rounded">
-                        {data.data[0].attributes.title}
-                      </textarea>
-                    </div>
-                    <div className="flex gap-4">
-                      <p>Category</p>
-                      <select className="border border-1 border-gray-400 rounded">
-                        <option>{data.data[0].attributes.tag}</option>
-                      </select>
-                    </div>
-                    <div className="flex justify-evenly items-start gap-2">
-                      <p>Content</p>
-                      <Editor content={data.data[0].attributes.article} />
-                      <button className="border border-1 border-gray-400 rounded p-1">
-                        <CopyIcon />
-                      </button>
-                    </div>
+                <div className="grid grid-cols-12">
+                  <p className="col-span-1">Title</p>
+                  <textarea className="resize-none col-span-11 max-h-8 h-8 px-2 rounded border border-1 border-gray-300">
+                    {post.title}
+                  </textarea>
+                </div>
+                <div className="grid grid-cols-12">
+                  <p className="col-span-1">Category</p>
+                  <select className="rounded border border-1 border-gray-300 px-2">
+                    <option>Ideas</option>
+                  </select>
+                </div>
+                <div className="flex-grow grid grid-cols-12 min-h-0">
+                  <p className="col-span-1">Content</p>
+                  <Editor content={post.article} />
+                  <div className="border border-2 p-2 rounded border-gray-300 hover:border-gray-400 col-span-1 justify-self-center place-self-start">
+                    <CopyIcon />
                   </div>
                 </div>
               </div>
@@ -83,19 +79,19 @@ export default function DashboardPost() {
                 <div className="rounded centrif shadow-centrif flex flex-col gap-2 py-4 px-2">
                   <div className="flex justify-between">
                     <p className="text-gray-400">Published</p>
-                    <p>{convertDate(data.data[0].attributes.publishedAt)}</p>
+                    <p>{convertDate(post.publishedAt)}</p>
                   </div>
                   <div className="flex justify-between">
                     <p className="text-gray-400">Author</p>
-                    <p>{data.data[0].attributes.author}</p>
+                    <p>{post.author}</p>
                   </div>
                   <div className="flex justify-between">
                     <p className="text-gray-400">Edited</p>
-                    <p>{data.data[0].attributes?.edited ?? '-'}</p>
+                    <p>{post?.edited ?? '-'}</p>
                   </div>
                   <div className="flex justify-between">
                     <p className="text-gray-400">Views</p>
-                    <p>{data.data[0].attributes.views ?? '0'}</p>
+                    <p>{post.views ?? '0'}</p>
                   </div>
                 </div>
                 <button className="w-full py-2 rounded font-bold text-white bg-red-600 hover:bg-red-400">

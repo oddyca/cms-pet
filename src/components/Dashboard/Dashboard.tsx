@@ -33,7 +33,7 @@ export default function Dashboard() {
         <div className="h-[64px]" />
         <div className="w-full h-[calc(100vh-64px)] p-8 mx-0 my-auto">
           <div className="flex rounded-md overflow-hidden shadow-centrif h-full">
-            <div className="basis-1/6 align-self-stretch bg-accent-blue-100 flex flex-col justify-between rounded">
+            <div className="basis-1/6 h-full bg-accent-blue-100 flex flex-col justify-between rounded">
               <div className="flex flex-col items-stretch gap-6 items-center p-4">
                 <Logo fillColor="text-accent-blue-50 self-center" />
                 <HorizontallDivider color="accent-blue-50" />
@@ -48,15 +48,13 @@ export default function Dashboard() {
                   </NavLink>
                 </div>
               </div>
-              <div>
-                <button
-                  type="button"
-                  onClick={handleClick}
-                  className="px-4 py-2 rounded w-0 min-w-full bg-accent-blue-50 text-white"
-                >
-                  Log out
-                </button>
-              </div>
+              <button
+                type="button"
+                onClick={handleClick}
+                className="px-4 py-2 rounded w-0 min-w-full bg-accent-blue-50 text-white"
+              >
+                Log out
+              </button>
             </div>
             <div className="basis-5/6 col-start-2 flex p-2 h-full">
               <Outlet />

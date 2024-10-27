@@ -1,8 +1,8 @@
 export default function CopyIcon({ color }: { color?: string }) {
   return (
     <svg
-      width="14"
-      height="14"
+      width="16"
+      height="16"
       viewBox="0 0 14 14"
       fill="none"
       className={`text-${color} hover:brightness-50 duration-100 hover:cursor-pointer`}
