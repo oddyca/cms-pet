@@ -8,7 +8,7 @@ const initialState: FilterState = {
   value: 'All Categories',
 };
 
-export const counterSlice = createSlice({
+export const dashboardFilterSlice = createSlice({
   name: 'dashboardCategoryFilter',
   initialState,
   reducers: {
@@ -19,6 +19,6 @@ export const counterSlice = createSlice({
   },
 });
 
-export const { setCategory, resetCategory } = counterSlice.actions;
+export const { setCategory, resetCategory } = dashboardFilterSlice.actions;
 
-export default counterSlice.reducer;
+export default dashboardFilterSlice.reducer;

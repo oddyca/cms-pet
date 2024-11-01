@@ -29,7 +29,7 @@ export type TPost = {
   id: number;
   attributes: {
     title: string;
-    intro: string;
+    intro?: string;
     author: string;
     slug: string;
     createdAt: string;
@@ -37,6 +37,8 @@ export type TPost = {
     publishedAt: string;
     tag: string;
     article: string;
+    edited: string;
+    views: number;
     thumbnail?: {
       data: [
         {
@@ -53,7 +55,7 @@ export type TPost = {
 
 export type TBlogPost = {
   title: string;
-  intro: string;
+  intro?: string;
   author: string;
   tag: string;
   slug: string;

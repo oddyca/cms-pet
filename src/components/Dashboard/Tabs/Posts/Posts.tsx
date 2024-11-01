@@ -38,7 +38,7 @@ export default function Posts() {
   if (slug) return <Outlet />;
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col w-full">
       <div className="w-full p-2 flex justify-between">
         <div>
           <Dropwdown
