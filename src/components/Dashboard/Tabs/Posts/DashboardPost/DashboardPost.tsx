@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { useLoaderData, useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { blogPost, convertDate } from '@/controller/controller';
@@ -12,9 +12,10 @@ import EditIcon from '@/assets/EditIcon';
 import CopyIcon from '@/assets/CopyIcon';
 import Editor from '@/components/Dashboard/TextEditor/Editor';
 import BinIcon from '@/assets/BinIcon';
+import Modal from '../Modal/Modal';
 
 // Store
-import { RootState, store } from '@/controller/store/store';
+import { RootState } from '@/controller/store/store';
 import { setPostInfo } from '@/controller/store/slices/postEditSlice';
 
 export default function DashboardPost() {
@@ -23,7 +24,9 @@ export default function DashboardPost() {
 
   const [isIntroCopied, setIsIntroCopied] = useState(false);
   const [isContentCopied, setIsContentCopied] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useDispatch();
+  const modalRef = useRef<HTMLDivElement>(null);
 
   const { isPending, error, data } = useQuery<TAllPosts>({
     queryKey: ['post', slug],
@@ -34,9 +37,31 @@ export default function DashboardPost() {
   // Fetched post data
   const post = data.data[0].attributes;
 
+  const img =
+    post.placeholderThumbnail ??
+    `http://localhost:1337${post.thumbnail!.data[0].attributes.url}`;
+
+  // Modal func
+  const handlePreviewClick = () => {
+    setIsModalOpen(true);
+  };
+
   useEffect(() => {
     dispatch(setPostInfo({ type: 'intro', text: post.intro }));
     dispatch(setPostInfo({ type: 'content', text: post.article }));
+
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        modalRef.current &&
+        !modalRef.current.contains(event.target as Node)
+      ) {
+        setIsModalOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
   const isEdited = useSelector(
@@ -44,10 +69,15 @@ export default function DashboardPost() {
   );
 
   // Copy functions
-  const handleIntroCopy = () => {
-    const postIntro = store.getState().postEditSlice.value.intro;
+  const introText = useSelector(
+    (state: RootState) => state.postEditSlice.value.intro,
+  );
+  const contentText = useSelector(
+    (state: RootState) => state.postEditSlice.value.content,
+  );
 
-    navigator.clipboard.writeText(postIntro!);
+  const handleIntroCopy = () => {
+    navigator.clipboard.writeText(introText!);
     setIsIntroCopied(true);
     setTimeout(() => {
       setIsIntroCopied(false);
@@ -55,9 +85,7 @@ export default function DashboardPost() {
   };
 
   const handleContentCopy = () => {
-    const postContent = store.getState().postEditSlice.value.content;
-
-    navigator.clipboard.writeText(postContent!);
+    navigator.clipboard.writeText(contentText!);
     setIsContentCopied(true);
     setTimeout(() => {
       setIsContentCopied(false);
@@ -66,21 +94,21 @@ export default function DashboardPost() {
 
   return (
     <>
-      <div className="w-full h-full min-h-0 p-4 flex gap-4">
+      <div className="relative w-full h-full min-h-0 p-4 flex gap-4">
+        {isModalOpen && (
+          <Modal
+            ref={modalRef}
+            setIsModalOpen={setIsModalOpen}
+            postData={post}
+          />
+        )}
         {isPending ? (
           <PostLoader />
         ) : (
           !error && (
             <>
               <div className="basis-1/5 h-fit rounded border-dashed border-2 border-gray-300 hover:border-gray-400 hover:cursor-pointer p-4 group relative">
-                <img
-                  className="w-full object-cover"
-                  loading="lazy"
-                  src={
-                    post.placeholderThumbnail ??
-                    `http://localhost:1337${post.thumbnail!.data[0].attributes.url}`
-                  }
-                />
+                <img className="w-full object-cover" loading="lazy" src={img} />
                 <div className="hidden absolute inset-0 group-hover:flex group-hover:bg-white/[0.7] justify-center items-center z-10">
                   <div className="self-center flex gap-2 items-center">
                     <EditIcon color="gray-500" />
@@ -90,7 +118,12 @@ export default function DashboardPost() {
               </div>
               <div className="flex flex-col h-full items-evenly w-full min-h-0 gap-2">
                 <div className="flex justify-between">
-                  <Button bg="black" btn="Preview" disabled={false} />
+                  <Button
+                    bg="black"
+                    btn="Preview"
+                    disabled={false}
+                    onClick={handlePreviewClick}
+                  />
                   <div className="flex gap-6">
                     <Button btn="Cancel" disabled={!isEdited} />
                     <Button
