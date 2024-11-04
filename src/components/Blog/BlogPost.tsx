@@ -1,10 +1,11 @@
+import { useEffect } from 'react';
 import { useLoaderData, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import ReactMarkdown from 'react-markdown';
 
 import { TAllPosts } from '@/types/types';
 
-import { blogPost, convertDate } from '@/controller/controller';
+import { blogPost, convertDate, updateViews } from '@/controller/controller';
 
 import PostLoader from './Loaders/PostLoader';
 import Tag from '../Tag/Tag';
@@ -19,6 +20,10 @@ export default function BlogPost() {
     queryFn: () => blogPost(slug!),
     initialData,
   });
+
+  useEffect(() => {
+    updateViews(data.data[0].id);
+  }, []);
 
   const convertedDate = convertDate(data.data[0].attributes.publishedAt);
 

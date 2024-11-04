@@ -87,3 +87,14 @@ export type TFormInputs = {
   email: string;
   password: string;
 };
+
+export type TUpdateEntry = {
+  entryID: number;
+  entryData: {
+    title: string;
+    category: string;
+    intro: string;
+    article: string;
+    edited: string;
+  };
+};

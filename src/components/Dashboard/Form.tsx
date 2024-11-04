@@ -27,8 +27,8 @@ export default function Form() {
     try {
       const response = await signIn(email, password);
       if (response.ok) {
-        const { data } = await response.json();
-        sessionStorage.setItem('JWT', data.token);
+        const data = await response.json();
+        sessionStorage.setItem('JWT', data.jwt);
         sessionStorage.setItem('isLogged', 'true');
         navigate('/dashboard/home');
       } else {

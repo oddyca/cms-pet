@@ -3,7 +3,7 @@ import { useLoaderData, useParams } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { blogPost, convertDate } from '@/controller/controller';
+import { blogPost, convertDate, updateEntry } from '@/controller/controller';
 import { TAllPosts } from '@/types/types';
 
 import PostLoader from '@/components/Blog/Loaders/PostLoader';
@@ -13,6 +13,11 @@ import CopyIcon from '@/assets/CopyIcon';
 import Editor from '@/components/Dashboard/TextEditor/Editor';
 import BinIcon from '@/assets/BinIcon';
 import Modal from '../Modal/Modal';
+
+// TODO
+// 1 - DONE preview
+// 2 - saveChanges - UPDATE request
+// 3 - cancel - reset store
 
 // Store
 import { RootState } from '@/controller/store/store';
@@ -92,6 +97,24 @@ export default function DashboardPost() {
     }, 150);
   };
 
+  const handleSaveChanges = async () => {
+    const updatedPostData = {
+      title: post.title,
+      category: 'testCategoryUpdate',
+      intro: introText || '',
+      article: contentText,
+      edited: JSON.stringify(new Date()),
+    };
+    try {
+      await updateEntry({
+        entryID: data.data[0].id,
+        entryData: updatedPostData,
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   return (
     <>
       <div className="relative w-full h-full min-h-0 p-4 flex gap-4">
@@ -130,6 +153,7 @@ export default function DashboardPost() {
                       bg="accent-purple-300"
                       btn="Save Changes"
                       disabled={!isEdited}
+                      onClick={handleSaveChanges}
                     />
                   </div>
                 </div>

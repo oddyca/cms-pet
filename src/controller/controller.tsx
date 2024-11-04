@@ -1,7 +1,7 @@
 import React from 'react';
 import { LoaderFunctionArgs, defer } from 'react-router-dom';
 import { QueryClient } from '@tanstack/react-query';
-import { TAllPosts, TPost, TCategoryPosts } from '@/types/types';
+import { TAllPosts, TPost, TCategoryPosts, TUpdateEntry } from '@/types/types';
 import { LoaderFunction } from 'react-router-dom';
 
 export const blogLoader = async (queryClient: QueryClient) => {
@@ -103,15 +103,60 @@ export const convertDate = (d: string): string => {
 };
 
 export const signIn = async (email: string, password: string) => {
-  const response = await fetch(
-    `http://localhost:1337/admin/login?email=${email}&password=${password}`,
-    {
-      method: 'POST',
+  const response = await fetch('http://localhost:1337/api/auth/local', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      identifier: email,
+      password: password,
+    }),
+  });
+  return response;
+};
+
+export const updateViews = async (entryID: number) => {
+  try {
+    const response = await fetch(
+      `http://localhost:1337/api/blog-posts/${entryID}/increment-view`,
+      {
+        method: 'PUT',
+      },
+    );
+
+    if (!response.ok) {
+      console.error('Failed to increment view count');
+    }
+  } catch (error) {
+    console.error('Error:', error);
+  }
+};
+
+export const updateEntry = async ({ entryID, entryData }: TUpdateEntry) => {
+  const url = `http://localhost:1337/api/blog-posts/${entryID}`;
+  const updatedData = {
+    data: { ...entryData },
+  };
+
+  try {
+    const response = await fetch(url, {
+      method: 'PUT',
       headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('JWT')}`,
         'Content-Type': 'application/json',
       },
-    },
-  );
+      body: JSON.stringify(updatedData),
+    });
 
-  return response;
+    const responseData = await response.json();
+
+    if (!response.ok) {
+      throw new Error(responseData);
+    }
+
+    return responseData;
+  } catch (error) {
+    console.error('Error:', error);
+  }
 };
