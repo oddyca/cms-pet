@@ -95,6 +95,6 @@ export type TUpdateEntry = {
     category: string;
     intro: string;
     article: string;
-    edited: string;
+    edited: Date;
   };
 };

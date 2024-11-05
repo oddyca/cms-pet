@@ -22,7 +22,13 @@ export default function BlogPost() {
   });
 
   useEffect(() => {
+    const originalTitle = document.title;
+
     updateViews(data.data[0].id);
+    document.title = data.data[0].attributes.title;
+    return () => {
+      document.title = originalTitle;
+    };
   }, []);
 
   const convertedDate = convertDate(data.data[0].attributes.publishedAt);
@@ -51,7 +57,9 @@ export default function BlogPost() {
                   </div>
                 </div>
                 <p className="lg:w-3/5 text-lg">
-                  {data.data[0].attributes.intro || ''}
+                  <ReactMarkdown>
+                    {data.data[0].attributes.intro || ''}
+                  </ReactMarkdown>
                 </p>
                 <div className="h-96 w-1/2 rounded-md overflow-hidden">
                   <img
@@ -63,7 +71,7 @@ export default function BlogPost() {
                   />
                 </div>
                 <div className="lg:w-3/5 text-lg prose">
-                  <ReactMarkdown className="">
+                  <ReactMarkdown>
                     {data.data[0].attributes.article}
                   </ReactMarkdown>
                 </div>

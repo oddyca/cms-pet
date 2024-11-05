@@ -3,7 +3,12 @@ import { useLoaderData, useParams } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { blogPost, convertDate, updateEntry } from '@/controller/controller';
+import {
+  blogPost,
+  convertDate,
+  convertDateDashboard,
+  updateEntry,
+} from '@/controller/controller';
 import { TAllPosts } from '@/types/types';
 
 import PostLoader from '@/components/Blog/Loaders/PostLoader';
@@ -14,14 +19,12 @@ import Editor from '@/components/Dashboard/TextEditor/Editor';
 import BinIcon from '@/assets/BinIcon';
 import Modal from '../Modal/Modal';
 
-// TODO
-// 1 - DONE preview
-// 2 - saveChanges - UPDATE request
-// 3 - cancel - reset store
-
 // Store
 import { RootState } from '@/controller/store/store';
-import { setPostInfo } from '@/controller/store/slices/postEditSlice';
+import {
+  setPostInfo,
+  setIsEdited,
+} from '@/controller/store/slices/postEditSlice';
 
 export default function DashboardPost() {
   const initialData = useLoaderData() as TAllPosts;
@@ -52,6 +55,9 @@ export default function DashboardPost() {
   };
 
   useEffect(() => {
+    const originalTitle = document.title;
+    document.title = `Editing | ${data.data[0].attributes.title}`;
+
     dispatch(setPostInfo({ type: 'intro', text: post.intro }));
     dispatch(setPostInfo({ type: 'content', text: post.article }));
 
@@ -66,20 +72,24 @@ export default function DashboardPost() {
 
     document.addEventListener('mousedown', handleClickOutside);
 
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.title = originalTitle;
+    };
   }, []);
 
   const isEdited = useSelector(
     (state: RootState) => state.postEditSlice.value.isEdited,
   );
 
-  // Copy functions
   const introText = useSelector(
     (state: RootState) => state.postEditSlice.value.intro,
   );
   const contentText = useSelector(
     (state: RootState) => state.postEditSlice.value.content,
   );
+
+  // Copy functions
 
   const handleIntroCopy = () => {
     navigator.clipboard.writeText(introText!);
@@ -103,7 +113,7 @@ export default function DashboardPost() {
       category: 'testCategoryUpdate',
       intro: introText || '',
       article: contentText,
-      edited: JSON.stringify(new Date()),
+      edited: new Date(),
     };
     try {
       await updateEntry({
@@ -113,6 +123,12 @@ export default function DashboardPost() {
     } catch (e) {
       console.error(e);
     }
+  };
+
+  const handleCancel = () => {
+    dispatch(setPostInfo({ type: 'intro', text: post.intro }));
+    dispatch(setPostInfo({ type: 'content', text: post.article }));
+    dispatch(setIsEdited({ bool: false }));
   };
 
   return (
@@ -148,7 +164,11 @@ export default function DashboardPost() {
                     onClick={handlePreviewClick}
                   />
                   <div className="flex gap-6">
-                    <Button btn="Cancel" disabled={!isEdited} />
+                    <Button
+                      btn="Cancel"
+                      disabled={!isEdited}
+                      onClick={handleCancel}
+                    />
                     <Button
                       bg="accent-purple-300"
                       btn="Save Changes"
@@ -175,7 +195,7 @@ export default function DashboardPost() {
                       <p>Intro</p>
                       <p className="text-gray-400">(optional)</p>
                     </div>
-                    <Editor content={post.intro} type="intro" />
+                    <Editor type="intro" />
                     <div
                       onClick={handleIntroCopy}
                       className="relative border border-2 p-2 rounded border-gray-300 hover:border-gray-400 hover:cursor-pointer col-span-1 justify-self-center place-self-start"
@@ -195,7 +215,7 @@ export default function DashboardPost() {
                 )}
                 <div className="flex-grow grid grid-cols-12 min-h-0 basis-2/3">
                   <p className="col-span-1">Content</p>
-                  <Editor content={post.article} type="content" />
+                  <Editor type="content" />
                   <div
                     onClick={handleContentCopy}
                     className="relative border border-2 p-2 rounded border-gray-300 hover:border-gray-400 hover:cursor-pointer col-span-1 justify-self-center place-self-start"
@@ -222,7 +242,7 @@ export default function DashboardPost() {
                   </div>
                   <div className="flex justify-between">
                     <p className="text-gray-400">Edited</p>
-                    <p>{post?.edited ?? '-'}</p>
+                    <p>{convertDateDashboard(post.edited) ?? '-'}</p>
                   </div>
                   <div className="flex justify-between">
                     <p className="text-gray-400">Views</p>

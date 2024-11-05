@@ -41,7 +41,9 @@ const Modal = forwardRef<HTMLDivElement, ModalProps>(function Modal(
               </div>
             </div>
           </div>
-          <p className="w-full text-lg">{postData.intro || ''}</p>
+          <ReactMarkdown className="w-full">
+            {postData.intro || ''}
+          </ReactMarkdown>
           <img
             className="w-4/5 self-center h-96 rounded object-cover"
             src={
@@ -49,10 +51,8 @@ const Modal = forwardRef<HTMLDivElement, ModalProps>(function Modal(
               `http://localhost:1337${postData.thumbnail!.data[0].attributes.url}`
             }
           />
-          {/* <div className="h-fit w-1/2 rounded-md overflow-hidden">
-          </div> */}
           <div className="w-full text-lg prose">
-            <ReactMarkdown className="">{postData.article}</ReactMarkdown>
+            <ReactMarkdown className="w-full">{postData.article}</ReactMarkdown>
           </div>
         </div>
       </div>

@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   MDXEditor,
   headingsPlugin,
@@ -16,26 +16,32 @@ import {
 } from '@/controller/store/slices/postEditSlice';
 
 import '@mdxeditor/editor/style.css';
+import { RootState } from '@/controller/store/store';
 
-export default function Editor({
-  content,
-  type,
-}: {
-  content: string;
-  type: string;
-}) {
+export default function Editor({ type }: { type: string }) {
   const dispatch = useDispatch();
   const editorRef = useRef<MDXEditorMethods>(null);
 
+  const introText = useSelector(
+    (state: RootState) => state.postEditSlice.value.intro,
+  );
+  const contentText = useSelector(
+    (state: RootState) => state.postEditSlice.value.content,
+  );
+
   useEffect(() => {
     if (editorRef.current) {
-      editorRef.current.setMarkdown(content);
+      if (type === 'intro') {
+        editorRef.current.setMarkdown(introText!);
+      } else {
+        editorRef.current.setMarkdown(contentText);
+      }
     }
-  }, [content]);
+  }, [introText, contentText]);
 
   const handleChange = (text: string) => {
     dispatch(setPostInfo({ type, text }));
-    dispatch(setIsEdited());
+    dispatch(setIsEdited({ bool: true }));
   };
 
   return (

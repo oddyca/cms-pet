@@ -28,13 +28,17 @@ export const postEditSlice = createSlice({
         state.value = { ...state.value, content: text };
       }
     },
-    setIsEdited: (state) => {
-      state.value.isEdited = true;
+    setIsEdited: (state, action) => {
+      const { bool } = action.payload;
+      if (bool) {
+        state.value.isEdited = true;
+      } else {
+        state.value.isEdited = false;
+      }
     },
-    resetPost: () => initialState,
   },
 });
 
-export const { setPostInfo, setIsEdited, resetPost } = postEditSlice.actions;
+export const { setPostInfo, setIsEdited } = postEditSlice.actions;
 
 export default postEditSlice.reducer;
