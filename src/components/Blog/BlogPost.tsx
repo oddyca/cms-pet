@@ -66,7 +66,7 @@ export default function BlogPost() {
                     className="w-full object-cover"
                     src={
                       data.data[0].attributes.placeholderThumbnail ??
-                      `http://localhost:1337${data.data[0].attributes.thumbnail!.data[0].attributes.url}`
+                      `http://localhost:1337${data.data[0].attributes.thumbnail!.data.attributes.url}`
                     }
                   />
                 </div>

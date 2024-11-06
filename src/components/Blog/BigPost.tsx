@@ -25,7 +25,7 @@ export default function BigPost({
           <img
             src={
               placeholderThumbnail ||
-              `http://localhost:1337${thumbnail!.data[0].attributes.url}`
+              `http://localhost:1337${thumbnail!.data.attributes.url}`
             }
             alt="Big post thumbnail"
             className="scale-125 object-cover"

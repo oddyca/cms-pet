@@ -48,7 +48,7 @@ const Modal = forwardRef<HTMLDivElement, ModalProps>(function Modal(
             className="w-4/5 self-center h-96 rounded object-cover"
             src={
               postData.placeholderThumbnail ??
-              `http://localhost:1337${postData.thumbnail!.data[0].attributes.url}`
+              `http://localhost:1337${postData.thumbnail!.data.attributes.url}`
             }
           />
           <div className="w-full text-lg prose">

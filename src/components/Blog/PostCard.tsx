@@ -23,7 +23,7 @@ export default function PostCard({
         className="h-full w-full object-cover duration-300 ease-in-out group-hover:scale-110"
         src={
           placeholderThumbnail ||
-          `http://localhost:1337${thumbnail!.data[0].attributes.url}`
+          `http://localhost:1337${thumbnail!.data.attributes.url}`
         }
         loading="lazy"
       />

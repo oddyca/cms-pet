@@ -13,7 +13,6 @@ import { TAllPosts } from '@/types/types';
 
 import PostLoader from '@/components/Blog/Loaders/PostLoader';
 import Button from '../Button/Button';
-import EditIcon from '@/assets/EditIcon';
 import CopyIcon from '@/assets/CopyIcon';
 import Editor from '@/components/Dashboard/TextEditor/Editor';
 import BinIcon from '@/assets/BinIcon';
@@ -25,6 +24,7 @@ import {
   setPostInfo,
   setIsEdited,
 } from '@/controller/store/slices/postEditSlice';
+import SelectImage from '../SelectImage/SelectImage';
 
 export default function DashboardPost() {
   const initialData = useLoaderData() as TAllPosts;
@@ -47,12 +47,7 @@ export default function DashboardPost() {
 
   const img =
     post.placeholderThumbnail ??
-    `http://localhost:1337${post.thumbnail!.data[0].attributes.url}`;
-
-  // Modal func
-  const handlePreviewClick = () => {
-    setIsModalOpen(true);
-  };
+    `http://localhost:1337${post.thumbnail!.data.attributes.url}`;
 
   useEffect(() => {
     const originalTitle = document.title;
@@ -77,6 +72,11 @@ export default function DashboardPost() {
       document.title = originalTitle;
     };
   }, []);
+
+  // Modal func
+  const handlePreviewClick = () => {
+    setIsModalOpen(true);
+  };
 
   const isEdited = useSelector(
     (state: RootState) => state.postEditSlice.value.isEdited,
@@ -147,13 +147,7 @@ export default function DashboardPost() {
           !error && (
             <>
               <div className="basis-1/5 h-fit rounded border-dashed border-2 border-gray-300 hover:border-gray-400 hover:cursor-pointer p-4 group relative">
-                <img className="w-full object-cover" loading="lazy" src={img} />
-                <div className="hidden absolute inset-0 group-hover:flex group-hover:bg-white/[0.7] justify-center items-center z-10">
-                  <div className="self-center flex gap-2 items-center">
-                    <EditIcon color="gray-500" />
-                    <p className="font-semibold text-gray-500">CHANGE IMAGE</p>
-                  </div>
-                </div>
+                <SelectImage id={data.data[0].id} defaultImage={img} />
               </div>
               <div className="flex flex-col h-full items-evenly w-full min-h-0 gap-2">
                 <div className="flex justify-between">
@@ -242,7 +236,9 @@ export default function DashboardPost() {
                   </div>
                   <div className="flex justify-between">
                     <p className="text-gray-400">Edited</p>
-                    <p>{convertDateDashboard(post.edited) ?? '-'}</p>
+                    <p className="text-right">
+                      {convertDateDashboard(post.edited) ?? '-'}
+                    </p>
                   </div>
                   <div className="flex justify-between">
                     <p className="text-gray-400">Views</p>

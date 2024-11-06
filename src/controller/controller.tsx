@@ -176,3 +176,41 @@ export const updateEntry = async ({ entryID, entryData }: TUpdateEntry) => {
     console.error('Error:', error);
   }
 };
+
+export const uploadImage = async (
+  entryID: number,
+  target: HTMLInputElement,
+) => {
+  const formData = new FormData();
+  if (!target.files) return;
+  formData.append('files', target.files[0]);
+  const JWT = sessionStorage.getItem('JWT');
+
+  const uploadResponse = await fetch(`http://localhost:1337/api/upload/`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${JWT}`,
+    },
+    body: formData,
+  });
+
+  const uploadedImage = await uploadResponse.json();
+  const updateResponse = await fetch(
+    `http://localhost:1337/api/blog-posts/${entryID}`,
+    {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${JWT}`,
+      },
+      body: JSON.stringify({
+        data: {
+          thumbnail: uploadedImage,
+        },
+      }),
+    },
+  );
+
+  const updatedEntry = await updateResponse.json();
+  return updatedEntry;
+};

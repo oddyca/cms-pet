@@ -22,7 +22,7 @@ export default function PostCard({
           className="object-cover w-full h-full"
           src={
             placeholderThumbnail ||
-            `http://localhost:1337${thumbnail!.data[0].attributes.url}`
+            `http://localhost:1337${thumbnail!.data.attributes.url}`
           }
         />
       </div>

@@ -40,14 +40,12 @@ export type TPost = {
     edited: string;
     views: number;
     thumbnail?: {
-      data: [
-        {
-          id: number;
-          attributes: {
-            url: 'string';
-          };
-        },
-      ];
+      data: {
+        id: number;
+        attributes: {
+          url: 'string';
+        };
+      };
     };
     placeholderThumbnail?: string;
   };
@@ -62,14 +60,12 @@ export type TBlogPost = {
   article: string;
   publishedAt: string;
   thumbnail?: {
-    data: [
-      {
-        id: number;
-        attributes: {
-          url: 'string';
-        };
-      },
-    ];
+    data: {
+      id: number;
+      attributes: {
+        url: 'string';
+      };
+    };
   };
   placeholderThumbnail?: string;
 };
