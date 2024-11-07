@@ -7,6 +7,7 @@ import {
   blogPost,
   convertDate,
   convertDateDashboard,
+  deletePost,
   updateEntry,
 } from '@/controller/controller';
 import { TAllPosts } from '@/types/types';
@@ -30,9 +31,11 @@ export default function DashboardPost() {
   const initialData = useLoaderData() as TAllPosts;
   const { slug } = useParams();
 
+  // States
   const [isIntroCopied, setIsIntroCopied] = useState(false);
   const [isContentCopied, setIsContentCopied] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [successfulReqMessage, setSuccessfulReqMessage] = useState('');
   const dispatch = useDispatch();
   const modalRef = useRef<HTMLDivElement>(null);
 
@@ -120,6 +123,9 @@ export default function DashboardPost() {
         entryID: data.data[0].id,
         entryData: updatedPostData,
       });
+      setSuccessfulReqMessage('Changes Saved!');
+      dispatch(setIsEdited({ bool: false }));
+      setTimeout(() => setSuccessfulReqMessage(''), 2000);
     } catch (e) {
       console.error(e);
     }
@@ -131,6 +137,10 @@ export default function DashboardPost() {
     dispatch(setIsEdited({ bool: false }));
   };
 
+  const handleDelete = () => {
+    deletePost(data.data[0].id);
+  };
+
   return (
     <>
       <div className="relative w-full h-full min-h-0 p-4 flex gap-4">
@@ -139,6 +149,8 @@ export default function DashboardPost() {
             ref={modalRef}
             setIsModalOpen={setIsModalOpen}
             postData={post}
+            intro={introText || ''}
+            content={contentText}
           />
         )}
         {isPending ? (
@@ -150,26 +162,23 @@ export default function DashboardPost() {
                 <SelectImage id={data.data[0].id} defaultImage={img} />
               </div>
               <div className="flex flex-col h-full items-evenly w-full min-h-0 gap-2">
-                <div className="flex justify-between">
+                <div className="flex justify-end gap-4">
                   <Button
-                    bg="black"
                     btn="Preview"
                     disabled={false}
                     onClick={handlePreviewClick}
                   />
-                  <div className="flex gap-6">
-                    <Button
-                      btn="Cancel"
-                      disabled={!isEdited}
-                      onClick={handleCancel}
-                    />
-                    <Button
-                      bg="accent-purple-300"
-                      btn="Save Changes"
-                      disabled={!isEdited}
-                      onClick={handleSaveChanges}
-                    />
-                  </div>
+                  <Button
+                    btn="Cancel"
+                    disabled={!isEdited}
+                    onClick={handleCancel}
+                  />
+                  <Button
+                    bg="accent-purple-300"
+                    btn="Save Changes"
+                    disabled={!isEdited}
+                    onClick={handleSaveChanges}
+                  />
                 </div>
                 <div className="grid grid-cols-12">
                   <p className="col-span-1">Title</p>
@@ -225,7 +234,7 @@ export default function DashboardPost() {
               </div>
               <div className=" basis-1/4 flex flex-col gap-4">
                 <p className="self-end">Post Information</p>
-                <div className="rounded centrif shadow-centrif flex flex-col gap-2 py-4 px-2">
+                <div className="rounded shadow-centrif flex flex-col gap-2 py-4 px-2">
                   <div className="flex justify-between">
                     <p className="text-gray-400">Published</p>
                     <p>{convertDate(post.publishedAt)}</p>
@@ -245,7 +254,10 @@ export default function DashboardPost() {
                     <p>{post.views ?? '0'}</p>
                   </div>
                 </div>
-                <button className="flex justify-center items-center gap-2 w-full py-2 rounded font-bold text-white bg-red-600 hover:bg-red-400">
+                <button
+                  className="flex justify-center items-center gap-2 w-full py-2 rounded font-bold text-white bg-red-600 hover:bg-red-400"
+                  onClick={handleDelete}
+                >
                   <BinIcon color="white" />
                   DELETE POST
                 </button>
@@ -253,6 +265,16 @@ export default function DashboardPost() {
             </>
           )
         )}
+
+        <div
+          className={
+            successfulReqMessage
+              ? 'fixed bottom-6 right-6 rounded border border-1 border-green-600 px-6 py-2 duration-300 bg-green-600 text-white shadow-centrif'
+              : 'fixed bottom-6 right-6 border-1 px-6 py-2 duration-300 opacity-0'
+          }
+        >
+          {successfulReqMessage}
+        </div>
       </div>
     </>
   );

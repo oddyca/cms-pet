@@ -6,10 +6,12 @@ import ReactMarkdown from 'react-markdown';
 interface ModalProps {
   setIsModalOpen: Dispatch<SetStateAction<boolean>>;
   postData: TBlogPost;
+  intro: string;
+  content: string;
 }
 
 const Modal = forwardRef<HTMLDivElement, ModalProps>(function Modal(
-  { setIsModalOpen, postData }: ModalProps,
+  { setIsModalOpen, postData, intro, content }: ModalProps,
   ref,
 ) {
   const convertedDate = convertDate(postData.publishedAt);
@@ -41,9 +43,7 @@ const Modal = forwardRef<HTMLDivElement, ModalProps>(function Modal(
               </div>
             </div>
           </div>
-          <ReactMarkdown className="w-full">
-            {postData.intro || ''}
-          </ReactMarkdown>
+          <ReactMarkdown className="w-full">{intro || ''}</ReactMarkdown>
           <img
             className="w-4/5 self-center h-96 rounded object-cover"
             src={
@@ -52,7 +52,7 @@ const Modal = forwardRef<HTMLDivElement, ModalProps>(function Modal(
             }
           />
           <div className="w-full text-lg prose">
-            <ReactMarkdown className="w-full">{postData.article}</ReactMarkdown>
+            <ReactMarkdown className="w-full">{content}</ReactMarkdown>
           </div>
         </div>
       </div>

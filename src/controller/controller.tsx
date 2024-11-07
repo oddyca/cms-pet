@@ -172,8 +172,8 @@ export const updateEntry = async ({ entryID, entryData }: TUpdateEntry) => {
     }
 
     return responseData;
-  } catch (error) {
-    console.error('Error:', error);
+  } catch (e) {
+    console.error('Error:', e);
   }
 };
 
@@ -213,4 +213,27 @@ export const uploadImage = async (
 
   const updatedEntry = await updateResponse.json();
   return updatedEntry;
+};
+
+export const deletePost = async (entryID: number) => {
+  const url = `http://localhost:1337/api/blog-posts/${entryID}`;
+  const JWT = sessionStorage.getItem('JWT');
+
+  try {
+    const response = await fetch(url, {
+      method: 'DELTE',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${JWT}`,
+      },
+    });
+
+    if (response.ok) {
+      return response.statusText;
+    } else {
+      return;
+    }
+  } catch (e) {
+    console.error('Error:', e);
+  }
 };
