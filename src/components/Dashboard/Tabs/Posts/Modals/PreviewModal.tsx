@@ -2,16 +2,17 @@ import { convertDate } from '@/controller/controller';
 import { TBlogPost } from '@/types/types';
 import { forwardRef, Dispatch, SetStateAction } from 'react';
 import ReactMarkdown from 'react-markdown';
+import CloseIcon from '@/assets/CloseIcon';
 
-interface ModalProps {
+interface PreviewModalProps {
   setIsModalOpen: Dispatch<SetStateAction<boolean>>;
   postData: TBlogPost;
   intro: string;
   content: string;
 }
 
-const Modal = forwardRef<HTMLDivElement, ModalProps>(function Modal(
-  { setIsModalOpen, postData, intro, content }: ModalProps,
+const Modal = forwardRef<HTMLDivElement, PreviewModalProps>(function Modal(
+  { setIsModalOpen, postData, intro, content }: PreviewModalProps,
   ref,
 ) {
   const convertedDate = convertDate(postData.publishedAt);
@@ -23,10 +24,10 @@ const Modal = forwardRef<HTMLDivElement, ModalProps>(function Modal(
         className="bg-white relative w-5/6 h-5/6 flex justify-center p-4"
       >
         <button
-          className="absolute top-4 right-4"
+          className="absolute top-4 right-4 p-3 border border-2 rounded-full bg-red-600 hover:bg-red-400 group duration-100"
           onClick={() => setIsModalOpen(false)}
         >
-          Close
+          <CloseIcon color="white" />
         </button>
         <div className="lg:w-3/5 w-full flex flex-col gap-4 text-lg overflow-y-auto custom-scrollbar">
           <div className="flex flex-col gap-2 items-center">

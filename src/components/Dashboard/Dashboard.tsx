@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 
 import Logo from '@/assets/Logo';
 import house from '/house.svg';
 import table from '/table.svg';
 import HorizontallDivider from '../Dividers/HorizontalDivider';
-import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 
 const navLinkClass = ({ isActive }: { isActive: boolean }) =>
   isActive

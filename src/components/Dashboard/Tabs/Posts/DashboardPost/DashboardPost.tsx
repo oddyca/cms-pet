@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { useLoaderData, useParams } from 'react-router-dom';
+import { useLoaderData, useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -17,7 +17,7 @@ import Button from '../Button/Button';
 import CopyIcon from '@/assets/CopyIcon';
 import Editor from '@/components/Dashboard/TextEditor/Editor';
 import BinIcon from '@/assets/BinIcon';
-import Modal from '../Modal/Modal';
+import PreviewModal from '../Modals/PreviewModal';
 
 // Store
 import { RootState } from '@/controller/store/store';
@@ -26,15 +26,20 @@ import {
   setIsEdited,
 } from '@/controller/store/slices/postEditSlice';
 import SelectImage from '../SelectImage/SelectImage';
+import CheckIcon from '@/assets/CheckIcon';
+import ConfirmModal from '../Modals/ConfirmModal';
 
 export default function DashboardPost() {
+  const navigate = useNavigate();
   const initialData = useLoaderData() as TAllPosts;
   const { slug } = useParams();
 
   // States
   const [isIntroCopied, setIsIntroCopied] = useState(false);
   const [isContentCopied, setIsContentCopied] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isPreviewModalOpen, setIsPreviewModalOpen] = useState(false);
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+  const [isConfirmed, setIsConfirmed] = useState(false);
   const [successfulReqMessage, setSuccessfulReqMessage] = useState('');
   const dispatch = useDispatch();
   const modalRef = useRef<HTMLDivElement>(null);
@@ -64,7 +69,7 @@ export default function DashboardPost() {
         modalRef.current &&
         !modalRef.current.contains(event.target as Node)
       ) {
-        setIsModalOpen(false);
+        setIsPreviewModalOpen(false);
       }
     };
 
@@ -78,7 +83,7 @@ export default function DashboardPost() {
 
   // Modal func
   const handlePreviewClick = () => {
-    setIsModalOpen(true);
+    setIsPreviewModalOpen(true);
   };
 
   const isEdited = useSelector(
@@ -92,22 +97,21 @@ export default function DashboardPost() {
     (state: RootState) => state.postEditSlice.value.content,
   );
 
-  // Copy functions
-
-  const handleIntroCopy = () => {
-    navigator.clipboard.writeText(introText!);
-    setIsIntroCopied(true);
-    setTimeout(() => {
-      setIsIntroCopied(false);
-    }, 150);
-  };
-
-  const handleContentCopy = () => {
-    navigator.clipboard.writeText(contentText!);
-    setIsContentCopied(true);
-    setTimeout(() => {
-      setIsContentCopied(false);
-    }, 150);
+  // Copy function
+  const handleCopy = (type: string) => {
+    if (type === 'intro') {
+      navigator.clipboard.writeText(introText!);
+      setIsIntroCopied(true);
+      setTimeout(() => {
+        setIsIntroCopied(false);
+      }, 250);
+    } else {
+      navigator.clipboard.writeText(contentText!);
+      setIsContentCopied(true);
+      setTimeout(() => {
+        setIsContentCopied(false);
+      }, 250);
+    }
   };
 
   const handleSaveChanges = async () => {
@@ -137,20 +141,39 @@ export default function DashboardPost() {
     dispatch(setIsEdited({ bool: false }));
   };
 
-  const handleDelete = () => {
-    deletePost(data.data[0].id);
+  const handleDelete = async () => {
+    setIsConfirmModalOpen(true);
   };
+
+  useEffect(() => {
+    if (isConfirmed) {
+      deletePost(data.data[0].id).then((res) => {
+        if (res!.ok) {
+          setSuccessfulReqMessage(res!.statusText);
+          navigate('/dashboard/posts');
+        } else {
+          setSuccessfulReqMessage(res!.statusText);
+        }
+      });
+    }
+  }, [isConfirmed]);
 
   return (
     <>
       <div className="relative w-full h-full min-h-0 p-4 flex gap-4">
-        {isModalOpen && (
-          <Modal
+        {isPreviewModalOpen && (
+          <PreviewModal
             ref={modalRef}
-            setIsModalOpen={setIsModalOpen}
+            setIsModalOpen={setIsPreviewModalOpen}
             postData={post}
             intro={introText || ''}
             content={contentText}
+          />
+        )}
+        {isConfirmModalOpen && (
+          <ConfirmModal
+            setIsConfirmModalOpen={setIsConfirmModalOpen}
+            setIsConfirmed={setIsConfirmed}
           />
         )}
         {isPending ? (
@@ -200,13 +223,13 @@ export default function DashboardPost() {
                     </div>
                     <Editor type="intro" />
                     <div
-                      onClick={handleIntroCopy}
+                      onClick={() => handleCopy('intro')}
                       className="relative border border-2 p-2 rounded border-gray-300 hover:border-gray-400 hover:cursor-pointer col-span-1 justify-self-center place-self-start"
                     >
                       <CopyIcon />
                       {isIntroCopied && (
-                        <div className="absolute inset-0 bg-white/[0.7] text-sm duration-150">
-                          Copied
+                        <div className="absolute grid place-items-center inset-0 bg-white/[0.7] text-sm duration-100">
+                          <CheckIcon color="zinc-300" />
                         </div>
                       )}
                     </div>
@@ -220,13 +243,13 @@ export default function DashboardPost() {
                   <p className="col-span-1">Content</p>
                   <Editor type="content" />
                   <div
-                    onClick={handleContentCopy}
+                    onClick={() => handleCopy('content')}
                     className="relative border border-2 p-2 rounded border-gray-300 hover:border-gray-400 hover:cursor-pointer col-span-1 justify-self-center place-self-start"
                   >
                     <CopyIcon />
                     {isContentCopied && (
                       <div className="absolute inset-0 bg-white/[0.7] text-sm duration-150">
-                        Copied
+                        <CheckIcon color="zinc-300" />
                       </div>
                     )}
                   </div>

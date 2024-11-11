@@ -221,18 +221,14 @@ export const deletePost = async (entryID: number) => {
 
   try {
     const response = await fetch(url, {
-      method: 'DELTE',
+      method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${JWT}`,
       },
     });
 
-    if (response.ok) {
-      return response.statusText;
-    } else {
-      return;
-    }
+    return response;
   } catch (e) {
     console.error('Error:', e);
   }
