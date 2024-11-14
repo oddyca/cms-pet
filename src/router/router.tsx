@@ -7,11 +7,7 @@ import {
 import { useEffect } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-import {
-  categoryLoader,
-  blogLoader,
-  blogPostLoader,
-} from '@/controller/controller';
+import { categoryLoader, blogLoader, blogPostLoader } from '@/services/loaders';
 
 function ScrollToTop() {
   const { pathname, hash } = useLocation();

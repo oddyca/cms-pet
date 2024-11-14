@@ -5,7 +5,7 @@ import PostTag from './PostTag';
 
 import EditIcon from '@/assets/EditIcon';
 
-import { convertDate } from '@/controller/controller';
+import { convertDate } from '@/utils/dateUtils';
 
 export default function PostCard({
   title,

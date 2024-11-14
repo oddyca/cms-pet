@@ -10,13 +10,11 @@ import {
   quotePlugin,
   MDXEditorMethods,
 } from '@mdxeditor/editor';
-import {
-  setPostInfo,
-  setIsEdited,
-} from '@/controller/store/slices/postEditSlice';
+
+import { setPostInfo, setIsEdited } from '@/state/store/slices/postEditSlice';
 
 import '@mdxeditor/editor/style.css';
-import { RootState } from '@/controller/store/store';
+import { RootState } from '@/state/store/store';
 
 export default function Editor({ type }: { type: string }) {
   const dispatch = useDispatch();

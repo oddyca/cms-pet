@@ -1,4 +1,4 @@
-import { convertDate } from '@/controller/controller';
+import { convertDate } from '@/utils/dateUtils';
 import { TBlogPost } from '@/types/types';
 import { forwardRef, Dispatch, SetStateAction } from 'react';
 import ReactMarkdown from 'react-markdown';

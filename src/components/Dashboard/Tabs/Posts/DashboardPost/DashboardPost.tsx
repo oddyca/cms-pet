@@ -3,13 +3,9 @@ import { useLoaderData, useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import {
-  blogPost,
-  convertDate,
-  convertDateDashboard,
-  deletePost,
-  updateEntry,
-} from '@/controller/controller';
+import { convertDate, convertDateDashboard } from '@/utils/dateUtils';
+import { blogPost } from '@/services/fetchServices';
+import { deletePost, updateEntry } from '@/services/updateServices';
 import { TAllPosts } from '@/types/types';
 
 import PostLoader from '@/components/Blog/Loaders/PostLoader';
@@ -20,11 +16,8 @@ import BinIcon from '@/assets/BinIcon';
 import PreviewModal from '../Modals/PreviewModal';
 
 // Store
-import { RootState } from '@/controller/store/store';
-import {
-  setPostInfo,
-  setIsEdited,
-} from '@/controller/store/slices/postEditSlice';
+import { RootState } from '@/state/store/store';
+import { setPostInfo, setIsEdited } from '@/state/store/slices/postEditSlice';
 import SelectImage from '../SelectImage/SelectImage';
 import CheckIcon from '@/assets/CheckIcon';
 import ConfirmModal from '../Modals/ConfirmModal';

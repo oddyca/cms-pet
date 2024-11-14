@@ -1,7 +1,6 @@
 import { isRouteErrorResponse, Link, useRouteError } from 'react-router-dom';
 import Logo from '@/assets/Logo';
 
-// react router error boundary
 export default function BlogErrorBoundary() {
   const error = useRouteError();
 

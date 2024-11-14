@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { signIn } from '@/controller/controller';
+import { signIn } from '@/services/controller';
 
 import lock from '/lock.svg';
 import mail from '/mail.svg';

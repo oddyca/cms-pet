@@ -5,7 +5,7 @@ import Tag from '../Tag/Tag';
 
 import { TBigPost } from '@/types/types';
 
-import { convertDate } from '@/controller/controller';
+import { convertDate } from '@/utils/dateUtils';
 
 export default function BigPost({
   title,

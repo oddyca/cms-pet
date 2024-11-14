@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { setCategory } from '@/controller/store/slices/dashboardFilterSlice';
-import { RootState } from '@/controller/store/store';
+import { setCategory } from '@/state/store/slices/dashboardFilterSlice';
+import { RootState } from '@/state/store/store';
 
 import ArrowIcon from '@/assets/ArrowIcon';
 

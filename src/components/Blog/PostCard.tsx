@@ -4,7 +4,7 @@ import Tag from '../Tag/Tag';
 
 import { TPostCard } from '@/types/types';
 
-import { convertDate } from '@/controller/controller';
+import { convertDate } from '@/utils/dateUtils';
 
 export default function PostCard({
   title,

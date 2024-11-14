@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import EditIcon from '@/assets/EditIcon';
 
-import { uploadImage } from '@/controller/controller';
+import { uploadImage } from '@/services/updateServices';
 
 export default function SelectImage({
   id,

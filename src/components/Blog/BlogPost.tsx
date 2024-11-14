@@ -5,7 +5,9 @@ import ReactMarkdown from 'react-markdown';
 
 import { TAllPosts } from '@/types/types';
 
-import { blogPost, convertDate, updateViews } from '@/controller/controller';
+import { blogPost } from '@/services/fetchServices';
+import { convertDate } from '@/utils/dateUtils';
+import { updateViews } from '@/services/updateServices';
 
 import PostLoader from './Loaders/PostLoader';
 import Tag from '../Tag/Tag';

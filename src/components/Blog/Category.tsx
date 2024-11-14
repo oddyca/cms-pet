@@ -3,7 +3,8 @@ import { useQuery } from '@tanstack/react-query';
 
 import { TCategoryPosts } from '@/types/types';
 
-import { categoryPosts, renderComponents } from '@/controller/controller';
+import { categoryPosts } from '@/services/fetchServices';
+import { renderComponents } from '@/services/renderServices';
 
 import PostCard from './PostCard';
 

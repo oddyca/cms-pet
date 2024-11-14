@@ -4,11 +4,12 @@ import { Outlet, useParams } from 'react-router-dom';
 import PostCard from './PostCard/PostCard';
 import Dropwdown from '@/components/Dropdown/Dropwdown';
 
-import { allPosts, renderComponents } from '@/controller/controller';
+import { allPosts } from '@/services/fetchServices';
+import { renderComponents } from '@/services/renderServices';
 
 import { TAllPosts } from '@/types/types';
 import { useSelector } from 'react-redux';
-import { RootState } from '@/controller/store/store';
+import { RootState } from '@/state/store/store';
 
 export default function Posts() {
   const { slug } = useParams();
