@@ -13,8 +13,8 @@ import {
 
 import { setPostInfo, setIsEdited } from '@/state/store/slices/postEditSlice';
 
-import '@mdxeditor/editor/style.css';
 import { RootState } from '@/state/store/store';
+import '@mdxeditor/editor/style.css';
 
 export default function Editor({ type }: { type: string }) {
   const dispatch = useDispatch();

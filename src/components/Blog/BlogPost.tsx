@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useLoaderData, useParams } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useMutation } from '@tanstack/react-query';
 import ReactMarkdown from 'react-markdown';
 
 import { TAllPosts } from '@/types/types';
@@ -23,10 +23,14 @@ export default function BlogPost() {
     initialData,
   });
 
+  const mutation = useMutation({
+    mutationFn: updateViews,
+  });
+
   useEffect(() => {
     const originalTitle = document.title;
 
-    updateViews(data.data[0].id);
+    mutation.mutate(data.data[0].id);
     document.title = data.data[0].attributes.title;
     return () => {
       document.title = originalTitle;

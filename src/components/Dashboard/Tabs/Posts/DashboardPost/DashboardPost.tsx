@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useMutation } from '@tanstack/react-query';
 import { useLoaderData, useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
@@ -14,6 +14,7 @@ import CopyIcon from '@/assets/CopyIcon';
 import Editor from '@/components/Dashboard/TextEditor/Editor';
 import BinIcon from '@/assets/BinIcon';
 import PreviewModal from '../Modals/PreviewModal';
+import Loader from '@/components/Dashboard/Loader';
 
 // Store
 import { RootState } from '@/state/store/store';
@@ -107,7 +108,11 @@ export default function DashboardPost() {
     }
   };
 
-  const handleSaveChanges = async () => {
+  const mutationUpdateEntry = useMutation({
+    mutationFn: updateEntry,
+  });
+
+  const handleSaveChanges = () => {
     const updatedPostData = {
       title: post.title,
       category: 'testCategoryUpdate',
@@ -116,11 +121,12 @@ export default function DashboardPost() {
       edited: new Date(),
     };
     try {
-      await updateEntry({
+      mutationUpdateEntry.mutate({
         entryID: data.data[0].id,
         entryData: updatedPostData,
       });
-      setSuccessfulReqMessage('Changes Saved!');
+      if (mutationUpdateEntry.isSuccess)
+        setSuccessfulReqMessage('Changes Saved!');
       dispatch(setIsEdited({ bool: false }));
       setTimeout(() => setSuccessfulReqMessage(''), 2000);
     } catch (e) {
@@ -138,16 +144,20 @@ export default function DashboardPost() {
     setIsConfirmModalOpen(true);
   };
 
+  const mutationDeleteEntry = useMutation({
+    mutationFn: deletePost,
+    onSuccess: (response) => {
+      setSuccessfulReqMessage(response!.statusText);
+      navigate('/dashboard/posts');
+    },
+    onError: (error) => {
+      console.error('Error deleting post:', error);
+    },
+  });
+
   useEffect(() => {
     if (isConfirmed) {
-      deletePost(data.data[0].id).then((res) => {
-        if (res!.ok) {
-          setSuccessfulReqMessage(res!.statusText);
-          navigate('/dashboard/posts');
-        } else {
-          setSuccessfulReqMessage(res!.statusText);
-        }
-      });
+      mutationDeleteEntry.mutate(data.data[0].id);
     }
   }, [isConfirmed]);
 
@@ -186,13 +196,19 @@ export default function DashboardPost() {
                   />
                   <Button
                     btn="Cancel"
-                    disabled={!isEdited}
+                    disabled={!isEdited || mutationUpdateEntry.isPending}
                     onClick={handleCancel}
                   />
                   <Button
                     bg="accent-purple-300"
-                    btn="Save Changes"
-                    disabled={!isEdited}
+                    btn={
+                      mutationUpdateEntry.isPending ? (
+                        <Loader />
+                      ) : (
+                        'Save Changes'
+                      )
+                    }
+                    disabled={!isEdited || mutationUpdateEntry.isPending}
                     onClick={handleSaveChanges}
                   />
                 </div>
@@ -274,14 +290,19 @@ export default function DashboardPost() {
                   className="flex justify-center items-center gap-2 w-full py-2 rounded font-bold text-white bg-red-600 hover:bg-red-400"
                   onClick={handleDelete}
                 >
-                  <BinIcon color="white" />
-                  DELETE POST
+                  {mutationDeleteEntry.isPending ? (
+                    <Loader />
+                  ) : (
+                    <>
+                      <BinIcon color="white" />
+                      DELETE POST
+                    </>
+                  )}
                 </button>
               </div>
             </>
           )
         )}
-
         <div
           className={
             successfulReqMessage

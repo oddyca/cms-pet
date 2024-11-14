@@ -18,9 +18,8 @@ const Crumbs = ({ crumbs }: TBreadCrumbs) => {
     url += `${crumb}/`;
 
     return (
-      <>
+      <div key={crumb} className="flex gap-4">
         <Link
-          key={crumb}
           to={`/blog/${url}`}
           className="hover:text-link-blue-300 duration-300 ease-in-out"
         >
@@ -29,7 +28,7 @@ const Crumbs = ({ crumbs }: TBreadCrumbs) => {
             : crumb.charAt(0).toUpperCase() + crumb.slice(1)}
         </Link>
         {id < crumbs.length - 1 && <p> &gt; </p>}
-      </>
+      </div>
     );
   });
 };

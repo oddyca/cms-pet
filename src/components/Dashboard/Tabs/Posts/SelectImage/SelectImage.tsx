@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
 import EditIcon from '@/assets/EditIcon';
 
 import { uploadImage } from '@/services/updateServices';
@@ -11,13 +12,18 @@ export default function SelectImage({
   defaultImage: string;
 }) {
   const [image, setImage] = useState<string>(defaultImage);
+  const mutationUploadImage = useMutation({
+    mutationFn: (target: HTMLInputElement) => uploadImage(id, target),
+  });
+
   const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
 
     if (!e.target.files) return;
     const imageFile = e.target.files[0];
     setImage(URL.createObjectURL(imageFile));
-    uploadImage(id, e.target);
+
+    mutationUploadImage.mutate(e.target);
   };
 
   return (
