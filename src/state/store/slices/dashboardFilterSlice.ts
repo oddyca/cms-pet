@@ -5,7 +5,7 @@ export interface FilterState {
 }
 
 const initialState: FilterState = {
-  value: 'All Categories',
+  value: '',
 };
 
 export const dashboardFilterSlice = createSlice({

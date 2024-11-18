@@ -37,7 +37,7 @@ export default function Blog() {
         </div>
       </div>
       <div className="w-full min-h-screen max-w-[1440px] my-8 mx-auto flex flex-col gap-8">
-        <NavBar /*postsData={data}*/ />
+        <NavBar />
         <div className="grid grid-cols-4 gap-6">
           {pathname === '/blog' ? (
             <div className="col-span-3 flex flex-col gap-4">

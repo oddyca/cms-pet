@@ -4,9 +4,10 @@ import { useEffect, useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { convertDate, convertDateDashboard } from '@/utils/dateUtils';
-import { blogPost } from '@/services/fetchServices';
+import { blogPost, getAllTags } from '@/services/fetchServices';
 import { deletePost, updateEntry } from '@/services/updateServices';
-import { TAllPosts } from '@/types/types';
+import { useHashText } from '@/hooks/useHashText';
+import { TAllPosts, TTag } from '@/types/types';
 
 import PostLoader from '@/components/Blog/Loaders/PostLoader';
 import Button from '../Button/Button';
@@ -15,13 +16,15 @@ import Editor from '@/components/Dashboard/TextEditor/Editor';
 import BinIcon from '@/assets/BinIcon';
 import PreviewModal from '../Modals/PreviewModal';
 import Loader from '@/components/Dashboard/Loader';
+import Dropwdown from '@/components/Dropdown/Dropwdown';
 
 // Store
 import { RootState } from '@/state/store/store';
-import { setPostInfo, setIsEdited } from '@/state/store/slices/postEditSlice';
+import { setPostInfo } from '@/state/store/slices/postEditSlice';
 import SelectImage from '../SelectImage/SelectImage';
 import CheckIcon from '@/assets/CheckIcon';
 import ConfirmModal from '../Modals/ConfirmModal';
+import { setCategory } from '@/state/store/slices/dashboardFilterSlice';
 
 export default function DashboardPost() {
   const navigate = useNavigate();
@@ -35,6 +38,7 @@ export default function DashboardPost() {
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   const [isConfirmed, setIsConfirmed] = useState(false);
   const [successfulReqMessage, setSuccessfulReqMessage] = useState('');
+  const [allCategories, setAllCategories] = useState<string[]>([]);
   const dispatch = useDispatch();
   const modalRef = useRef<HTMLDivElement>(null);
 
@@ -68,6 +72,18 @@ export default function DashboardPost() {
     };
 
     document.addEventListener('mousedown', handleClickOutside);
+    const categoriesSet = new Set<string>();
+
+    getAllTags().then((res) => {
+      res.data.map((tag: TTag) => {
+        const capFirstLetter =
+          tag.attributes.tag.charAt(0).toUpperCase() +
+          tag.attributes.tag.slice(1);
+
+        categoriesSet.add(capFirstLetter);
+      });
+      setAllCategories([...categoriesSet]);
+    });
 
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
@@ -80,18 +96,17 @@ export default function DashboardPost() {
     setIsPreviewModalOpen(true);
   };
 
-  const isEdited = useSelector(
-    (state: RootState) => state.postEditSlice.value.isEdited,
-  );
-
+  // store states
   const introText = useSelector(
     (state: RootState) => state.postEditSlice.value.intro,
   );
   const contentText = useSelector(
     (state: RootState) => state.postEditSlice.value.content,
   );
+  const category = useSelector(
+    (state: RootState) => state.dashboardCategoryFilter.value,
+  );
 
-  // Copy function
   const handleCopy = (type: string) => {
     if (type === 'intro') {
       navigator.clipboard.writeText(introText!);
@@ -112,10 +127,11 @@ export default function DashboardPost() {
     mutationFn: updateEntry,
   });
 
+  // Save changes
   const handleSaveChanges = () => {
     const updatedPostData = {
       title: post.title,
-      category: 'testCategoryUpdate',
+      tag: category || post.tag,
       intro: introText || '',
       article: contentText,
       edited: new Date(),
@@ -127,7 +143,6 @@ export default function DashboardPost() {
       });
       if (mutationUpdateEntry.isSuccess)
         setSuccessfulReqMessage('Changes Saved!');
-      dispatch(setIsEdited({ bool: false }));
       setTimeout(() => setSuccessfulReqMessage(''), 2000);
     } catch (e) {
       console.error(e);
@@ -137,7 +152,7 @@ export default function DashboardPost() {
   const handleCancel = () => {
     dispatch(setPostInfo({ type: 'intro', text: post.intro }));
     dispatch(setPostInfo({ type: 'content', text: post.article }));
-    dispatch(setIsEdited({ bool: false }));
+    dispatch(setCategory(post.tag));
   };
 
   const handleDelete = async () => {
@@ -160,6 +175,30 @@ export default function DashboardPost() {
       mutationDeleteEntry.mutate(data.data[0].id);
     }
   }, [isConfirmed]);
+
+  const initialDataRef = useRef({
+    intro: post.intro,
+    content: post.article,
+    category: post.tag,
+  });
+
+  const isIntroEdited =
+    initialDataRef.current.intro &&
+    useHashText(introText || initialDataRef.current.intro) !==
+      useHashText(initialDataRef.current.intro);
+
+  const isContentEdited =
+    initialDataRef.current.content &&
+    useHashText(contentText || initialDataRef.current.content) !==
+      useHashText(initialDataRef.current.content);
+
+  const isCategoryEdited =
+    category !== '' && category !== initialDataRef.current.category;
+
+  const isEdited =
+    initialDataRef.current.intro !== undefined &&
+    initialDataRef.current.content !== undefined &&
+    (isIntroEdited || isContentEdited || isCategoryEdited);
 
   return (
     <>
@@ -220,9 +259,12 @@ export default function DashboardPost() {
                 </div>
                 <div className="grid grid-cols-12">
                   <p className="col-span-1">Category</p>
-                  <select className="rounded border border-1 border-gray-300 px-2">
-                    <option>Ideas</option>
-                  </select>
+                  <div className="rounded border border-1 border-gray-300 px-2 py-1 w-fit">
+                    <Dropwdown
+                      menuOptions={allCategories}
+                      defaultCat={category || post.tag}
+                    />
+                  </div>
                 </div>
                 {post.intro ? (
                   <div className="flex-grow grid grid-cols-12 min-h-0 basis-1/3">

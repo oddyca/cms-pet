@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 
 import Logo from '@/assets/Logo';
@@ -12,7 +12,6 @@ const navLinkClass = ({ isActive }: { isActive: boolean }) =>
     : 'px-4 py-2 rounded flex gap-3 hover:text-white hover:bg-accent-blue-50';
 
 export default function Dashboard() {
-  const [token, setToken] = useState('');
   const navigate = useNavigate();
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -21,12 +20,6 @@ export default function Dashboard() {
     navigate('/dashboard/signin');
   };
 
-  useEffect(() => {
-    const isLoggedLS = sessionStorage.getItem('isLogged');
-    const JWT = sessionStorage.getItem('JWT') as string;
-
-    setToken(JWT);
-  }, []);
   return (
     <>
       <div className="w-full max-h-screen">

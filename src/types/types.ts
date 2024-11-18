@@ -88,9 +88,16 @@ export type TUpdateEntry = {
   entryID: number;
   entryData: {
     title: string;
-    category: string;
+    tag: string;
     intro: string;
     article: string;
     edited: Date;
+  };
+};
+
+export type TTag = {
+  id: number;
+  attributes: {
+    tag: string;
   };
 };

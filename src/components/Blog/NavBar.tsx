@@ -2,15 +2,10 @@ import { NavLink } from 'react-router-dom';
 import VerticalDivider from '../Dividers/VerticalDivider';
 import HorizontallDivider from '../Dividers/HorizontalDivider';
 
-import { TBlogNavBar } from '@/types/types';
+import { getAllTags } from '@/services/fetchServices';
 
-const categories = [
-  { name: 'FRONT PAGE', slug: 'front-page' },
-  { name: 'MENTIONS', slug: 'mentions' },
-  { name: 'ARTICLES', slug: 'articles' },
-  { name: 'OUR IDEAS', slug: 'ideas' },
-];
-
+import { TBlogNavBar, TTag } from '@/types/types';
+import { useEffect, useState } from 'react';
 const navLinkClass = ({ isActive }: { isActive: boolean }) =>
   isActive ? 'block w-full bg-accent-purple-100' : 'w-full';
 
@@ -33,11 +28,38 @@ const renderNavBar = (arr: TBlogNavBar[]) => {
 };
 
 export default function NavBar() {
+  const categoriesMap = new Map();
+
+  const [allCategories, setAllCategories] = useState<TBlogNavBar[]>([]);
+
+  useEffect(() => {
+    getAllTags().then((res) => {
+      res.data.map((tag: TTag) => {
+        const capTag = tag.attributes.tag.toUpperCase();
+        const tagName = capTag === 'IDEAS' ? 'OUR IDEAS' : capTag;
+
+        if (!categoriesMap.has(capTag)) {
+          categoriesMap.set(capTag, {
+            name: tagName,
+            slug: capTag.toLowerCase(),
+          });
+        }
+      });
+      const mapObj = Object.values(
+        Object.fromEntries(categoriesMap.entries()),
+      ) as TBlogNavBar[];
+      setAllCategories([
+        { name: 'FRONT PAGES', slug: 'front-page' },
+        ...mapObj,
+      ]);
+    });
+  }, []);
+
   return (
     <div>
       <HorizontallDivider />
       <ul className="grid grid-cols-4 justify-items-stretch list-none py-4">
-        {renderNavBar(categories)}
+        {allCategories.length > 0 && renderNavBar(allCategories)}
       </ul>
       <HorizontallDivider />
     </div>

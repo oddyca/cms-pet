@@ -4,7 +4,7 @@ export interface EditPostState {
   value: {
     intro?: string;
     content: string;
-    isEdited: boolean;
+    // isEdited: boolean;
   };
 }
 
@@ -12,7 +12,6 @@ const initialState: EditPostState = {
   value: {
     intro: '',
     content: '',
-    isEdited: false,
   },
 };
 
@@ -28,17 +27,9 @@ export const postEditSlice = createSlice({
         state.value = { ...state.value, content: text };
       }
     },
-    setIsEdited: (state, action) => {
-      const { bool } = action.payload;
-      if (bool) {
-        state.value.isEdited = true;
-      } else {
-        state.value.isEdited = false;
-      }
-    },
   },
 });
 
-export const { setPostInfo, setIsEdited } = postEditSlice.actions;
+export const { setPostInfo } = postEditSlice.actions;
 
 export default postEditSlice.reducer;

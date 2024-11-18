@@ -11,7 +11,7 @@ import {
   MDXEditorMethods,
 } from '@mdxeditor/editor';
 
-import { setPostInfo, setIsEdited } from '@/state/store/slices/postEditSlice';
+import { setPostInfo } from '@/state/store/slices/postEditSlice';
 
 import { RootState } from '@/state/store/store';
 import '@mdxeditor/editor/style.css';
@@ -39,7 +39,6 @@ export default function Editor({ type }: { type: string }) {
 
   const handleChange = (text: string) => {
     dispatch(setPostInfo({ type, text }));
-    dispatch(setIsEdited({ bool: true }));
   };
 
   return (

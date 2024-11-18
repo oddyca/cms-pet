@@ -6,7 +6,13 @@ import { RootState } from '@/state/store/store';
 
 import ArrowIcon from '@/assets/ArrowIcon';
 
-export default function Dropwdown({ menuOptions }: { menuOptions: string[] }) {
+export default function Dropwdown({
+  menuOptions,
+  defaultCat,
+}: {
+  menuOptions: string[];
+  defaultCat?: string;
+}) {
   const [isOpen, setIsOpen] = useState(false);
   const dispatch = useDispatch();
   const category = useSelector(
@@ -31,13 +37,13 @@ export default function Dropwdown({ menuOptions }: { menuOptions: string[] }) {
       onClick={() => setIsOpen((state) => !state)}
     >
       <div className="flex gap-2 items-center">
-        <li className="list-none">{category}</li>
+        <li className="list-none">{category || defaultCat}</li>
         <ArrowIcon isOpen={isOpen} />
       </div>
       <ul
         className={
           isOpen
-            ? 'absolute top-8 left-0 bg-white rounded border border-1 border-gray-300 flex flex-col gap-2 duration-150 w-fit min-w-64 max-h-48 overflow-hidden shadow-centrif'
+            ? 'absolute top-8 left-0 bg-white rounded border border-1 border-gray-300 flex flex-col gap-2 duration-150 w-fit min-w-64 max-h-48 overflow-hidden shadow-centrif z-10'
             : 'max-h-0 absolute top-6 left-0 bg-white'
         }
       >

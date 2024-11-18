@@ -1,3 +1,4 @@
+import { useRef, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Outlet, useParams } from 'react-router-dom';
 
@@ -8,15 +9,18 @@ import { allPosts } from '@/services/fetchServices';
 import { renderComponents } from '@/services/renderServices';
 
 import { TAllPosts } from '@/types/types';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/state/store/store';
+// import { setIsEdited } from '@/state/store/slices/postEditSlice';
+import { setCategory } from '@/state/store/slices/dashboardFilterSlice';
 
 export default function Posts() {
   const { slug } = useParams();
+  const allCategoriesArr = useRef<string[]>([]);
 
-  const category = useSelector(
-    (state: RootState) => state.dashboardCategoryFilter.value,
-  );
+  const category =
+    useSelector((state: RootState) => state.dashboardCategoryFilter.value) ||
+    'All Categories';
 
   const allPostsQuery = useQuery<TAllPosts>({
     queryKey: ['blogPosts'],
@@ -36,6 +40,28 @@ export default function Posts() {
     enabled: category !== 'All Categories',
   });
 
+  if (!allPostsQuery.isPending) {
+    const categoriesSet = new Set<string>();
+
+    allPostsQuery.data!.data.map((post) => {
+      const capFirstLetter =
+        post.attributes.tag.charAt(0).toUpperCase() +
+        post.attributes.tag.slice(1);
+
+      categoriesSet.add(capFirstLetter);
+    });
+
+    allCategoriesArr.current = ['All Categories', ...categoriesSet];
+  }
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    return () => {
+      dispatch(setCategory(''));
+    };
+  }, []);
+
   if (slug) return <Outlet />;
 
   return (
@@ -43,7 +69,8 @@ export default function Posts() {
       <div className="w-full p-2 flex justify-between">
         <div>
           <Dropwdown
-            menuOptions={['All Categories', 'Ideas', 'Mentions', 'Articles']}
+            menuOptions={allCategoriesArr.current}
+            defaultCat="All Categories"
           />
         </div>
         <button className="rounded border border-black px-2">

@@ -37,3 +37,15 @@ export const blogPost = async (slug: string): Promise<TAllPosts> => {
 
   return fetchedData as Promise<TAllPosts>;
 };
+
+export const getAllTags = async () => {
+  try {
+    const fetchedData = await fetch(
+      'http://localhost:1337/api/blog-posts?fields=tag',
+    );
+    const allCategories = await fetchedData.json();
+    return allCategories;
+  } catch (e) {
+    console.error(e);
+  }
+};
