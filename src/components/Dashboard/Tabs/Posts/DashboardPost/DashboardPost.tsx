@@ -1,19 +1,15 @@
-import { useQuery, useMutation } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { useLoaderData, useParams } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { blogPost, getAllTags } from '@/services/fetchServices';
-import { updateEntry } from '@/services/updateServices';
-import { useHashText } from '@/hooks/useHashText';
 import { TAllPosts, TTag } from '@/types/types';
 
 import PostLoader from '@/components/Blog/Loaders/PostLoader';
-import Button from '../Button/Button';
 import CopyIcon from '@/assets/CopyIcon';
 import Editor from '@/components/Dashboard/TextEditor/Editor';
 import PreviewModal from '../Modals/PreviewModal';
-import Loader from '@/components/Dashboard/Loader';
 import Dropwdown from '@/components/Dropdown/Dropwdown';
 
 // Store
@@ -22,8 +18,8 @@ import { setPostInfo } from '@/state/store/slices/postEditSlice';
 import SelectImage from '../SelectImage/SelectImage';
 import CheckIcon from '@/assets/CheckIcon';
 import ConfirmModal from '../Modals/ConfirmModal';
-import { setCategory } from '@/state/store/slices/dashboardFilterSlice';
 import PostInfo from './PostInfo';
+import ButtonsPanel from './ButtonsPanel';
 
 export default function DashboardPost() {
   const initialData = useLoaderData() as TAllPosts;
@@ -121,63 +117,6 @@ export default function DashboardPost() {
     }
   };
 
-  const mutationUpdateEntry = useMutation({
-    mutationFn: updateEntry,
-  });
-
-  // Save changes
-  const handleSaveChanges = () => {
-    const updatedPostData = {
-      title: post.title,
-      tag: category || post.tag,
-      intro: introText || '',
-      article: contentText,
-      edited: new Date(),
-    };
-    try {
-      mutationUpdateEntry.mutate({
-        entryID: data.data[0].id,
-        entryData: updatedPostData,
-      });
-      if (mutationUpdateEntry.isSuccess) {
-        setSuccessfulReqMessage('Changes Saved!');
-      }
-      setTimeout(() => setSuccessfulReqMessage(''), 2000);
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
-  const handleCancel = () => {
-    dispatch(setPostInfo({ type: 'intro', text: post.intro }));
-    dispatch(setPostInfo({ type: 'content', text: post.article }));
-    dispatch(setCategory(post.tag));
-  };
-
-  const initialDataRef = useRef({
-    intro: post.intro,
-    content: post.article,
-    category: post.tag,
-  });
-
-  const isIntroEdited =
-    initialDataRef.current.intro &&
-    useHashText(introText || initialDataRef.current.intro) !==
-      useHashText(initialDataRef.current.intro);
-
-  const isContentEdited =
-    initialDataRef.current.content &&
-    useHashText(contentText || initialDataRef.current.content) !==
-      useHashText(initialDataRef.current.content);
-
-  const isCategoryEdited =
-    category !== '' && category !== initialDataRef.current.category;
-
-  const isEdited =
-    initialDataRef.current.intro !== undefined &&
-    initialDataRef.current.content !== undefined &&
-    (isIntroEdited || isContentEdited || isCategoryEdited);
-
   return (
     <>
       <div className="relative w-full h-full min-h-0 p-4 flex gap-4">
@@ -205,30 +144,15 @@ export default function DashboardPost() {
                 <SelectImage id={data.data[0].id} defaultImage={img} />
               </div>
               <div className="flex flex-col h-full items-evenly w-full min-h-0 gap-2">
-                <div className="flex justify-end gap-4">
-                  <Button
-                    btn="Preview"
-                    disabled={false}
-                    onClick={handlePreviewClick}
-                  />
-                  <Button
-                    btn="Cancel"
-                    disabled={!isEdited || mutationUpdateEntry.isPending}
-                    onClick={handleCancel}
-                  />
-                  <Button
-                    bg="accent-purple-300"
-                    btn={
-                      mutationUpdateEntry.isPending ? (
-                        <Loader />
-                      ) : (
-                        'Save Changes'
-                      )
-                    }
-                    disabled={!isEdited || mutationUpdateEntry.isPending}
-                    onClick={handleSaveChanges}
-                  />
-                </div>
+                <ButtonsPanel
+                  handlePreviewClick={handlePreviewClick}
+                  setSuccessfulReqMessage={setSuccessfulReqMessage}
+                  category={category}
+                  post={post}
+                  introText={introText}
+                  contentText={contentText}
+                  postID={data.data[0].id}
+                />
                 <div className="grid grid-cols-12">
                   <p className="col-span-1">Title</p>
                   <textarea className="resize-none col-span-11 max-h-8 h-8 px-2 rounded border border-1 border-gray-300">
