@@ -1,11 +1,10 @@
 import { useQuery, useMutation } from '@tanstack/react-query';
-import { useLoaderData, useParams, useNavigate } from 'react-router-dom';
+import { useLoaderData, useParams } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { convertDate, convertDateDashboard } from '@/utils/dateUtils';
 import { blogPost, getAllTags } from '@/services/fetchServices';
-import { deletePost, updateEntry } from '@/services/updateServices';
+import { updateEntry } from '@/services/updateServices';
 import { useHashText } from '@/hooks/useHashText';
 import { TAllPosts, TTag } from '@/types/types';
 
@@ -13,7 +12,6 @@ import PostLoader from '@/components/Blog/Loaders/PostLoader';
 import Button from '../Button/Button';
 import CopyIcon from '@/assets/CopyIcon';
 import Editor from '@/components/Dashboard/TextEditor/Editor';
-import BinIcon from '@/assets/BinIcon';
 import PreviewModal from '../Modals/PreviewModal';
 import Loader from '@/components/Dashboard/Loader';
 import Dropwdown from '@/components/Dropdown/Dropwdown';
@@ -25,9 +23,9 @@ import SelectImage from '../SelectImage/SelectImage';
 import CheckIcon from '@/assets/CheckIcon';
 import ConfirmModal from '../Modals/ConfirmModal';
 import { setCategory } from '@/state/store/slices/dashboardFilterSlice';
+import PostInfo from './PostInfo';
 
 export default function DashboardPost() {
-  const navigate = useNavigate();
   const initialData = useLoaderData() as TAllPosts;
   const { slug } = useParams();
 
@@ -141,8 +139,9 @@ export default function DashboardPost() {
         entryID: data.data[0].id,
         entryData: updatedPostData,
       });
-      if (mutationUpdateEntry.isSuccess)
+      if (mutationUpdateEntry.isSuccess) {
         setSuccessfulReqMessage('Changes Saved!');
+      }
       setTimeout(() => setSuccessfulReqMessage(''), 2000);
     } catch (e) {
       console.error(e);
@@ -154,27 +153,6 @@ export default function DashboardPost() {
     dispatch(setPostInfo({ type: 'content', text: post.article }));
     dispatch(setCategory(post.tag));
   };
-
-  const handleDelete = async () => {
-    setIsConfirmModalOpen(true);
-  };
-
-  const mutationDeleteEntry = useMutation({
-    mutationFn: deletePost,
-    onSuccess: (response) => {
-      setSuccessfulReqMessage(response!.statusText);
-      navigate('/dashboard/posts');
-    },
-    onError: (error) => {
-      console.error('Error deleting post:', error);
-    },
-  });
-
-  useEffect(() => {
-    if (isConfirmed) {
-      mutationDeleteEntry.mutate(data.data[0].id);
-    }
-  }, [isConfirmed]);
 
   const initialDataRef = useRef({
     intro: post.intro,
@@ -306,42 +284,12 @@ export default function DashboardPost() {
                   </div>
                 </div>
               </div>
-              <div className=" basis-1/4 flex flex-col gap-4">
-                <p className="self-end">Post Information</p>
-                <div className="rounded shadow-centrif flex flex-col gap-2 py-4 px-2">
-                  <div className="flex justify-between">
-                    <p className="text-gray-400">Published</p>
-                    <p>{convertDate(post.publishedAt)}</p>
-                  </div>
-                  <div className="flex justify-between">
-                    <p className="text-gray-400">Author</p>
-                    <p>{post.author}</p>
-                  </div>
-                  <div className="flex justify-between">
-                    <p className="text-gray-400">Edited</p>
-                    <p className="text-right">
-                      {convertDateDashboard(post.edited) ?? '-'}
-                    </p>
-                  </div>
-                  <div className="flex justify-between">
-                    <p className="text-gray-400">Views</p>
-                    <p>{post.views ?? '0'}</p>
-                  </div>
-                </div>
-                <button
-                  className="flex justify-center items-center gap-2 w-full py-2 rounded font-bold text-white bg-red-600 hover:bg-red-400"
-                  onClick={handleDelete}
-                >
-                  {mutationDeleteEntry.isPending ? (
-                    <Loader />
-                  ) : (
-                    <>
-                      <BinIcon color="white" />
-                      DELETE POST
-                    </>
-                  )}
-                </button>
-              </div>
+              <PostInfo
+                postID={data.data[0].id}
+                post={post}
+                setIsConfirmModalOpen={setIsConfirmModalOpen}
+                isConfirmed={isConfirmed}
+              />
             </>
           )
         )}
