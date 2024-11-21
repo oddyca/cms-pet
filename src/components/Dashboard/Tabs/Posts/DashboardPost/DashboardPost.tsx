@@ -100,6 +100,9 @@ export default function DashboardPost() {
   const category = useSelector(
     (state: RootState) => state.dashboardCategoryFilter.value,
   );
+  const storeImage = useSelector(
+    (state: RootState) => state.updateImageSlice.value.image,
+  );
 
   const handleCopy = (type: string) => {
     if (type === 'intro') {
@@ -141,7 +144,7 @@ export default function DashboardPost() {
           !error && (
             <>
               <div className="basis-1/5 h-fit rounded border-dashed border-2 border-gray-300 hover:border-gray-400 hover:cursor-pointer p-4 group relative">
-                <SelectImage id={data.data[0].id} defaultImage={img} />
+                <SelectImage defaultImage={img} />
               </div>
               <div className="flex flex-col h-full items-evenly w-full min-h-0 gap-2">
                 <ButtonsPanel
@@ -151,6 +154,7 @@ export default function DashboardPost() {
                   post={post}
                   introText={introText}
                   contentText={contentText}
+                  imageURL={storeImage}
                   postID={data.data[0].id}
                 />
                 <div className="grid grid-cols-12">
@@ -219,7 +223,7 @@ export default function DashboardPost() {
         )}
         <div
           className={
-            successfulReqMessage
+            successfulReqMessage.length > 0
               ? 'fixed bottom-6 right-6 rounded border border-1 border-green-600 px-6 py-2 duration-300 bg-green-600 text-white shadow-centrif'
               : 'fixed bottom-6 right-6 border-1 px-6 py-2 duration-300 opacity-0'
           }

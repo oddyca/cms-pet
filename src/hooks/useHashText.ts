@@ -10,10 +10,11 @@ const processText = (text: string) => {
 };
 
 export const useHashText = (text: string, delay: number = 500) => {
-  const [hash, setHash] = useState<number>(processText(text));
+  const hashedText = processText(text);
+  const [hash, setHash] = useState<number>(hashedText);
 
   useEffect(() => {
-    const timeout = setTimeout(() => setHash(processText(text)), delay);
+    const timeout = setTimeout(() => setHash(hashedText), delay);
 
     return () => {
       clearTimeout(timeout);

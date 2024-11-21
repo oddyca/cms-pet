@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import dashboardCategoryFilter from './slices/dashboardFilterSlice';
 import postEditSlice from './slices/postEditSlice';
+import updateImageSlice from './slices/updateImageSlice';
 
 export const store = configureStore({
   reducer: {
     dashboardCategoryFilter: dashboardCategoryFilter,
     postEditSlice: postEditSlice,
+    updateImageSlice: updateImageSlice,
   },
 });
 

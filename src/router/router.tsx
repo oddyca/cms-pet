@@ -36,6 +36,7 @@ import Signin from '@/components/Dashboard/Signin';
 import ProtectedRoute from '@/components/ProtectedRoute/ProtectedRoute';
 import DashboardTab from '@/components/Dashboard/DashboardTab';
 import DashboardPost from '@/components/Dashboard/Tabs/Posts/DashboardPost/DashboardPost';
+import CreatePost from '@/components/Dashboard/Tabs/Posts/CreatePost/CreatePost';
 
 const queryClient = new QueryClient();
 
@@ -96,6 +97,10 @@ export const router = createBrowserRouter([
                 path: '/dashboard/posts/:slug',
                 element: <DashboardPost />,
                 loader: blogPostLoader(queryClient),
+              },
+              {
+                path: '/dashboard/posts/create-new',
+                element: <CreatePost />,
               },
             ],
           },

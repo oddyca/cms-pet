@@ -45,13 +45,17 @@ export const updateEntry = async ({ entryID, entryData }: TUpdateEntry) => {
   }
 };
 
-export const uploadImage = async (
-  entryID: number,
-  target: HTMLInputElement,
-) => {
+export const uploadImage = async (entryID: number, imgBlop: string) => {
   const formData = new FormData();
-  if (!target.files) return;
-  formData.append('files', target.files[0]);
+  if (!imgBlop) return;
+
+  // Fetch the Blob from the URL
+  const response = await fetch(imgBlop);
+  const blob = await response.blob();
+
+  // Create a File object
+  const file = new File([blob], 'uploaded-image.jpg', { type: blob.type });
+  formData.append('files', file);
   const JWT = sessionStorage.getItem('JWT');
 
   const uploadResponse = await fetch(`http://localhost:1337/api/upload/`, {
@@ -94,6 +98,35 @@ export const deletePost = async (entryID: number) => {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${JWT}`,
       },
+    });
+
+    return response;
+  } catch (e) {
+    console.error('Error:', e);
+  }
+};
+
+export const createDraft = async (newPostData: {
+  title: string;
+  author: string;
+  tag: string;
+  intro: string | undefined;
+  content: string;
+  publishedAt: null;
+}) => {
+  const url = 'http://localhost:1337/api/blog-posts?status=draft';
+  const JWT = sessionStorage.getItem('JWT');
+
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${JWT}`,
+      },
+      body: JSON.stringify({
+        data: { ...newPostData },
+      }),
     });
 
     return response;

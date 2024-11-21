@@ -11,8 +11,8 @@ import { renderComponents } from '@/services/renderServices';
 import { TAllPosts } from '@/types/types';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/state/store/store';
-// import { setIsEdited } from '@/state/store/slices/postEditSlice';
 import { setCategory } from '@/state/store/slices/dashboardFilterSlice';
+import { Link } from 'react-router-dom';
 
 export default function Posts() {
   const { slug } = useParams();
@@ -73,9 +73,12 @@ export default function Posts() {
             defaultCat="All Categories"
           />
         </div>
-        <button className="rounded border border-black px-2">
+        <Link
+          to="/dashboard/posts/create-new"
+          className="rounded border border-black px-2"
+        >
           CREATE NEW POST
-        </button>
+        </Link>
       </div>
       <div className="h-full flex min-h-0">
         <div className="basis-1/2 custom-scrollbar-hidden hover:custom-scrollbar overflow-y-auto p-2">
