@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Outlet, useParams } from 'react-router-dom';
 
 import PostCard from './PostCard/PostCard';
-import Dropwdown from '@/components/Dropdown/Dropwdown';
+import Dropwdown from '@/components/Dropdown/Dropdown';
 
 import { allPosts } from '@/services/fetchServices';
 import { renderComponents } from '@/services/renderServices';

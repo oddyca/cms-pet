@@ -35,11 +35,14 @@ export default function Editor({ type }: { type: string }) {
         editorRef.current.setMarkdown(contentText);
       }
     }
-
-    return () => {
-      dispatch(resetPostInfo());
-    };
   }, [introText, contentText]);
+
+  useEffect(
+    () => () => {
+      dispatch(resetPostInfo());
+    },
+    [],
+  );
 
   const handleChange = (text: string) => {
     dispatch(setPostInfo({ type, text }));

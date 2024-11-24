@@ -6,7 +6,7 @@ import { RootState } from '@/state/store/store';
 
 import ArrowIcon from '@/assets/ArrowIcon';
 
-export default function Dropwdown({
+export default function Dropdown({
   menuOptions,
   defaultCat,
 }: {

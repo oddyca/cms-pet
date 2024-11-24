@@ -10,7 +10,7 @@ import PostLoader from '@/components/Blog/Loaders/PostLoader';
 import CopyIcon from '@/assets/CopyIcon';
 import Editor from '@/components/Dashboard/TextEditor/Editor';
 import PreviewModal from '../Modals/PreviewModal';
-import Dropwdown from '@/components/Dropdown/Dropwdown';
+import Dropdown from '@/components/Dropdown/Dropdown';
 
 // Store
 import { RootState } from '@/state/store/store';
@@ -122,7 +122,7 @@ export default function DashboardPost() {
 
   return (
     <>
-      <div className="relative w-full h-full min-h-0 p-4 flex gap-4">
+      <div className="relative w-full h-full min-h-0 p-4">
         {isPreviewModalOpen && (
           <PreviewModal
             ref={modalRef}
@@ -142,83 +142,92 @@ export default function DashboardPost() {
           <PostLoader />
         ) : (
           !error && (
-            <>
-              <div className="basis-1/5 h-fit rounded border-dashed border-2 border-gray-300 hover:border-gray-400 hover:cursor-pointer p-4 group relative">
-                <SelectImage defaultImage={img} />
+            <div className="flex flex-col gap-4 w-full h-full">
+              <div className="grid grid-cols-12 w-full h-fit gap-2">
+                <div className="col-span-2" />
+                <div className="col-span-7 place-self-end">
+                  <ButtonsPanel
+                    handlePreviewClick={handlePreviewClick}
+                    setSuccessfulReqMessage={setSuccessfulReqMessage}
+                    category={category}
+                    post={post}
+                    introText={introText}
+                    contentText={contentText}
+                    imageURL={storeImage}
+                    postID={data.data[0].id}
+                  />
+                </div>
+                <div className="col-span-3" />
               </div>
-              <div className="flex flex-col h-full items-evenly w-full min-h-0 gap-2">
-                <ButtonsPanel
-                  handlePreviewClick={handlePreviewClick}
-                  setSuccessfulReqMessage={setSuccessfulReqMessage}
-                  category={category}
-                  post={post}
-                  introText={introText}
-                  contentText={contentText}
-                  imageURL={storeImage}
-                  postID={data.data[0].id}
-                />
-                <div className="grid grid-cols-12">
-                  <p className="col-span-1">Title</p>
-                  <textarea className="resize-none col-span-11 max-h-8 h-8 px-2 rounded border border-1 border-gray-300">
-                    {post.title}
-                  </textarea>
+
+              <div className="w-full h-full grid grid-cols-12 gap-4">
+                <div className="col-span-2 h-fit rounded border-dashed border-2 border-gray-300 hover:border-gray-400 hover:cursor-pointer p-4 group relative">
+                  <SelectImage defaultImage={img} />
                 </div>
-                <div className="grid grid-cols-12">
-                  <p className="col-span-1">Category</p>
-                  <div className="rounded border border-1 border-gray-300 px-2 py-1 w-fit">
-                    <Dropwdown
-                      menuOptions={allCategories}
-                      defaultCat={category || post.tag}
-                    />
+                <div className="col-span-7 flex flex-col h-full items-evenly w-full min-h-0 gap-2">
+                  <div className="grid grid-cols-12">
+                    <p className="col-span-1">Title</p>
+                    <textarea className="resize-none col-span-11 max-h-8 h-8 px-2 rounded border border-1 border-gray-300">
+                      {post.title}
+                    </textarea>
                   </div>
-                </div>
-                {post.intro ? (
-                  <div className="flex-grow grid grid-cols-12 min-h-0 basis-1/3">
-                    <div className="col-span-1">
-                      <p>Intro</p>
-                      <p className="text-gray-400">(optional)</p>
+                  <div className="grid grid-cols-12">
+                    <p className="col-span-1">Category</p>
+                    <div className="rounded border border-1 border-gray-300 px-2 py-1 w-fit">
+                      <Dropdown
+                        menuOptions={allCategories}
+                        defaultCat={category || post.tag}
+                      />
                     </div>
-                    <Editor type="intro" />
+                  </div>
+                  {post.intro ? (
+                    <div className="flex-grow grid grid-cols-12 min-h-0 basis-1/3">
+                      <div className="col-span-1">
+                        <p>Intro</p>
+                        <p className="text-gray-400">(optional)</p>
+                      </div>
+                      <Editor type="intro" />
+                      <div
+                        onClick={() => handleCopy('intro')}
+                        className="relative border border-2 p-2 rounded border-gray-300 hover:border-gray-400 hover:cursor-pointer col-span-1 justify-self-center place-self-start"
+                      >
+                        <CopyIcon />
+                        {isIntroCopied && (
+                          <div className="absolute grid place-items-center inset-0 bg-white/[0.7] text-sm duration-100">
+                            <CheckIcon color="zinc-300" />
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  ) : (
+                    <button className="self-center border-dashed border-2 border-gray-300 rounded px-8 py-2 hover:border-gray-400">
+                      + Add Intro
+                    </button>
+                  )}
+                  <div className="flex-grow grid grid-cols-12 min-h-0 basis-2/3">
+                    <p className="col-span-1">Content</p>
+                    <Editor type="content" />
                     <div
-                      onClick={() => handleCopy('intro')}
+                      onClick={() => handleCopy('content')}
                       className="relative border border-2 p-2 rounded border-gray-300 hover:border-gray-400 hover:cursor-pointer col-span-1 justify-self-center place-self-start"
                     >
                       <CopyIcon />
-                      {isIntroCopied && (
-                        <div className="absolute grid place-items-center inset-0 bg-white/[0.7] text-sm duration-100">
+                      {isContentCopied && (
+                        <div className="absolute inset-0 bg-white/[0.7] text-sm duration-150">
                           <CheckIcon color="zinc-300" />
                         </div>
                       )}
                     </div>
                   </div>
-                ) : (
-                  <button className="self-center border-dashed border-2 border-gray-300 rounded px-8 py-2 hover:border-gray-400">
-                    + Add Intro
-                  </button>
-                )}
-                <div className="flex-grow grid grid-cols-12 min-h-0 basis-2/3">
-                  <p className="col-span-1">Content</p>
-                  <Editor type="content" />
-                  <div
-                    onClick={() => handleCopy('content')}
-                    className="relative border border-2 p-2 rounded border-gray-300 hover:border-gray-400 hover:cursor-pointer col-span-1 justify-self-center place-self-start"
-                  >
-                    <CopyIcon />
-                    {isContentCopied && (
-                      <div className="absolute inset-0 bg-white/[0.7] text-sm duration-150">
-                        <CheckIcon color="zinc-300" />
-                      </div>
-                    )}
-                  </div>
                 </div>
+                <PostInfo
+                  postID={data.data[0].id}
+                  post={post}
+                  setIsConfirmModalOpen={setIsConfirmModalOpen}
+                  isConfirmed={isConfirmed}
+                />
               </div>
-              <PostInfo
-                postID={data.data[0].id}
-                post={post}
-                setIsConfirmModalOpen={setIsConfirmModalOpen}
-                isConfirmed={isConfirmed}
-              />
-            </>
+            </div>
           )
         )}
         <div
