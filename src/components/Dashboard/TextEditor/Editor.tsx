@@ -11,7 +11,7 @@ import {
   MDXEditorMethods,
 } from '@mdxeditor/editor';
 
-import { setPostInfo } from '@/state/store/slices/postEditSlice';
+import { setPostInfo, resetPostInfo } from '@/state/store/slices/postEditSlice';
 
 import { RootState } from '@/state/store/store';
 import '@mdxeditor/editor/style.css';
@@ -35,6 +35,10 @@ export default function Editor({ type }: { type: string }) {
         editorRef.current.setMarkdown(contentText);
       }
     }
+
+    return () => {
+      dispatch(resetPostInfo());
+    };
   }, [introText, contentText]);
 
   const handleChange = (text: string) => {

@@ -3,8 +3,8 @@ import { createSlice } from '@reduxjs/toolkit';
 export interface EditPostState {
   value: {
     title: string;
-    tag: string;
     author: string;
+    tag: string;
     intro?: string;
     content: string;
   };
@@ -34,9 +34,12 @@ export const postEditSlice = createSlice({
         state.value = { ...state.value, title, author, tag };
       }
     },
+    resetPostInfo: (state) => {
+      state.value = initialState.value;
+    },
   },
 });
 
-export const { setPostInfo } = postEditSlice.actions;
+export const { setPostInfo, resetPostInfo } = postEditSlice.actions;
 
 export default postEditSlice.reducer;

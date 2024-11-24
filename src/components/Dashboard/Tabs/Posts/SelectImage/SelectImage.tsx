@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import EditIcon from '@/assets/EditIcon';
 import { RootState } from '@/state/store/store';
-import { setImage } from '@/state/store/slices/updateImageSlice';
+import { setImage, resetImage } from '@/state/store/slices/updateImageSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 export default function SelectImage({
@@ -9,6 +9,13 @@ export default function SelectImage({
 }: {
   defaultImage: string;
 }) {
+  useEffect(
+    () => () => {
+      dispatch(resetImage());
+    },
+    [],
+  );
+
   const storeImage = useSelector(
     (state: RootState) => state.updateImageSlice.value.image,
   );
@@ -23,8 +30,11 @@ export default function SelectImage({
     dispatch(setImage(imageFileBlop));
   };
 
+  const containerClass =
+    defaultImage || storeImage ? 'relative' : 'absolute inset-2';
+
   return (
-    <div className="relative">
+    <div className={containerClass}>
       <img
         className="w-full object-cover"
         loading="lazy"
@@ -41,7 +51,7 @@ export default function SelectImage({
         type="file"
         accept="image/png, image/jpeg"
         name="selectImage"
-        className="absolute inset-0 z-20 opacity-0 cursor-pointer"
+        className="absolute inset-0 opacity-0 z-20 cursor-pointer"
       />
     </div>
   );

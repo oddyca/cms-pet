@@ -42,7 +42,7 @@ export default function PostInfo({
     }
   }, [isConfirmed]);
   return (
-    <div className=" basis-1/4 flex flex-col gap-4">
+    <div className="basis-1/4 flex flex-col gap-4">
       <p className="self-end">Post Information</p>
       <div className="rounded shadow-centrif flex flex-col gap-2 py-4 px-2">
         <div className="flex justify-between">

@@ -16,9 +16,12 @@ export const updateImageSlice = createSlice({
       const inputElem = action.payload;
       state.value = { image: inputElem };
     },
+    resetImage: (state) => {
+      state.value = initialState.value;
+    },
   },
 });
 
-export const { setImage } = updateImageSlice.actions;
+export const { setImage, resetImage } = updateImageSlice.actions;
 
 export default updateImageSlice.reducer;
