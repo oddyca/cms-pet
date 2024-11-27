@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import dashboardCategoryFilter from './slices/dashboardFilterSlice';
+import dashboardCategoryFilter from './slices/categorySelectionSlice';
 import postEditSlice from './slices/postEditSlice';
 import updateImageSlice from './slices/updateImageSlice';
 

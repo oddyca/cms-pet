@@ -1,6 +1,6 @@
 import { QueryClient } from '@tanstack/react-query';
 import { LoaderFunctionArgs, defer } from 'react-router-dom';
-import { allPosts, blogPost, filterByCategory } from './fetchServices';
+import { getAllPosts, getBlogPost, filterByCategory } from './fetchServices';
 
 export const blogLoader = async (queryClient: QueryClient) => {
   const queryKey = ['blogPosts'];
@@ -8,7 +8,7 @@ export const blogLoader = async (queryClient: QueryClient) => {
   return defer({
     blogPosts: queryClient.ensureQueryData({
       queryKey,
-      queryFn: allPosts,
+      queryFn: getAllPosts,
     }),
   });
 };
@@ -35,7 +35,7 @@ export const blogPostLoader =
       queryClient.getQueryData(queryKey) ??
       (await queryClient.fetchQuery({
         queryKey,
-        queryFn: () => blogPost(slug),
+        queryFn: () => getBlogPost(slug),
       }))
     );
   };

@@ -84,6 +84,16 @@ export type TFormInputs = {
   password: string;
 };
 
+export type TCreatePostForm = {
+  img: string;
+  title: string;
+  category: string;
+  author: string;
+  intro?: string;
+  content: string;
+  publishAt?: string;
+};
+
 export type TUpdateEntry = {
   entryID: number;
   entryData: {

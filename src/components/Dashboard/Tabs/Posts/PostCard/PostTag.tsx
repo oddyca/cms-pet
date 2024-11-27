@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { setCategory } from '@/state/store/slices/dashboardFilterSlice';
+import { setCategory } from '@/state/store/slices/categorySelectionSlice';
 
 export default function Tag({ tag }: { tag: string }) {
   const dispatch = useDispatch();

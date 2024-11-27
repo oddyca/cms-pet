@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import { TCategoryPosts } from '@/types/types';
 
-import { categoryPosts } from '@/services/fetchServices';
+import { getCategoryPosts } from '@/services/fetchServices';
 import { renderComponents } from '@/services/renderServices';
 
 import PostCard from './PostCard';
@@ -14,7 +14,7 @@ export default function Category() {
 
   const { isPending, error, data } = useQuery<TCategoryPosts>({
     queryKey: ['category', category],
-    queryFn: () => categoryPosts(category!),
+    queryFn: () => getCategoryPosts(category!),
     initialData,
   });
 

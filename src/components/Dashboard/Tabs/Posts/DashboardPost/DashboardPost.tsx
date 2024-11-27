@@ -3,8 +3,9 @@ import { useLoaderData, useParams } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { blogPost, getAllTags } from '@/services/fetchServices';
-import { TAllPosts, TTag } from '@/types/types';
+import { getBlogPost } from '@/services/fetchServices';
+import { allTagsSet } from '@/utils/allTagsSet';
+import { TAllPosts } from '@/types/types';
 
 import PostLoader from '@/components/Blog/Loaders/PostLoader';
 import CopyIcon from '@/assets/CopyIcon';
@@ -38,7 +39,7 @@ export default function DashboardPost() {
 
   const { isPending, error, data } = useQuery<TAllPosts>({
     queryKey: ['post', slug],
-    queryFn: () => blogPost(slug!),
+    queryFn: () => getBlogPost(slug!),
     initialData,
   });
 
@@ -66,18 +67,9 @@ export default function DashboardPost() {
     };
 
     document.addEventListener('mousedown', handleClickOutside);
-    const categoriesSet = new Set<string>();
 
-    getAllTags().then((res) => {
-      res.data.map((tag: TTag) => {
-        const capFirstLetter =
-          tag.attributes.tag.charAt(0).toUpperCase() +
-          tag.attributes.tag.slice(1);
-
-        categoriesSet.add(capFirstLetter);
-      });
-      setAllCategories([...categoriesSet]);
-    });
+    // Getting and filtering all categories (tags)
+    allTagsSet().then((res) => setAllCategories([...res]));
 
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);

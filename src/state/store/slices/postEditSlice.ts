@@ -27,9 +27,9 @@ export const postEditSlice = createSlice({
     setPostInfo: (state, action) => {
       const { type, text, title, author, tag } = action.payload;
       if (type === 'intro') {
-        state.value = { ...state.value, intro: text, title, author, tag };
+        state.value = { ...state.value, intro: text };
       } else if (type === 'content') {
-        state.value = { ...state.value, content: text, title, author, tag };
+        state.value = { ...state.value, content: text };
       } else {
         state.value = { ...state.value, title, author, tag };
       }

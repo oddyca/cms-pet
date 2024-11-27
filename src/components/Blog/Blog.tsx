@@ -3,7 +3,7 @@ import { Outlet, useLoaderData, useLocation, Await } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import Logo from '@/assets/Logo';
 
-import { allPosts } from '@/services/fetchServices';
+import { getAllPosts } from '@/services/fetchServices';
 import { renderComponents } from '@/services/renderServices';
 
 import { TAllPosts } from '@/types/types';
@@ -22,7 +22,7 @@ export default function Blog() {
 
   const { isPending, error, data } = useQuery<TAllPosts>({
     queryKey: ['blogPosts'],
-    queryFn: allPosts,
+    queryFn: getAllPosts,
     initialData,
   });
 

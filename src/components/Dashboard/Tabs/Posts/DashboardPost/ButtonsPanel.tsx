@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { updateEntry, uploadImage } from '@/services/updateServices';
 import { setPostInfo } from '@/state/store/slices/postEditSlice';
-import { setCategory } from '@/state/store/slices/dashboardFilterSlice';
+import { setCategory } from '@/state/store/slices/categorySelectionSlice';
 import { useHashText } from '@/hooks/useHashText';
 
 import { TPost } from '@/types/types';

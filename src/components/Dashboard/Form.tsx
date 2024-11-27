@@ -103,7 +103,7 @@ export default function Form() {
           </Link>
         </form>
       </div>
-      <p className="text-red-600 min-h-6">{signInError && signInError}</p>
+      <p className="text-red-600 min-h-6">{signInError}</p>
     </div>
   );
 }

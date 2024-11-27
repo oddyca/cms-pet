@@ -5,7 +5,7 @@ import ReactMarkdown from 'react-markdown';
 
 import { TAllPosts } from '@/types/types';
 
-import { blogPost } from '@/services/fetchServices';
+import { getBlogPost } from '@/services/fetchServices';
 import { convertDate } from '@/utils/dateUtils';
 import { updateViews } from '@/services/updateServices';
 
@@ -19,7 +19,7 @@ export default function BlogPost() {
 
   const { isPending, error, data } = useQuery<TAllPosts>({
     queryKey: ['post', slug],
-    queryFn: () => blogPost(slug!),
+    queryFn: () => getBlogPost(slug!),
     initialData,
   });
 

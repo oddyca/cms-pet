@@ -3,6 +3,8 @@ import { TBlogPost } from '@/types/types';
 import { forwardRef, Dispatch, SetStateAction } from 'react';
 import ReactMarkdown from 'react-markdown';
 import CloseIcon from '@/assets/CloseIcon';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/state/store/store';
 
 interface PreviewModalProps {
   setIsModalOpen: Dispatch<SetStateAction<boolean>>;
@@ -15,7 +17,13 @@ const Modal = forwardRef<HTMLDivElement, PreviewModalProps>(function Modal(
   { setIsModalOpen, postData, intro, content }: PreviewModalProps,
   ref,
 ) {
-  const convertedDate = convertDate(postData.publishedAt);
+  const convertedDate = postData.publishedAt
+    ? convertDate(postData.publishedAt)
+    : '';
+
+  const storeImage = useSelector(
+    (state: RootState) => state.updateImageSlice.value.image,
+  );
 
   return (
     <div className="fixed inset-0 bg-black/[50%] border border-black rounded flex items-center justify-center z-20">
@@ -48,8 +56,9 @@ const Modal = forwardRef<HTMLDivElement, PreviewModalProps>(function Modal(
           <img
             className="w-4/5 self-center h-96 rounded object-cover"
             src={
-              postData.placeholderThumbnail ??
-              `http://localhost:1337${postData.thumbnail!.data.attributes.url}`
+              storeImage ||
+              (postData.placeholderThumbnail ??
+                `http://localhost:1337${postData.thumbnail!.data.attributes.url}`)
             }
           />
           <div className="w-full text-lg prose">

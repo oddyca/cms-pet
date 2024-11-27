@@ -1,14 +1,14 @@
 import { LoaderFunctionArgs, LoaderFunction } from 'react-router-dom';
 import { TAllPosts, TCategoryPosts } from '@/types/types';
 
-export const allPosts = async (): Promise<TAllPosts> => {
+export const getAllPosts = async (): Promise<TAllPosts> => {
   const fetchedData = await fetch(
     'http://localhost:1337/api/blog-posts?populate=thumbnail',
   );
   return fetchedData.json();
 };
 
-export const categoryPosts = async (
+export const getCategoryPosts = async (
   category: string,
 ): Promise<TCategoryPosts> => {
   const fetchedData = await fetch(
@@ -30,7 +30,7 @@ export const filterByCategory: LoaderFunction = async ({
   return fetchedData as TAllPosts;
 };
 
-export const blogPost = async (slug: string): Promise<TAllPosts> => {
+export const getBlogPost = async (slug: string): Promise<TAllPosts> => {
   const fetchedData = await fetch(
     `http://localhost:1337/api/blog-posts?filters[slug][$eqi]=${slug}&populate=thumbnail`,
   ).then((res) => res.json());

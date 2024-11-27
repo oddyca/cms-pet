@@ -5,13 +5,13 @@ import { Outlet, useParams } from 'react-router-dom';
 import PostCard from './PostCard/PostCard';
 import Dropwdown from '@/components/Dropdown/Dropdown';
 
-import { allPosts } from '@/services/fetchServices';
+import { getAllPosts } from '@/services/fetchServices';
 import { renderComponents } from '@/services/renderServices';
 
 import { TAllPosts } from '@/types/types';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/state/store/store';
-import { setCategory } from '@/state/store/slices/dashboardFilterSlice';
+import { setCategory } from '@/state/store/slices/categorySelectionSlice';
 import { Link } from 'react-router-dom';
 
 export default function Posts() {
@@ -24,7 +24,7 @@ export default function Posts() {
 
   const allPostsQuery = useQuery<TAllPosts>({
     queryKey: ['blogPosts'],
-    queryFn: allPosts,
+    queryFn: getAllPosts,
     enabled: category === 'All Categories',
   });
 
