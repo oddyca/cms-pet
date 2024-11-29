@@ -271,7 +271,7 @@ export default function CreatePost() {
               </div>
             </div>
           </div>
-          <SchedulePost />
+          <SchedulePost setValue={setValue} />
         </div>
       </form>
     </div>
