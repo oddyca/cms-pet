@@ -8,7 +8,7 @@ export default function CreatePostButtonPanel({
   handlePreviewClick: () => void;
 }) {
   return (
-    <div className="col-span-6 place-self-end flex gap-4">
+    <div className="col-span-10 place-self-end flex gap-4">
       <Button btn="Preview" disabled={false} onClick={handlePreviewClick} />
 
       <button

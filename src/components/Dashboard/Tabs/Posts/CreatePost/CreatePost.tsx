@@ -132,7 +132,7 @@ export default function CreatePost() {
   }, [category, contentText]);
 
   return (
-    <div className=" w-full p-4">
+    <div className="grid grid-cols-12 w-full p-4">
       {isPreviewModalOpen && (
         <PreviewModal
           ref={modalRef}
@@ -152,16 +152,15 @@ export default function CreatePost() {
         />
       )}
       <form
-        className="flex flex-col gap-4 h-full"
+        className="col-span-9 flex flex-col gap-4 h-full"
         onSubmit={handleSubmit(handleFormSubmit)}
       >
         <div className="grid grid-cols-12 w-full min-h-0 gap-2">
-          <div className="col-span-3" />
+          <div className="col-span-2" />
           <CreatePostButtonPanel
             isDraftCreated={isDraftCreated}
             handlePreviewClick={handlePreviewClick}
           />
-          <div className="col-span-3" />
         </div>
 
         <div className="w-full h-full grid grid-cols-12 gap-4">
@@ -173,7 +172,7 @@ export default function CreatePost() {
               {errors.img && errors.img.message}
             </p>
           </div>
-          <div className="col-span-7 flex flex-col gap-4">
+          <div className="col-span-10 flex flex-col gap-4">
             <div className="grid grid-cols-12 gap-2">
               <p className="col-span-1">Title</p>
               <div className="col-span-11 flex gap-4 items-center">
@@ -271,9 +270,9 @@ export default function CreatePost() {
               </div>
             </div>
           </div>
-          <SchedulePost setValue={setValue} />
         </div>
       </form>
+      <SchedulePost parentSetValue={setValue} />
     </div>
   );
 }
