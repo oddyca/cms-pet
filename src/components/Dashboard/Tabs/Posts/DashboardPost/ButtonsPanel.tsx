@@ -2,7 +2,11 @@ import React, { useRef, useState, useEffect } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { updateEntry, uploadImage } from '@/services/updateServices';
+import {
+  updateEntry,
+  uploadImage,
+  updateImage,
+} from '@/services/updateServices';
 import { setPostInfo } from '@/state/store/slices/postEditSlice';
 import { setCategory } from '@/state/store/slices/categorySelectionSlice';
 import { useHashText } from '@/hooks/useHashText';
@@ -38,7 +42,11 @@ export default function ButtonsPanel({
     mutationFn: updateEntry,
   });
   const mutationUploadImage = useMutation({
-    mutationFn: (imgBlop: string) => uploadImage(postID, imgBlop),
+    mutationFn: (imgBlop: string) => uploadImage(imgBlop),
+  });
+  const mutationUpdateImage = useMutation({
+    mutationFn: (uploadedImageObj: File[]) =>
+      updateImage(postID, uploadedImageObj),
   });
 
   const storeImage = useSelector(
@@ -46,7 +54,7 @@ export default function ButtonsPanel({
   );
 
   // Save changes
-  const handleSaveChanges = () => {
+  const handleSaveChanges = async () => {
     const updatedPostData = {
       title: post.title,
       tag: category || post.tag,
@@ -59,7 +67,9 @@ export default function ButtonsPanel({
         entryID: postID,
         entryData: updatedPostData,
       });
-      mutationUploadImage.mutate(storeImage);
+
+      const uploadedImage = await mutationUploadImage.mutateAsync(storeImage);
+      mutationUpdateImage.mutate(uploadedImage);
     } catch (e) {
       console.error(e);
     }

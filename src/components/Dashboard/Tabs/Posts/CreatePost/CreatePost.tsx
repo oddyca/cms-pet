@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 
-import { createDraft } from '@/services/updateServices';
+import { createDraft, uploadImage } from '@/services/updateServices';
 import { setPostInfo } from '@/state/store/slices/postEditSlice';
 import { allTagsSet } from '@/utils/allTagsSet';
 import { TCreatePostForm } from '@/types/types';
@@ -22,6 +22,7 @@ export default function CreatePost() {
   const [isIntroCopied, setIsIntroCopied] = useState(false);
   const [isContentCopied, setIsContentCopied] = useState(false);
   const [isDraftCreated, setIsDraftCreated] = useState(false);
+  const [draftID, setDraftID] = useState(null);
   const [isPreviewModalOpen, setIsPreviewModalOpen] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
   const [allCategories, setAllCategories] = useState<string[]>([]);
@@ -54,7 +55,7 @@ export default function CreatePost() {
   const contentText = useSelector(
     (state: RootState) => state.postEditSlice.value.content,
   );
-  const category = useSelector(
+  const tag = useSelector(
     (state: RootState) => state.dashboardCategoryFilter.value,
   );
   const authorStore = useSelector(
@@ -80,21 +81,32 @@ export default function CreatePost() {
     }
   };
 
-  const handleCreateDraft = () => {
+  const handleCreateDraft = async () => {
+    const { img, title, author, tag, intro, article, publishAt } = getValues();
+    const imageFileBlop = URL.createObjectURL(img[0]);
+    const uploadedImageJSON = await uploadImage(imageFileBlop);
+
     const newPostData = {
-      title: titleStore,
-      author: authorStore,
-      tag: category,
-      intro: introText,
-      content: contentText,
+      thumbnail: uploadedImageJSON,
+      title: title,
+      author: author,
+      tag: tag,
+      intro: intro || '',
+      article: article,
       publishedAt: null,
+      publishAt: publishAt || undefined,
     };
 
-    createDraft(newPostData).then((res) => {
+    try {
+      const res = await createDraft(newPostData);
       if (res!.ok) {
         setIsDraftCreated(true);
+        const draftData = await res?.json();
+        setDraftID(draftData.data.id);
       }
-    });
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   const handlePreviewClick = () => {
@@ -110,10 +122,6 @@ export default function CreatePost() {
     setValue,
   } = useForm<TCreatePostForm>();
 
-  const handleFormSubmit: SubmitHandler<TCreatePostForm> = () => {
-    handleCreateDraft();
-  };
-
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     e.preventDefault();
     const { title, author } = getValues();
@@ -121,15 +129,15 @@ export default function CreatePost() {
       setPostInfo({
         title: title,
         author: author,
-        category: category,
+        category: tag,
       }),
     );
   };
 
   useEffect(() => {
-    setValue('category', category);
-    setValue('content', contentText);
-  }, [category, contentText]);
+    setValue('tag', tag);
+    setValue('article', contentText);
+  }, [tag, contentText]);
 
   return (
     <div className="grid grid-cols-12 w-full p-4">
@@ -140,7 +148,7 @@ export default function CreatePost() {
           postData={{
             title: titleStore,
             author: authorStore,
-            tag: category,
+            tag: tag,
             intro: introText,
             article: contentText,
             slug: '',
@@ -153,13 +161,15 @@ export default function CreatePost() {
       )}
       <form
         className="col-span-9 flex flex-col gap-4 h-full"
-        onSubmit={handleSubmit(handleFormSubmit)}
+        onSubmit={handleSubmit(handleCreateDraft)}
       >
         <div className="grid grid-cols-12 w-full min-h-0 gap-2">
           <div className="col-span-2" />
           <CreatePostButtonPanel
             isDraftCreated={isDraftCreated}
             handlePreviewClick={handlePreviewClick}
+            draftID={draftID}
+            getValues={getValues}
           />
         </div>
 
@@ -194,18 +204,18 @@ export default function CreatePost() {
                 <div className="rounded border border-1 border-gray-300 px-2 py-1 w-fitflex">
                   <Dropdown
                     menuOptions={allCategories}
-                    defaultCat={category || 'Select a category'}
+                    defaultCat={tag || 'Select a category'}
                   />
                   <input
                     type="hidden"
-                    {...register('category', {
+                    {...register('tag', {
                       required: 'Category is required.',
                     })}
-                    value={category}
+                    value={tag}
                   />
                 </div>
                 <p className="text-red-600">
-                  {errors.category && errors.category.message}
+                  {errors.tag && errors.tag.message}
                 </p>
               </div>
             </div>
@@ -247,13 +257,13 @@ export default function CreatePost() {
                 <p className="">Content</p>
                 <input
                   type="hidden"
-                  {...register('content', {
+                  {...register('article', {
                     required: 'Content field is required.',
                   })}
                   value={contentText}
                 />
-                {errors.content && (
-                  <p className="text-red-600">{errors.content.message}</p>
+                {errors.article && (
+                  <p className="text-red-600">{errors.article.message}</p>
                 )}
               </div>
               <Editor type="content" />

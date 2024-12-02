@@ -39,7 +39,7 @@ export default function SchedulePost({
 
   const handleFormSubmit = ({ date, time }: TForm) => {
     const dateToSubmit = new Date(`${date}T${time}`);
-    parentSetValue('publishAt', `${dateToSubmit}`);
+    parentSetValue('publishAt', dateToSubmit);
   };
 
   const renderHourOptions = () => {

@@ -85,13 +85,22 @@ export type TFormInputs = {
 };
 
 export type TCreatePostForm = {
-  img: string;
+  img: File[];
   title: string;
-  category: string;
+  tag: string;
   author: string;
   intro?: string;
-  content: string;
-  publishAt?: string;
+  article: string;
+  publishAt?: Date;
+  publishedAt?: Date;
+};
+
+export type TPublishEntry = {
+  draftID: number;
+  draftData: TCreatePostForm & {
+    publishAt?: Date;
+    publishedAt?: Date;
+  };
 };
 
 export type TUpdateEntry = {

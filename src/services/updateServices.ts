@@ -1,4 +1,4 @@
-import { TUpdateEntry } from '@/types/types';
+import { TPublishEntry, TUpdateEntry } from '@/types/types';
 
 export const updateViews = async (entryID: number) => {
   try {
@@ -45,7 +45,7 @@ export const updateEntry = async ({ entryID, entryData }: TUpdateEntry) => {
   }
 };
 
-export const uploadImage = async (entryID: number, imgBlop: string) => {
+export const uploadImage = async (imgBlop: string) => {
   const formData = new FormData();
   if (!imgBlop) return;
 
@@ -54,7 +54,9 @@ export const uploadImage = async (entryID: number, imgBlop: string) => {
   const blob = await response.blob();
 
   // Create a File object
-  const file = new File([blob], 'uploaded-image.jpg', { type: blob.type });
+  const file = new File([blob], `uploaded-image-${Date.now()}`, {
+    type: blob.type,
+  });
   formData.append('files', file);
   const JWT = sessionStorage.getItem('JWT');
 
@@ -67,6 +69,12 @@ export const uploadImage = async (entryID: number, imgBlop: string) => {
   });
 
   const uploadedImage = await uploadResponse.json();
+
+  return uploadedImage;
+};
+
+export const updateImage = async (entryID: number, uploadedImage: File[]) => {
+  const JWT = sessionStorage.getItem('JWT');
   const updateResponse = await fetch(
     `http://localhost:1337/api/blog-posts/${entryID}`,
     {
@@ -107,12 +115,14 @@ export const deletePost = async (entryID: number) => {
 };
 
 export const createDraft = async (newPostData: {
+  thumbnail: File[];
   title: string;
   author: string;
   tag: string;
   intro: string | undefined;
-  content: string;
+  article: string;
   publishedAt: null;
+  publishAt: Date | undefined;
 }) => {
   const url = 'http://localhost:1337/api/blog-posts?status=draft';
   const JWT = sessionStorage.getItem('JWT');
@@ -130,6 +140,34 @@ export const createDraft = async (newPostData: {
     });
 
     return response;
+  } catch (e) {
+    console.error('Error:', e);
+  }
+};
+
+export const publishDraft = async ({ draftID, draftData }: TPublishEntry) => {
+  const url = `http://localhost:1337/api/blog-posts/${draftID}`;
+  const updatedData = {
+    data: { ...draftData },
+  };
+
+  try {
+    const response = await fetch(url, {
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('JWT')}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updatedData),
+    });
+
+    const responseData = await response.json();
+
+    if (!response.ok) {
+      throw new Error(responseData);
+    }
+
+    return responseData;
   } catch (e) {
     console.error('Error:', e);
   }
