@@ -87,6 +87,7 @@ export type TFormInputs = {
 export type TCreatePostForm = {
   img: File[];
   title: string;
+  slug: string;
   tag: string;
   author: string;
   intro?: string;

@@ -28,7 +28,13 @@ export default function SchedulePost({
 
   const handleChange = () => {
     const { date, time } = getValues();
-    if (date && time) setIsDateSet(true);
+    const newDate = new Date();
+    const formDate = new Date(date);
+    if (formDate <= newDate) {
+      setValue('date', newDate.toISOString().split('T')[0]);
+    }
+
+    if (getValues().date && time) setIsDateSet(true);
   };
 
   const handleClear = (e: React.MouseEvent<HTMLButtonElement>) => {

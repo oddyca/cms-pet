@@ -86,9 +86,12 @@ export default function CreatePost() {
     const imageFileBlop = URL.createObjectURL(img[0]);
     const uploadedImageJSON = await uploadImage(imageFileBlop);
 
+    const slugTitle = title.split(' ').join('-').toLowerCase();
+
     const newPostData = {
       thumbnail: uploadedImageJSON,
       title: title,
+      slug: slugTitle,
       author: author,
       tag: tag,
       intro: intro || '',
