@@ -49,3 +49,15 @@ export const getAllTags = async () => {
     console.error(e);
   }
 };
+
+export const getStatsForDashboard = async () => {
+  try {
+    const fetchedData = await fetch(
+      'http://localhost:1337/api/blog-posts?fields[0]=title&fields[1]=views&fields[2]=slug&fields[3]=author&fields[4]=tag&fields[5]=createdAt',
+    );
+    const allViews = await fetchedData.json();
+    return allViews;
+  } catch (e) {
+    console.error(e);
+  }
+};
