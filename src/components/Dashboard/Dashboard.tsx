@@ -49,7 +49,7 @@ export default function Dashboard() {
                 Log out
               </button>
             </div>
-            <div className="basis-5/6 col-start-2 flex p-2 h-full">
+            <div className="basis-5/6 col-start-2 flex h-full p-4">
               <Outlet />
             </div>
           </div>
