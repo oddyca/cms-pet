@@ -33,7 +33,7 @@ export default function DashboardDonut({ data }: { data: TPost[] }) {
           index="title"
           showAnimation
           showTooltip={false}
-          className="w-64 h-64"
+          className="w-64 h-64 self-center"
         />
         <div className="flex flex-col gap-2 min-h-0 h-full overflow-y-auto custom-scrollbar-hidden hover:custom-scrollbar">
           {lengedCategories.map((legend, id) => (
@@ -42,7 +42,7 @@ export default function DashboardDonut({ data }: { data: TPost[] }) {
                 className="rounded-full w-2 h-2"
                 style={{ backgroundColor: donutColors[id] }}
               />
-              <p className="w-1/2">{legend}</p>
+              <p className="">{legend}</p>
             </div>
           ))}
         </div>

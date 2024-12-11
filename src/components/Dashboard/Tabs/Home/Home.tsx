@@ -7,6 +7,7 @@ import DashboardCard from './DashboardCard/DashboardCard';
 import DashboardCategory from './DashboardCategory/DashboardCategory';
 import DashboardDonut from './DashboardDonut/DashboardDonut';
 import DashboardBars from './DashboardBars/DashboardBars';
+import DashboardTopCategories from './DashboardTopCategories/DashboardTopCategories';
 
 export default function Home() {
   const { isPending, data } = useQuery<TAllPosts>({
@@ -46,6 +47,10 @@ export default function Home() {
           <div className="basis-1/4  flex flex-col gap-4">
             <DashboardCategory name="Top authors" />
             <DashboardBars data={sortedData} />
+          </div>
+          <div className="basis-1/4  flex flex-col gap-4">
+            <DashboardCategory name="Top categories" />
+            <DashboardTopCategories data={sortedData} />
           </div>
         </div>
       )}
