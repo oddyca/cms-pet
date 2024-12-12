@@ -53,6 +53,12 @@ export default function ButtonsPanel({
     (state: RootState) => state.updateImageSlice.value.image,
   );
 
+  const initialDataRef = useRef({
+    intro: post.intro,
+    content: post.article,
+    category: post.tag,
+  });
+
   // Save changes
   const handleSaveChanges = async () => {
     const updatedPostData = {
@@ -89,27 +95,17 @@ export default function ButtonsPanel({
     dispatch(setCategory(post.tag));
   };
 
-  const initialDataRef = useRef({
-    intro: post.intro,
-    content: post.article,
-    category: post.tag,
-  });
-
-  const hashedIntroText =
-    initialDataRef.current.intro &&
-    useHashText(introText || initialDataRef.current.intro);
-  const hashedInitialIntro =
-    initialDataRef.current.intro && useHashText(initialDataRef.current.intro);
+  const hashedIntroText = useHashText(introText || '');
+  const hashedInitialIntro = useHashText(initialDataRef.current.intro || '');
 
   const hashedContentText = useHashText(
     contentText || initialDataRef.current.content,
   );
   const hashedInitialContent = useHashText(initialDataRef.current.content);
 
+  // Watch edits to the text
   useEffect(() => {
-    const isIntroEdited =
-      initialDataRef.current.intro && hashedIntroText !== hashedInitialIntro;
-
+    const isIntroEdited = hashedIntroText !== hashedInitialIntro;
     const isContentEdited =
       initialDataRef.current.content &&
       hashedContentText !== hashedInitialContent;
@@ -117,6 +113,7 @@ export default function ButtonsPanel({
     const isCategoryEdited =
       category !== '' && category !== initialDataRef.current.category;
 
+    // final
     const isEdited =
       initialDataRef.current.intro !== undefined &&
       initialDataRef.current.content !== undefined &&

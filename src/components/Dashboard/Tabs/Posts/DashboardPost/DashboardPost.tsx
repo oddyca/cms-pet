@@ -15,7 +15,7 @@ import Dropdown from '@/components/Dropdown/Dropdown';
 
 // Store
 import { RootState } from '@/state/store/store';
-import { setPostInfo } from '@/state/store/slices/postEditSlice';
+import { setPostInfo, resetPostInfo } from '@/state/store/slices/postEditSlice';
 import SelectImage from '../SelectImage/SelectImage';
 import CheckIcon from '@/assets/CheckIcon';
 import ConfirmModal from '../Modals/ConfirmModal';
@@ -26,7 +26,6 @@ export default function DashboardPost() {
   const initialData = useLoaderData() as TAllPosts;
   const { slug } = useParams();
 
-  // States
   const [isIntroCopied, setIsIntroCopied] = useState(false);
   const [isContentCopied, setIsContentCopied] = useState(false);
   const [isPreviewModalOpen, setIsPreviewModalOpen] = useState(false);
@@ -34,6 +33,8 @@ export default function DashboardPost() {
   const [isConfirmed, setIsConfirmed] = useState(false);
   const [successfulReqMessage, setSuccessfulReqMessage] = useState('');
   const [allCategories, setAllCategories] = useState<string[]>([]);
+  const [isIntroAdded, setIsIntroAdded] = useState(false);
+
   const dispatch = useDispatch();
   const modalRef = useRef<HTMLDivElement>(null);
 
@@ -74,6 +75,8 @@ export default function DashboardPost() {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
       document.title = originalTitle;
+
+      dispatch(resetPostInfo());
     };
   }, []);
 
@@ -172,7 +175,7 @@ export default function DashboardPost() {
                       />
                     </div>
                   </div>
-                  {post.intro ? (
+                  {post.intro || isIntroAdded ? (
                     <div className="flex-grow grid grid-cols-12 min-h-0 basis-1/3">
                       <div className="col-span-1">
                         <p>Intro</p>
@@ -192,7 +195,10 @@ export default function DashboardPost() {
                       </div>
                     </div>
                   ) : (
-                    <button className="self-center border-dashed border-2 border-gray-300 rounded px-8 py-2 hover:border-gray-400">
+                    <button
+                      onClick={() => setIsIntroAdded(true)}
+                      className="self-center border-dashed border-2 border-gray-300 rounded px-8 py-2 hover:border-gray-400"
+                    >
                       + Add Intro
                     </button>
                   )}

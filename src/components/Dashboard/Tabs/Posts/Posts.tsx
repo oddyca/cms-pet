@@ -75,7 +75,7 @@ export default function Posts() {
         </div>
         <Link
           to="/dashboard/posts/create-new"
-          className="rounded border border-black px-2"
+          className="rounded-md bg-link-blue-300 px-2 py-1 text-white font-bold hover:text-white hover:bg-link-blue-100"
         >
           CREATE NEW POST
         </Link>

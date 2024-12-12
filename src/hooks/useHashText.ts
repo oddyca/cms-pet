@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 
 const processText = (text: string) => {
+  if (!text) return 1;
   const interval = 1;
   let hash = 0;
   for (let i = 0; i < text.length; i += interval) {
