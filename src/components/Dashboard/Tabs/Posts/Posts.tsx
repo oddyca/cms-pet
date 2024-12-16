@@ -5,7 +5,7 @@ import { Outlet, useParams } from 'react-router-dom';
 import PostCard from './PostCard/PostCard';
 import Dropwdown from '@/components/Dropdown/Dropdown';
 
-import { getAllPosts } from '@/services/fetchServices';
+import { getAllPosts, getAllDrafts } from '@/services/fetchServices';
 import { renderComponents } from '@/services/renderServices';
 
 import { TAllPosts } from '@/types/types';
@@ -26,6 +26,11 @@ export default function Posts() {
     queryKey: ['blogPosts'],
     queryFn: getAllPosts,
     enabled: category === 'All Categories',
+  });
+
+  const allDraftsQuery = useQuery<TAllPosts>({
+    queryKey: ['blogDrafts'],
+    queryFn: getAllDrafts,
   });
 
   const categoriesFilterQuery = useQuery({
@@ -82,6 +87,7 @@ export default function Posts() {
       </div>
       <div className="h-full flex min-h-0">
         <div className="basis-1/2 custom-scrollbar-hidden hover:custom-scrollbar overflow-y-auto p-2">
+          <p>Published posts</p>
           {category !== 'All Categories' ? (
             categoriesFilterQuery.isLoading ? (
               <p>Loading...</p>
@@ -92,6 +98,18 @@ export default function Posts() {
             <p>Loading...</p>
           ) : (
             renderComponents(allPostsQuery.data!.data, PostCard)
+          )}
+        </div>
+        <div className="basis-1/2 custom-scrollbar-hidden hover:custom-scrollbar overflow-y-auto p-2">
+          <p>Drafts</p>
+          {allDraftsQuery.isLoading ? (
+            <p>Loading...</p>
+          ) : allDraftsQuery.data!.data.length === 0 ? (
+            <div className="h-[calc(100%-1.5rem)] flex items-center justify-center italic">
+              No drafts found
+            </div>
+          ) : (
+            renderComponents(allDraftsQuery.data!.data, PostCard)
           )}
         </div>
       </div>

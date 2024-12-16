@@ -70,7 +70,7 @@ export type TBlogPost = {
   placeholderThumbnail?: string;
 };
 
-export type TBigPost = TBlogPost;
+export type TBigPost = TBlogPost & { views: number };
 export type TPostCard = TBlogPost;
 
 export type TSideBarProps = {

@@ -61,3 +61,11 @@ export const getStatsForDashboard = async () => {
     console.error(e);
   }
 };
+
+export const getAllDrafts = async () => {
+  const fetchedData = await fetch(
+    `http://localhost:1337/api/blog-posts?publicationState=preview&filters[publishedAt][$null]=true&populate=thumbnail`,
+  ).then((res) => res.json());
+
+  return fetchedData as Promise<TCategoryPosts>;
+};

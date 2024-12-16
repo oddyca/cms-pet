@@ -4,6 +4,7 @@ import { TBigPost } from '@/types/types';
 import PostTag from './PostTag';
 
 import EditIcon from '@/assets/EditIcon';
+import EyeIcon from '@/assets/EyeIcon';
 
 import { convertDate } from '@/utils/dateUtils';
 
@@ -11,6 +12,7 @@ export default function PostCard({
   title,
   tag,
   slug,
+  views,
   publishedAt,
   thumbnail,
   placeholderThumbnail,
@@ -35,7 +37,10 @@ export default function PostCard({
           </div>
         </div>
         <div className="flex justify-between">
-          <div></div>
+          <div className="flex gap-1 items-center">
+            <EyeIcon color="gray-400" />
+            <p className="text-sm text-gray-400">{views}</p>
+          </div>
           <div className="flex gap-6 items-center">
             <Link to={`${slug}`}>
               <EditIcon color="gray-400" />

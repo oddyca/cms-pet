@@ -1,7 +1,7 @@
 export default function EyeIcon({ color }: { color: string }) {
   return (
     <svg
-      className={`text-${color} hover:cursor-pointer`}
+      className={`text-${color}`}
       width="22"
       height="14"
       viewBox="0 0 22 14"
