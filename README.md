@@ -15,7 +15,7 @@ This is a web application designed for managing and analyzing blog posts. It pro
   - Tremor.
 
 **Backend:**
-  - Strapi: A headless CMS that provides a RESTful API for managing content.
+  - Strapi v4: A headless CMS that provides a RESTful API for managing content.
 
 ## Features
 **Sign in into the dashboard**
@@ -25,7 +25,7 @@ This is a web application designed for managing and analyzing blog posts. It pro
 **Post Management:**
   - Create, edit, and delete posts with a rich text editor;
   - Save drafts;
-  - View published posts and drafts in separate sections.
+  - Scheduled posts.
 
 **Blog post views tracker**
 

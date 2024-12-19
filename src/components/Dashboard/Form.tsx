@@ -58,6 +58,7 @@ export default function Form() {
               alt="mail icon"
             />
             <input
+              autoFocus
               placeholder="Email"
               type="email"
               {...register('email', { required: 'Email Address is required' })}
@@ -90,7 +91,7 @@ export default function Form() {
             )}
           </div>
           <button
-            className="py-2 rounded bg-accent-purple-300 font-bold text-white hover:bg-accent-purple-500 flex justify-center items-center"
+            className="py-2 rounded bg-accent-purple-500 font-bold text-white hover:bg-accent-purple-300 flex justify-center items-center"
             disabled={loading}
           >
             {loading ? <Loader /> : 'SIGN IN'}
