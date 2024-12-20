@@ -25,6 +25,7 @@ This is a web application designed for managing and analyzing blog posts. It pro
 **Post Management:**
   - Create, edit, and delete posts with a rich text editor;
   - Save drafts;
+  - Preview posts;
   - Scheduled posts.
 
 **Blog post views tracker**

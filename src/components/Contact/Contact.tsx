@@ -4,7 +4,7 @@ export default function Contact() {
   return (
     <div className="h-screen flex flex-col justify-center items-center justify-center gap-6">
       <Logo fillColor="black" />
-      <p className="text-lg">We'd like to hear from you!</p>
+      <p className="text-lg">We&apos;d like to hear from you!</p>
       <div className="w-1/2 max-w-[1440px] border border-1 bg-zinc-200 p-6 rounded-md p-4">
         <form
           className="flex flex-col gap-4"

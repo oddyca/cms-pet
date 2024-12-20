@@ -8,12 +8,12 @@ export default function Footer() {
   return (
     <div className="w-full">
       <HorizontallDivider />
-      <div className="mx-auto my-0 max-w-[1440px] min-h-[300px] flex justify-between items-start py-6">
+      <div className="mx-auto my-0 max-w-[1440px] min-h-[300px] flex flex-col 2xl:flex-row gap-6 2xl:justify-between items-center 2xl:items-start py-6 px-6 2xl:px-0">
         <div className="flex items-center gap-4">
           <Logo fillColor="black" />
           <p>Venture Capital</p>
         </div>
-        <ul className="list-none flex flex-col gap-6">
+        <ul className="list-none grid grid-cols-2 2xl:flex 2xl:flex-col gap-6">
           <li>
             <Link to="/">Home</Link>
           </li>

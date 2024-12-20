@@ -7,7 +7,7 @@ const navLinkClass = ({ isActive }: { isActive: boolean }) =>
 
 export default function Header() {
   return (
-    <div className="w-full h-[64px] flex justify-center place-center bg-white/50 border-b-2 border-b-base-black-100 fixed backdrop-blur z-10">
+    <div className="w-full h-[64px] flex justify-center place-center bg-white/50 border-b-2 border-b-base-black-100 fixed backdrop-blur z-10  px-6 2xl:px-0">
       <div className="w-full h-full max-w-[1440px] flex items-center justify-between">
         <div className="flex-1">
           <Link to="/" className="hover:text-black">
@@ -32,7 +32,7 @@ export default function Header() {
               </NavLink>
             </li>
             <li>
-              <NavLink to="/contact" className={navLinkClass}>
+              <NavLink to="/contact" className={`${navLinkClass} text-nowrap`}>
                 Contact Us
               </NavLink>
             </li>

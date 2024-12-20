@@ -26,9 +26,9 @@ a:hover {
 
 .animated-background {
   background-size: 200% 100%;
-  -webkit-animation: animation 3s ease-in-out infinite;
-  -moz-animation: animation 3s ease-in-out infinite;
-  animation: animation 3s ease-in-out infinite;
+  -webkit-animation: animation 5s ease-in-out infinite;
+  -moz-animation: animation 5s ease-in-out infinite;
+  animation: animation 5s ease-in-out infinite;
 }
 
 @keyframes animation {
