@@ -1,7 +1,7 @@
 import { Link, NavLink } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 
-import HorizontallDivider from '../Dividers/HorizontalDivider';
+import HorizontallDivider from '../../Dividers/HorizontalDivider';
 
 import TwitterLogo from '@/assets/TwitterLogo';
 import InstaLogo from '@/assets/InstaLogo';
@@ -21,18 +21,20 @@ export default function SideBar({ initialData }: TSideBarProps) {
     : '';
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-2 lg:gap-4">
       {pathname != '/blog' && (
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-2 lg:gap-4">
           <p className="text-gray-400">SEE ALSO</p>
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-2 lg:gap-4">
             {filteredPosts ? (
               filteredPosts.slice(0, 2).map((post) => (
                 <div key={post.id} className="flex flex-col gap-2">
-                  <h3 className="font-bold">{post.attributes.title}</h3>
+                  <h3 className="font-bold text-sm lg:text-base">
+                    {post.attributes.title}
+                  </h3>
                   <Link
                     to={`/blog/${post.attributes.tag}/${post.attributes.slug}`}
-                    className="hover:text-link-blue-100"
+                    className="hover:text-link-blue-100 text-sm lg:text-base"
                   >
                     Read more &#10141;
                   </Link>
@@ -45,7 +47,7 @@ export default function SideBar({ initialData }: TSideBarProps) {
                     <p>•</p>
                     <NavLink
                       to={`/blog/${post.attributes.tag}`}
-                      className="px-4 py-1 border rounded-full border-black hover:text-link-blue-100 hover:border-link-blue-100"
+                      className="px-2 lg:px-4 py-1 border rounded-full border-black hover:text-link-blue-100 hover:border-link-blue-100 text-sm lg:text-base"
                     >
                       {post.attributes.tag}
                     </NavLink>

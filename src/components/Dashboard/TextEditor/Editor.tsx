@@ -44,7 +44,7 @@ export default function Editor({ type }: { type: string }) {
   return (
     <MDXEditor
       onChange={handleChange}
-      className="col-span-10 border border-1 border-gray-300 rounded h-full overflow-y-auto custom-scrollbar prose max-w-none"
+      className="col-span-9 border border-1 border-gray-300 rounded h-full overflow-y-auto custom-scrollbar prose max-w-none"
       markdown=""
       ref={editorRef}
       plugins={[

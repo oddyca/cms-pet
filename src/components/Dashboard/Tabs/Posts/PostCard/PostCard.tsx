@@ -19,7 +19,7 @@ export default function PostCard({
 }: TBigPost) {
   return (
     <div className="my-2 h-40 p-2 rounded border border-gray-300 flex gap-2 overflow-hidden">
-      <div className="basis-1/4 overflow-hidden rounded">
+      <div className="basis-1/3 xl:basis-1/4 overflow-hidden rounded">
         <img
           className="object-cover w-full h-full"
           src={

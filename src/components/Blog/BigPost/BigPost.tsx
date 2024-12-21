@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 
-import HorizontallDivider from '../Dividers/HorizontalDivider';
-import Tag from '../Tag/Tag';
+import HorizontallDivider from '../../Dividers/HorizontalDivider';
+import Tag from '../../Tag/Tag';
 
 import { TBigPost } from '@/types/types';
 
@@ -19,16 +19,16 @@ export default function BigPost({
   const formattedDate = convertDate(publishedAt);
 
   return (
-    <div className="flex flex-col gap-6">
-      <div className="grid grid-cols-4 gap-4">
-        <div className="col-span-2 h-80 w-full overflow-hidden rounded-md">
+    <div className="flex flex-col gap-2 md:gap-6">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4">
+        <div className="col-span-2 h-44 md:h-80 w-full overflow-hidden rounded-md">
           <img
             src={
               placeholderThumbnail ||
               `http://localhost:1337${thumbnail!.data.attributes.url}`
             }
             alt="Big post thumbnail"
-            className="scale-125 object-cover"
+            className="scale-100 md:scale-125 object-cover"
             loading="lazy"
           />
         </div>

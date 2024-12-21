@@ -117,7 +117,7 @@ export default function DashboardPost() {
 
   return (
     <>
-      <div className="relative w-full h-full min-h-0 p-4">
+      <div className="relative w-full h-full min-h-0 p-2 2xl:p-4">
         {isPreviewModalOpen && (
           <PreviewModal
             ref={modalRef}
@@ -155,19 +155,19 @@ export default function DashboardPost() {
                 <div className="col-span-3" />
               </div>
 
-              <div className="w-full h-full grid grid-cols-12 gap-4">
+              <div className="w-full h-full min-h-0 grid grid-cols-12 gap-2 2xl:gap-4">
                 <div className="col-span-2 h-fit rounded border-dashed border-2 border-gray-300 hover:border-gray-400 hover:cursor-pointer p-4 group relative">
                   <SelectImage defaultImage={img} />
                 </div>
-                <div className="col-span-7 flex flex-col h-full items-evenly w-full min-h-0 gap-2">
+                <div className="col-span-8 2xl:col-span-7 flex flex-col w-full h-full min-h-0 gap-2">
                   <div className="grid grid-cols-12">
-                    <p className="col-span-1">Title</p>
-                    <textarea className="resize-none col-span-11 max-h-8 h-8 px-2 rounded border border-1 border-gray-300">
+                    <p className="col-span-2 text-sm xl:text-base">Title</p>
+                    <textarea className="resize-none col-span-9 h-full xl:max-h-8 xl:h-8 px-2 rounded border border-1 border-gray-300">
                       {post.title}
                     </textarea>
                   </div>
                   <div className="grid grid-cols-12">
-                    <p className="col-span-1">Category</p>
+                    <p className="col-span-2 text-sm xl:text-base">Category</p>
                     <div className="rounded border border-1 border-gray-300 px-2 py-1 w-fit">
                       <Dropdown
                         menuOptions={allCategories}
@@ -176,8 +176,8 @@ export default function DashboardPost() {
                     </div>
                   </div>
                   {post.intro || isIntroAdded ? (
-                    <div className="flex-grow grid grid-cols-12 min-h-0 basis-1/3">
-                      <div className="col-span-1">
+                    <div className="flex-grow grid gap-2 grid-cols-12 min-h-0 basis-1/3">
+                      <div className="col-span-2 text-sm xl:text-base">
                         <p>Intro</p>
                         <p className="text-gray-400">(optional)</p>
                       </div>
@@ -202,8 +202,8 @@ export default function DashboardPost() {
                       + Add Intro
                     </button>
                   )}
-                  <div className="flex-grow grid grid-cols-12 min-h-0 basis-2/3">
-                    <p className="col-span-1">Content</p>
+                  <div className="flex-grow grid grid-cols-12 min-h-0 h-full basis-2/3">
+                    <p className="col-span-2 text-sm xl:text-base">Content</p>
                     <Editor type="content" />
                     <div
                       onClick={() => handleCopy('content')}

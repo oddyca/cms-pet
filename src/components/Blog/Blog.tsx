@@ -9,12 +9,12 @@ import { renderComponents } from '@/services/renderServices';
 import { TAllPosts } from '@/types/types';
 
 import VerticalDivider from '../Dividers/VerticalDivider';
-import BigPost from './BigPost';
-import PostCard from './PostCard';
+import BigPost from './BigPost/BigPost';
+import PostCard from './PostCard/PostCard';
 import BigPostLoader from './Loaders/BigPostLoader';
 import SideBarLoader from './Loaders/SideBarLoader';
-import NavBar from './NavBar';
-import SideBar from './SideBar';
+import NavBar from './NavBar/NavBar';
+import SideBar from './SideBar/SideBar';
 
 export default function Blog() {
   const { pathname } = useLocation();
@@ -31,16 +31,16 @@ export default function Blog() {
       <div className="h-[64px]" />
       <div className="w-full h-36 bg-cover bg-[center_35%] bg-[url('https://images.unsplash.com/photo-1517094857443-80776ddd155c?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')] flex justify-center py-8">
         <div className="w-full max-w-[1440px] place-self-center">
-          <p className="text-4xl text-black pointer-events-none">
+          <p className="px-6 2xl:px-0 text-4xl text-black pointer-events-none">
             VENTURE <Logo fillColor="black" /> CAPITAL
           </p>
         </div>
       </div>
       <div className="w-full min-h-screen max-w-[1440px] my-8 mx-auto flex flex-col gap-8">
         <NavBar />
-        <div className="grid grid-cols-4 gap-6">
+        <div className="px-2 md:px-6 2xl:px-0 grid grid-cols-1 md:grid-cols-4 gap-2 lg:gap-6">
           {pathname === '/blog' ? (
-            <div className="col-span-3 flex flex-col gap-4">
+            <div className="md:col-span-3 flex flex-col gap-4">
               <Suspense fallback={<BigPostLoader />}>
                 <Await resolve={initialData.blogPosts}>
                   {(data) => renderComponents(data.data.slice(0, 2), BigPost)}
@@ -48,7 +48,7 @@ export default function Blog() {
               </Suspense>
             </div>
           ) : (
-            <div className="col-span-3 flex flex-col gap-4">
+            <div className="md:col-span-3 flex flex-col gap-4">
               <Outlet />
             </div>
           )}

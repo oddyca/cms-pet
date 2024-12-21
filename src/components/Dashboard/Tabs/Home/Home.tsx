@@ -23,7 +23,7 @@ export default function Home() {
     <div className="flex flex-col h-full w-full gap-4">
       <h2 className="font-bold text-xl w-full h-fit">Dashboard | Overview</h2>
       {!isPending && (
-        <div className="flex flex-row flex-grow gap-4 h-full min-h-0">
+        <div className="grid grid-cols-1 lg:grid-cols-2 2xl:flex 2xl:flex-row 2xl:flex-grow gap-4 h-full min-h-0">
           <div className="basis-1/3 flex flex-col gap-2 min-h-0 h-full">
             <DashboardCategory name="Most popular posts" />
             <div className="grid grid-cols-1 xl:grid-cols-2 auto-rows-min gap-2 place-items-stretch h-full min-h-0 overflow-y-auto custom-scrollbar-hidden hover:custom-scrollbar">

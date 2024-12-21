@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
-import VerticalDivider from '../Dividers/VerticalDivider';
-import HorizontallDivider from '../Dividers/HorizontalDivider';
+import VerticalDivider from '../../Dividers/VerticalDivider';
+import HorizontallDivider from '../../Dividers/HorizontalDivider';
 
 import { getAllTags } from '@/services/fetchServices';
 

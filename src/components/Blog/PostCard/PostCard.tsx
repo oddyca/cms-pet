@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-import Tag from '../Tag/Tag';
+import Tag from '../../Tag/Tag';
 
 import { TPostCard } from '@/types/types';
 
@@ -18,7 +18,7 @@ export default function PostCard({
   const formattedDate = convertDate(publishedAt);
 
   return (
-    <div className="h-96 relative border-2 rounded-xl col-span-1 overflow-hidden group">
+    <div className="h-56 lg:h-96 relative border-2 rounded-xl col-span-1 overflow-hidden group">
       <img
         className="h-full w-full object-cover duration-300 ease-in-out group-hover:scale-110"
         src={
@@ -31,11 +31,13 @@ export default function PostCard({
         <div className="flex flex-col gap-2 z-10">
           <Link
             to={`/blog/${tag.toLowerCase()}/${slug}`}
-            className="font-bold hover:text-link-blue-100 text-xl text-white"
+            className="font-bold hover:text-link-blue-100 md:text-xl text-white"
           >
             {title}
           </Link>
-          <p className="text-white z-10">{article.split('.')[0]}.</p>
+          <p className="text-sm md:text-base text-white z-10">
+            {article.split('.')[0]}.
+          </p>
         </div>
         <div className="flex justify-end items-center text-sm gap-2 z-10 text-white opacity-50 group-hover:opacity-100">
           <p>{formattedDate}</p>
@@ -43,7 +45,7 @@ export default function PostCard({
           <Tag tag={tag} elem={'card'} />
         </div>
       </div>
-      <div className="absolute h-1/2 group-hover:h-full w-full duration-300 ease-in-out bottom-0 bg-gradient-to-t from-black to-transparent z-1" />
+      <div className="absolute h-full md:h-1/2 group-hover:h-full w-full duration-300 ease-in-out bottom-0 bg-gradient-to-t from-black to-transparent z-1" />
     </div>
   );
 }

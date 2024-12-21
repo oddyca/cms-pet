@@ -9,9 +9,9 @@ import { getBlogPost } from '@/services/fetchServices';
 import { convertDate } from '@/utils/dateUtils';
 import { updateViews } from '@/services/updateServices';
 
-import PostLoader from './Loaders/PostLoader';
-import Tag from '../Tag/Tag';
-import Breadcrumbs from './Breadcrumbs';
+import PostLoader from '../Loaders/PostLoader';
+import Tag from '../../Tag/Tag';
+import Breadcrumbs from '../Breadcrumbs/Breadcrumbs';
 
 export default function BlogPost() {
   const initialData = useLoaderData() as TAllPosts;
@@ -43,7 +43,7 @@ export default function BlogPost() {
     <>
       <div className="h-[64px]" />
       <div className="w-full flex flex-col">
-        <div className="w-full max-w-[1440px] place-self-center py-6 flex flex-col gap-6">
+        <div className="w-full max-w-[1440px] place-self-center py-6 px-6 lg:px-2 2xl:px-0 flex flex-col gap-6">
           <Breadcrumbs crumbs={[category!, data.data[0].attributes.title]} />
           {isPending ? (
             <PostLoader />
@@ -67,7 +67,7 @@ export default function BlogPost() {
                     {data.data[0].attributes.intro || ''}
                   </ReactMarkdown>
                 </p>
-                <div className="h-96 w-1/2 rounded-md overflow-hidden">
+                <div className="h-64 lg:h-96 w-full lg:w-1/2 rounded-md overflow-hidden">
                   <img
                     className="w-full object-cover"
                     src={

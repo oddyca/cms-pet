@@ -41,25 +41,28 @@ export default function PostInfo({
       mutationDeleteEntry.mutate(postID);
     }
   }, [isConfirmed]);
+
+  const rowClass = 'flex flex-col 2xl:justify-between 2xl:flex-row';
+
   return (
-    <div className="col-span-3 flex flex-col gap-4">
+    <div className="col-span-2 2xl:col-span-3 flex flex-col gap-2 2xl:gap-4">
       <p className="self-end">Post Information</p>
-      <div className="rounded shadow-centrif flex flex-col gap-2 py-4 px-2">
-        <div className="flex justify-between">
+      <div className="rounded shadow-centrif flex flex-col gap-2 py-2 2xl:py-4 px-2 text-sm 2xl:text-base">
+        <div className={rowClass}>
           <p className="text-gray-400">Published</p>
           <p>{convertDate(post.publishedAt)}</p>
         </div>
-        <div className="flex justify-between">
+        <div className={rowClass}>
           <p className="text-gray-400">Author</p>
           <p>{post.author}</p>
         </div>
-        <div className="flex justify-between">
+        <div className={rowClass}>
           <p className="text-gray-400">Edited</p>
           <p className="text-right">
             {convertDateDashboard(post.edited) ?? '-'}
           </p>
         </div>
-        <div className="flex justify-between">
+        <div className={rowClass}>
           <p className="text-gray-400">Views</p>
           <p>{post.views ?? '0'}</p>
         </div>
