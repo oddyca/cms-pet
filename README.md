@@ -58,10 +58,6 @@ This is a web application designed for managing and analyzing blog posts. It pro
 
 4. Run the application:
    ```bash
-   npm run start
-   ```
-   or
-   ```bash
    npm run dev
    ```
 5. Access the application:
