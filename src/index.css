@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Uncial+Antiqua&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color: #494949;
+  background-color: #ededed;
+}
+
+h1 {
+  font-family: 'Uncial Antiqua', system-ui;
+}
+
+a:hover {
+  color: #828dcf;
+}
+
+.animated-background {
+  background-size: 200% 100%;
+  -webkit-animation: animation 5s ease-in-out infinite;
+  -moz-animation: animation 5s ease-in-out infinite;
+  animation: animation 5s ease-in-out infinite;
+}
+
+@keyframes animation {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+}
