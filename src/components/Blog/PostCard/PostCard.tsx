@@ -45,7 +45,7 @@ export default function PostCard({
           <Tag tag={tag} elem={'card'} />
         </div>
       </div>
-      <div className="absolute h-full md:h-1/2 group-hover:h-full w-full duration-300 ease-in-out bottom-0 bg-gradient-to-t from-black to-transparent z-1" />
+      <div className="absolute h-full lg:4/5 xl:h-1/2 group-hover:h-full w-full duration-300 ease-in-out bottom-0 bg-gradient-to-t from-black to-transparent z-1" />
     </div>
   );
 }

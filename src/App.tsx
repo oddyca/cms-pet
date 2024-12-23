@@ -40,7 +40,7 @@ function App() {
             src={hero}
             alt="hero image"
             loading="lazy"
-            className="w-full h-96 object-cover xl:object-fill px-0 xl:px-6 2xl:px-0"
+            className="w-full h-96 object-cover px-0 xl:px-6 2xl:px-0"
           />
         </div>
         <div className="mt-6">
@@ -69,7 +69,7 @@ function App() {
             <div>
               <div className="flex items-center gap-2 xl:gap-4">
                 <h2
-                  className={`${aboutSloganClass} text-[36px] md:text-[40px] lg:text-[56px] xl:text-2xl ml-0 md:ml-4 xl:ml-10`}
+                  className={`${aboutSloganClass} text-[32px] md:text-[40px] lg:text-[56px] xl:text-2xl ml-0 md:ml-4 xl:ml-10`}
                 >
                   EMPOWERING
                 </h2>
@@ -90,14 +90,14 @@ function App() {
                   />
                 </div>
                 <h2
-                  className={`${aboutSloganClass} text-[30px] md:text-[40px] text-nowrap`}
+                  className={`${aboutSloganClass} text-[32px] md:text-[40px] text-nowrap`}
                 >
                   TECH STARTUPS
                 </h2>
               </div>
               <div className="flex items-center gap-2 md:gap-4">
                 <h2
-                  className={`${aboutSloganClass} text-[36px] md:text-[40px] text-nowrap lg:text-[56px] xl:text-2xl ml-4 xl:ml-10`}
+                  className={`${aboutSloganClass} text-[32px] md:text-[40px] text-nowrap lg:text-[56px] xl:text-2xl ml-4 xl:ml-10`}
                 >
                   TO SUCCEED
                 </h2>
