@@ -15,5 +15,5 @@ export default defineConfig({
       '/': '/public',
     },
   },
-  base: '/',
+  base: './',
 });
