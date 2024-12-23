@@ -15,4 +15,5 @@ export default defineConfig({
       '/': '/public',
     },
   },
+  base: '/cms-pet/',
 });
