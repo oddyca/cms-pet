@@ -1,5 +1,6 @@
 # Blog With A Dashboard
 
+![Link](https://cms-pet.netlify.app/) to the deployed frontend part of the project.
 ## Overview
 This is a web application designed for managing and analyzing blog posts. It provides a user-friendly interface for viewing, creating, and editing posts, along with basic analytics on post performance.
 
