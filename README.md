@@ -20,6 +20,7 @@ This is a web application designed for managing and analyzing blog posts. It pro
 
 ## Features
 **Sign in into the dashboard**
+
 **Dashboard:** 
   - Displays an overview of post statistics, including views and top categories.
   
